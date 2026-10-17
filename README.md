@@ -4,7 +4,7 @@ Aplicación Android para completar el **conduce de salida de herramientas, mater
 
 - Logo SEABOARD y documento original en hoja carta, dos sectores independientes.
 - Hasta 21 materiales por sector (matriz invisible 3 × 7).
-- PDF con la hoja como imagen, compartible por correo mediante el menú nativo Android.
+- PDF con la hoja como imagen. Botones independientes para guardar en Descargas y enviar el archivo directamente por Outlook.
 - Word y Excel editables; sin base de datos ni servicios externos.
 - Interfaz offline mediante WebView con archivos HTML/CSS/JS locales.
 
@@ -30,3 +30,9 @@ La compilación automática se ejecuta con cada push a `main`, sin que necesites
 - `.github/workflows/construir-apk.yml`: compilación y artefacto APK.
 
 No almacena formularios en una base de datos; los documentos compartidos se conservan temporalmente en la caché de Android.
+
+## Guardar / Outlook — versión 3.2
+
+- **Guardar en Descargas:** Android 10+ deposita PDF, Word o Excel en `Descargas/Conduce Salida` (archivos visibles desde Archivos). En Android 8 y 9 se abre el selector del sistema para escoger una carpeta, como Descargas.
+- **Enviar por Outlook:** abre exclusivamente Microsoft Outlook con el archivo adjunto preparado. Necesitas Outlook instalado y una cuenta configurada; revisas y envías manualmente el correo. No abre Gmail.
+- Las exportaciones siguen siendo locales; no se solicita acceso a la cuenta de correo.
