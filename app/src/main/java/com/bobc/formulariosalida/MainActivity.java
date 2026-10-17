@@ -2,11 +2,16 @@ package com.bobc.formulariosalida;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -16,10 +21,18 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-/** Aplicación local: interfaz HTML v2.3 intacta y compartir Android nativo. */
+/** Interfaz HTML local: guardar en Descargas o redactar correo con adjunto en Outlook. */
 public final class MainActivity extends Activity {
+    private static final int REQUEST_CREATE_DOCUMENT = 406;
+    private static final String OUTLOOK_PACKAGE = "com.microsoft.office.outlook";
     private WebView webView;
+    private File pendingLegacyFile;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -28,80 +41,178 @@ public final class MainActivity extends Activity {
         webView = new WebView(this);
         webView.setBackgroundColor(Color.WHITE);
         webView.setWebViewClient(new WebViewClient());
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(false); // Datos de captura solo en memoria.
-        settings.setAllowFileAccess(true);  // Recursos locales /android_asset/.
-        settings.setAllowContentAccess(false);
-        settings.setBuiltInZoomControls(false);
-        settings.setDisplayZoomControls(false);
-        settings.setDefaultTextEncodingName("UTF-8");
-        webView.addJavascriptInterface(new ShareBridge(), "ConduceAndroid");
+        WebSettings s = webView.getSettings();
+        s.setJavaScriptEnabled(true);
+        s.setDomStorageEnabled(false);
+        s.setAllowFileAccess(true);
+        s.setAllowContentAccess(false);
+        s.setBuiltInZoomControls(false);
+        s.setDisplayZoomControls(false);
+        s.setDefaultTextEncodingName("UTF-8");
+        webView.addJavascriptInterface(new DocumentBridge(), "ConduceAndroid");
         setContentView(webView);
         webView.loadUrl("file:///android_asset/www/index.html");
     }
 
-    private final class ShareBridge {
+    private final class DocumentBridge {
+        private static final int MAX_BASE64 = 24_000_000;
+        private String action = "download";
         private String name;
         private String mime;
         private StringBuilder encoded;
-        private static final int MAX_BASE64 = 24_000_000;
+
+        @JavascriptInterface public synchronized void setAction(String requested) {
+            action = "outlook".equals(requested) ? "outlook" : "download";
+        }
 
         @JavascriptInterface public synchronized void startShare(String filename, String contentType) {
             String safe = filename == null ? "Conduce_Salida.pdf" : filename.replaceAll("[^a-zA-Z0-9_.-]", "_");
             if (!safe.matches("[a-zA-Z0-9_.-]{1,110}\\.(pdf|docx|xlsx)")) {
                 name = null; encoded = null;
-                showError("Nombre de archivo no válido."); return;
+                message("Nombre de archivo no válido."); return;
             }
             name = safe;
-            if (safe.endsWith(".pdf")) mime = "application/pdf";
-            else if (safe.endsWith(".docx")) mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-            else mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            mime = safe.endsWith(".pdf") ? "application/pdf" : safe.endsWith(".docx")
+                ? "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             encoded = new StringBuilder(200_000);
         }
 
-        @JavascriptInterface public synchronized void appendChunk(String text) {
-            if (encoded == null || text == null) return;
-            if (encoded.length() + text.length() > MAX_BASE64) {
-                encoded = null; showError("Archivo demasiado grande para compartir."); return;
+        @JavascriptInterface public synchronized void appendChunk(String chunk) {
+            if (encoded == null || chunk == null) return;
+            if (encoded.length() + chunk.length() > MAX_BASE64) {
+                encoded = null; message("El documento excede el tamaño permitido."); return;
             }
-            encoded.append(text);
+            encoded.append(chunk);
         }
 
         @JavascriptInterface public synchronized void finishShare() {
             if (encoded == null || name == null) return;
-            final String filename = name;
-            final String type = mime;
             byte[] data;
             try { data = Base64.decode(encoded.toString(), Base64.DEFAULT); }
-            catch (IllegalArgumentException ex) { encoded = null; showError("El archivo generado no es válido."); return; }
+            catch (IllegalArgumentException e) {
+                encoded = null; message("No se pudo leer el documento generado."); return;
+            }
             encoded = null;
-            try {
-                File dir = new File(getCacheDir(), "compartidos");
-                if (!dir.exists() && !dir.mkdirs()) throw new Exception("No se pudo crear la carpeta temporal.");
-                File dest = new File(dir, filename);
-                try (FileOutputStream out = new FileOutputStream(dest)) { out.write(data); }
-                final Uri uri = new Uri.Builder().scheme("content")
-                    .authority(getPackageName() + ".shared").appendPath(filename).build();
-                runOnUiThread(() -> share(uri, type));
-            } catch (Exception ex) { showError("No se pudo compartir el documento: " + ex.getMessage()); }
+            String selectedAction = action;
+            String type = mime;
+            String filename = withTimestamp(name);
+            action = "download";
+            if ("outlook".equals(selectedAction)) {
+                try {
+                    File dir = new File(getCacheDir(), "compartidos");
+                    if (!dir.exists() && !dir.mkdirs()) throw new IOException("No se pudo preparar el adjunto.");
+                    File cached = new File(dir, filename);
+                    try (FileOutputStream out = new FileOutputStream(cached)) { out.write(data); }
+                    Uri uri = new Uri.Builder().scheme("content")
+                        .authority(getPackageName() + ".shared").appendPath(filename).build();
+                    runOnUiThread(() -> openOutlook(uri, type));
+                } catch (Exception e) { message("Error preparando Outlook: " + e.getMessage()); }
+            } else {
+                runOnUiThread(() -> saveDocument(data, filename, type));
+            }
         }
 
-        private void showError(String text) {
-            runOnUiThread(() -> Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show());
+        private String withTimestamp(String filename) {
+            int dot = filename.lastIndexOf('.');
+            String suffix = new SimpleDateFormat("_HHmmss_SSS", Locale.US).format(new Date());
+            return filename.substring(0, dot) + suffix + filename.substring(dot);
         }
     }
 
-    private void share(Uri uri, String mime) {
-        Intent send = new Intent(Intent.ACTION_SEND);
-        send.setType(mime);
-        send.putExtra(Intent.EXTRA_STREAM, uri);
-        send.putExtra(Intent.EXTRA_SUBJECT, "Conduce de salida");
-        send.putExtra(Intent.EXTRA_TEXT, "Adjunto el conduce de salida en formato " + (mime.equals("application/pdf") ? "PDF (hoja carta)." : "editable."));
-        send.setClipData(ClipData.newRawUri("Conduce de salida", uri));
-        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        try { startActivity(Intent.createChooser(send, "Enviar conduce por correo u otra aplicación")); }
-        catch (Exception e) { Toast.makeText(this, "No hay una aplicación para compartir este archivo.", Toast.LENGTH_LONG).show(); }
+    private void saveDocument(byte[] data, String filename, String mime) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            // Android 8-9: selector SAF, sin permisos invasivos de almacenamiento.
+            try {
+                File dir = new File(getCacheDir(), "pendiente");
+                if (!dir.exists() && !dir.mkdirs()) throw new IOException("Error de carpeta.");
+                pendingLegacyFile = new File(dir, filename);
+                try (FileOutputStream out = new FileOutputStream(pendingLegacyFile)) { out.write(data); }
+                Intent create = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                create.addCategory(Intent.CATEGORY_OPENABLE);
+                create.setType(mime);
+                create.putExtra(Intent.EXTRA_TITLE, filename);
+                startActivityForResult(create, REQUEST_CREATE_DOCUMENT);
+            } catch (Exception e) { message("No se pudo abrir Guardar como: " + e.getMessage()); }
+            return;
+        }
+        Uri uri = null;
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(MediaStore.MediaColumns.DISPLAY_NAME, filename);
+            cv.put(MediaStore.MediaColumns.MIME_TYPE, mime);
+            cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Conduce Salida");
+            cv.put(MediaStore.MediaColumns.IS_PENDING, 1);
+            uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
+            if (uri == null) throw new IOException("Android no autorizó la descarga.");
+            try (OutputStream out = getContentResolver().openOutputStream(uri)) {
+                if (out == null) throw new IOException("No se pudo abrir el archivo.");
+                out.write(data);
+            }
+            ContentValues done = new ContentValues();
+            done.put(MediaStore.MediaColumns.IS_PENDING, 0);
+            getContentResolver().update(uri, done, null, null);
+            message("Guardado en Descargas / Conduce Salida / " + filename);
+        } catch (Exception e) {
+            if (uri != null) getContentResolver().delete(uri, null, null);
+            message("No se pudo guardar en Descargas: " + e.getMessage());
+        }
+    }
+
+    @Override protected void onActivityResult(int request, int result, Intent intent) {
+        super.onActivityResult(request, result, intent);
+        if (request != REQUEST_CREATE_DOCUMENT) return;
+        File cached = pendingLegacyFile;
+        pendingLegacyFile = null;
+        if (result != RESULT_OK || intent == null || intent.getData() == null || cached == null) {
+            message("No se guardó el documento."); return;
+        }
+        try (java.io.FileInputStream in = new java.io.FileInputStream(cached);
+             OutputStream out = getContentResolver().openOutputStream(intent.getData())) {
+            if (out == null) throw new IOException("El destino no está disponible.");
+            byte[] buf = new byte[16384]; int n;
+            while ((n = in.read(buf)) >= 0) out.write(buf, 0, n);
+            message("Documento guardado en la carpeta que elegiste.");
+        } catch (Exception e) { message("No se pudo guardar: " + e.getMessage()); }
+        finally { cached.delete(); }
+    }
+
+    private void openOutlook(Uri uri, String mime) {
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setPackage(OUTLOOK_PACKAGE); // No abre Gmail ni un selector genérico.
+        email.setType(mime);
+        email.putExtra(Intent.EXTRA_STREAM, uri);
+        email.putExtra(Intent.EXTRA_SUBJECT, "Conduce de salida");
+        email.putExtra(Intent.EXTRA_TEXT, "Adjunto el conduce de salida para imprimir en hoja carta.");
+        email.setClipData(ClipData.newRawUri("Conduce de salida", uri));
+        email.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            grantUriPermission(OUTLOOK_PACKAGE, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(email);
+        } catch (ActivityNotFoundException ex) {
+            new AlertDialog.Builder(this)
+                .setTitle("Outlook no está disponible")
+                .setMessage("Instala Microsoft Outlook o inicia sesión en la aplicación para enviar el PDF.")
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("Abrir Google Play", (dialog, which) -> {
+                    Intent link = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" + OUTLOOK_PACKAGE));
+                    try { startActivity(link); } catch (Exception ignored) {
+                        message("No se pudo abrir Google Play.");
+                    }
+                }).show();
+        } catch (Exception ex) { message("No se pudo abrir Outlook: " + ex.getMessage()); }
+    }
+
+    private void message(String text) {
+        runOnUiThread(() -> {
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+            if (webView != null) {
+                String js = "window.conduceAvisoAndroid && window.conduceAvisoAndroid(" +
+                    org.json.JSONObject.quote(text) + ");";
+                webView.evaluateJavascript(js, null);
+            }
+        });
     }
 
     @Override public void onBackPressed() {
@@ -109,7 +220,7 @@ public final class MainActivity extends Activity {
         webView.evaluateJavascript("Boolean(window.conduceVolverAndroid&&window.conduceVolverAndroid())", result -> {
             if (!"true".equals(result)) {
                 new AlertDialog.Builder(this).setTitle("Cerrar formulario")
-                    .setMessage("Los datos sin compartir se perderán. ¿Salir?")
+                    .setMessage("Los datos sin guardar se perderán. ¿Salir?")
                     .setNegativeButton("Cancelar", null)
                     .setPositiveButton("Salir", (dialog, which) -> finish()).show();
             }
@@ -119,7 +230,7 @@ public final class MainActivity extends Activity {
     @Override protected void onDestroy() {
         if (webView != null) {
             webView.removeJavascriptInterface("ConduceAndroid");
-            webView.destroy();webView = null;
+            webView.destroy(); webView = null;
         }
         super.onDestroy();
     }
