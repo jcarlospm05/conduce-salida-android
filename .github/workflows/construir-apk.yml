@@ -22,8 +22,11 @@ jobs:
           gradle-version: '8.9'
       - name: Instalar Android SDK 35
         run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMGR="$(find "$SDK_ROOT/cmdline-tools" -maxdepth 3 -type f -name sdkmanager | sort -V | tail -n 1)"
+          test -n "$SDKMGR"
+          yes | "$SDKMGR" --licenses >/dev/null || true
+          "$SDKMGR" --install "platforms;android-35" "build-tools;35.0.0"
       - name: Compilar instalador Android
         run: gradle --no-daemon --stacktrace assembleDebug
       - name: Adjuntar APK descargable
