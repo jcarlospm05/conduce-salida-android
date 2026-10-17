@@ -34,3 +34,10 @@
 .app-brand{display:flex;align-items:center;gap:10px}
 .app-brand-icon{width:40px;height:40px;object-fit:cover;border-radius:11px;box-shadow:0 1px 6px #061d3450}
 @media(max-width:780px){.app-brand-icon{width:37px;height:37px}.app-header{gap:10px}}
+
+/* Opciones Android visibles sin alterar la hoja carta del conduce. */
+.android-choices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.android-choices .btn{min-height:48px;font-size:13px;font-weight:700;white-space:normal}
+.android-choices .btn-outlook{background:#0874c4;color:#fff;border:1px solid #0874c4}
+.android-choices .btn-outlook:hover{background:#085e9d}
+@media(max-width:410px){.android-choices{grid-template-columns:1fr}}
