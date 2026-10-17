@@ -1,0 +1,16 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.bobc.formulariosalida'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.bobc.formulariosalida'
+        minSdk 26
+        targetSdk 34
+        versionCode 2
+        versionName '3.1.0'
+    }
+    buildTypes { release { minifyEnabled false } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}

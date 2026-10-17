@@ -1,0 +1,58 @@
+FORMULARIO DE SALIDA — VERSIÓN 2.3
+=================================
+
+ABRIR
+1. Descomprima el ZIP.
+2. Abra «Formulario de salida.html» (doble clic) en Chrome o Edge.
+3. Mantenga siempre el archivo HTML y la carpeta «Recursos» al mismo nivel.
+4. No necesita servidor, internet, instalación de Node ni cuenta de usuario.
+
+CONTENIDO
+- Se respeta el esquema del conduce aportado: logo SEABOARD y título del documento;
+  dos sectores «En caso de terceros» y «En caso personal interno»; autorización, entrega y nota.
+- El logo se muestra en el documento impreso, NO como marca de la interfaz de captura.
+- Cada sector dispone de un botón «+ Agregar artículo» y admite hasta 21 posiciones
+  (matriz invisible de 3 columnas × 7 filas dentro de su cuadro).
+- Las posiciones vacías no se imprimen ni muestran cuadrícula interna.
+- Los datos rellenados NO se muestran en negrita.
+- No hay botón de carga de ejemplos ni almacenamiento local o remoto.
+
+GUARDAR E IMPRIMIR
+1. Pulse «Guardar e imprimir».
+2. Elija PDF, Word o Excel y pulse «Aceptar y continuar».
+3. El archivo elegido se descargará en su computadora.
+4. Se abrirá la ventana estándar de impresión de Chrome o Edge para imprimir
+   el documento HTML, independientemente del formato descargado.
+
+DOCUMENTOS
+- .DOCX: textos y tablas nativos editables en Microsoft Word, logo como imagen.
+- .XLSX: celdas y posiciones de materiales editables en Microsoft Excel, logo como imagen.
+- .PDF: imagen de la hoja completa, guardada en PDF carta, página carta.
+- Impresión: HTML nativo en página carta 8.5 × 11 pulgadas.
+- El aspecto en Word y Excel puede variar ligeramente del navegador debido a los
+  motores de composición distintos, aunque se conservan las secciones y datos.
+
+MÁRGENES Y LÍMITE DE UNA PÁGINA
+- Por diseño el documento solo usa una página tamaño carta.
+- El tamaño de los textos de materiales NO se reduce automáticamente.
+- Si un artículo o campo excede su espacio, la aplicación solicita corregirlo.
+- El margen inferior del marco se ha retirado de la zona habitual no imprimible.
+- Al imprimir, use tamaño CARTA y desactive «Encabezados y pies de página».
+  Si la impresora permite los márgenes «Ninguno», selecciónelos; mantenga
+  escala 100 % o «Ajustar al área imprimible» cuando su impresora lo requiera.
+
+PRIVACIDAD
+- Los datos permanecen en la página mientras está abierta.
+- No se guardan automáticamente. Guarde el archivo antes de cerrar o recargar.
+
+TECNOLOGÍA
+HTML5 + CSS3 + JavaScript + Bootstrap 5.1.1 (incluido localmente) + JSZip local.
+
+AJUSTE v2.2: matrices 3×7 (21 materiales por sector); marco inferior y nota movidos dentro de la zona segura de impresión. Se conserva tamaño carta y una sola página.
+
+CORRECCIÓN 2.2: PDF compatible con apertura local (doble clic):
+El logo se toma de una copia segura integrada para evitar errores de permisos
+del navegador al generar el PDF. Sin cambios en la hoja, Word o Excel.
+
+
+VERSIÓN 2.3: PDF de imagen completa (raster, 3×), a partir de la hoja HTML. Los DOCX/XLSX permanecen editables y sus paquetes se validan antes de descargar.

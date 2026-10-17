@@ -1,0 +1,21 @@
+ARQUITECTURA
+===========
+Formulario de salida.html       Archivo de entrada principal.
+Recursos/estilos.css            UI, hoja carta y estilos de impresión.
+Recursos/app.js                 Captura, 21 materiales por sector, vista previa,
+                                validaciones, modal único Guardar e imprimir.
+Recursos/exportar.js            OOXML editable Word y Excel; PDF vectorial.
+Recursos/assets/logo_seaboard.png   Logo tomado del PDF de referencia.
+Recursos/assets/logo_embebido.js   Logo codificado para exportaciones sin fetch.
+Recursos/vendor/bootstrap.min.css  Bootstrap 5.1.1 bajo MIT.
+Recursos/vendor/jszip.min.js        JSZip 3.x con su licencia.
+
+Validación de la versión 2.1:
+- Sintaxis JS validada mediante node --check.
+- Exportación DOCX de prueba con texto y tablas editables, renderizada en 1 página carta.
+- Exportación XLSX de prueba: ZIP válido, archivos XML legibles, 21
+  celdas de materiales por sector y márgenes de impresión verificados.
+- PDF exportado y PDF de impresión del navegador: ambos en 1 página carta,
+  con marco inferior visible en el renderizado.
+- No se realizó prueba interactiva completa en Microsoft Word/Excel ni en
+  Chrome/Edge de Windows del equipo destinatario.
