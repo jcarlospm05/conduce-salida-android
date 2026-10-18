@@ -9,34 +9,75 @@ const stage=document.getElementById('paperStage');
 const viewport=document.getElementById('previewViewport');
 const modal=document.getElementById('formatModal');
 let saving=false,toastClock=0;
-const items={terceros:[''],internos:['']};
+const items={terceros:'',internos:''};
+const MAX_MATERIAL_LINES=8;
+const normalizedMaterials=(input)=>Array.isArray(input)?input.map(x=>String(x||'').trim()).filter(Boolean).join(' - '):String(input||'').trim();
+const splitMaterials=(input)=>String(input||'').split(/\s+-\s+|\n+/).map(x=>x.trim()).filter(Boolean);
 function isoNow(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function inputOptions(container,name,choices,multiple){container.replaceChildren();for(const choice of choices){const label=document.createElement('label');const input=document.createElement('input');input.type=multiple?'checkbox':'radio';input.name=name;input.value=choice;label.append(input,document.createTextNode(choice));container.append(label);}}
-function emptyData(){const d={};for(const element of form.querySelectorAll('[name]')){if(element.type==='radio'||element.type==='checkbox')continue;d[element.name]=element.value.trim();}d.localidad=form.querySelector('[name="localidad"]:checked')?.value||'';d.tipo=form.querySelector('[name="tipo"]:checked')?.value||'';d.conceptos=Array.from(form.querySelectorAll('[name="conceptos"]:checked'),x=>x.value);d.materialesTerceros=items.terceros.map(x=>x.trim()).filter(Boolean);d.materialesInternos=items.internos.map(x=>x.trim()).filter(Boolean);return d;}
+function emptyData(){const d={};for(const element of form.querySelectorAll('[name]')){if(element.type==='radio'||element.type==='checkbox')continue;d[element.name]=element.value.trim();}d.localidad=form.querySelector('[name="localidad"]:checked')?.value||'';d.tipo=form.querySelector('[name="tipo"]:checked')?.value||'';d.conceptos=Array.from(form.querySelectorAll('[name="conceptos"]:checked'),x=>x.value);d.materialesTerceros=splitMaterials(items.terceros);d.materialesInternos=splitMaterials(items.internos);return d;}
 function shortDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return v||'';const [y,m,d]=v.split('-').map(Number);return `${d}/${m}/${y}`;}
 function longDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return v||'';const [y,m,d]=v.split('-').map(Number);return new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).format(new Date(y,m-1,d,12));}
 function printChoices(id,options,selected){const group=document.getElementById(id);group.replaceChildren();for(const name of options){const item=document.createElement('span');item.className='choice';const label=document.createElement('span');label.className='choice-label';label.textContent=name;const sq=document.createElement('span');sq.className='square'+(selected.includes(name)?' on':'');sq.textContent=selected.includes(name)?'X':'';item.append(label,sq);group.append(item);}}
-function makeMatrix(containerId,materialList){const holder=document.getElementById(containerId);holder.replaceChildren();for(let i=0;i<21;i++){const slot=document.createElement('span');slot.className='matrix-item';slot.dataset.slot=String(i+1);slot.textContent=materialList[i]||'';holder.append(slot);}}
-function renderMaterialEditor(sector){const holder=document.getElementById(sector==='terceros'?'itemsTerceros':'itemsInternos');holder.replaceChildren();const list=items[sector];list.forEach((item,i)=>{const line=document.createElement('div');line.className='item-editor';const num=document.createElement('span');num.className='item-number';num.textContent=String(i+1);const inp=document.createElement('input');inp.className='form-control';inp.type='text';inp.maxLength=48;inp.placeholder='Código o descripción';inp.value=item;inp.setAttribute('aria-label',`Artículo ${i+1} de ${sector}`);inp.addEventListener('input',()=>{list[i]=inp.value;refresh();});const del=document.createElement('button');del.type='button';del.className='remove-item';del.textContent='×';del.title='Quitar artículo';del.addEventListener('click',()=>{if(list.length===1){list[0]='';inp.value='';inp.focus();}else{list.splice(i,1);renderMaterialEditor(sector);}refresh();});line.append(num,inp,del);holder.append(line);});document.getElementById(sector==='terceros'?'countTerceros':'countInternos').textContent=`${list.filter(x=>x.trim()).length} / 21`;
- document.querySelector(`[data-add="${sector}"]`).disabled=list.length>=21;}
+function makeMatrix(containerId,materialList){const holder=document.getElementById(containerId);holder.textContent=normalizedMaterials(materialList);}
+function materialLines(sector){
+ const id=sector==='terceros'?'docTerceros':'docInternos';const el=document.getElementById(id);
+ if(!el||!el.textContent.trim())return 0;
+ const clone=el.cloneNode(true);clone.removeAttribute('id');
+ clone.style.cssText='position:absolute;left:-9999px;top:0;width:'+el.clientWidth+'px;height:auto;min-height:0;max-height:none;overflow:visible;visibility:hidden';
+ paper.append(clone);
+ const cs=getComputedStyle(clone),line=parseFloat(cs.lineHeight)||15;
+ const top=parseFloat(cs.paddingTop)||0,bottom=parseFloat(cs.paddingBottom)||0;
+ const contentHeight=clone.scrollHeight-top-bottom;clone.remove();
+ return Math.max(1,Math.ceil((contentHeight-.2)/line));
+}
+function renderMaterialEditor(sector){
+ const holder=document.getElementById(sector==='terceros'?'itemsTerceros':'itemsInternos');holder.replaceChildren();
+ const area=document.createElement('textarea');area.className='form-control material-textarea';area.rows=5;
+ area.placeholder='Escriba aquí o agregue cada artículo. Se acomodarán automáticamente en renglones.';
+ area.value=items[sector];area.setAttribute('aria-label',`Artículos y materiales de ${sector}`);
+ area.addEventListener('input',()=>{items[sector]=area.value;refresh();});
+ const pending=document.createElement('input');pending.type='text';pending.className='form-control new-material-input';
+ pending.placeholder='Siguiente artículo o código';pending.setAttribute('aria-label',`Nuevo artículo de ${sector}`);
+ pending.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addMaterial(sector);}});
+ holder.append(area,pending);
+}
+function addMaterial(sector){
+ const holder=document.getElementById(sector==='terceros'?'itemsTerceros':'itemsInternos');
+ const pending=holder.querySelector('.new-material-input');const area=holder.querySelector('.material-textarea');
+ const next=(pending?.value||'').trim();if(!next){pending?.focus();return;}
+ const previous=items[sector];items[sector]=previous.trim()?previous.trim()+' - '+next:next;
+ area.value=items[sector];refresh();
+ if(checkFit().some(msg=>msg.startsWith('Materiales de '+(sector==='terceros'?'terceros':'personal interno')))){
+   items[sector]=previous;area.value=previous;refresh();toast('No cabe este artículo en las ocho líneas del conduce.');return;
+ }
+ pending.value='';pending.focus();
+}
 function refresh(){const d=emptyData();for(const el of document.querySelectorAll('[data-field]')){const key=el.dataset.field;el.textContent=key==='fecha'||key==='entFecha'?longDate(d[key]):key==='autFecha'?shortDate(d[key]):key==='hora'?(d.hora||''):d[key]||'';}
  printChoices('viewLoc',LOCS,d.localidad?[d.localidad]:[]);printChoices('viewTipo',TIPOS,d.tipo?[d.tipo]:[]);printChoices('viewConcepto',CONCEPTOS,d.conceptos);
- makeMatrix('docTerceros',d.materialesTerceros);makeMatrix('docInternos',d.materialesInternos);
- document.getElementById('countTerceros').textContent=`${d.materialesTerceros.length} / 21`;
- document.getElementById('countInternos').textContent=`${d.materialesInternos.length} / 21`;
- const errs=checkFit();document.getElementById('statusText').textContent=errs.length?'Revisar campos largos':'Listo para guardar e imprimir';document.getElementById('validationStatus').textContent=errs.length?errs[0]:'Una página carta · Word y Excel editables';
+ makeMatrix('docTerceros',items.terceros);makeMatrix('docInternos',items.internos);
+ for(const sector of ['terceros','internos']){
+  const label=document.getElementById(sector==='terceros'?'countTerceros':'countInternos');
+  label.textContent=`${materialLines(sector)} de ${MAX_MATERIAL_LINES} líneas`;
+ }
+ const errs=checkFit();document.getElementById('statusText').textContent=errs.length?'Revisar espacio del documento':'Listo para guardar e imprimir';document.getElementById('validationStatus').textContent=errs.length?errs[0]:'Una página carta · Texto automático hasta 8 líneas';
 }
-function checkFit(){const errors=[];for(const slot of paper.querySelectorAll('.matrix-item')){if(slot.textContent && slot.scrollWidth>slot.clientWidth+1){errors.push(`Artículo demasiado largo para su columna: ${slot.textContent.slice(0,32)}…`);break;}}
+function checkFit(){const errors=[];
+ for(const [id,sector] of [['docTerceros','terceros'],['docInternos','personal interno']]){
+  const el=document.getElementById(id);
+  if(el.textContent.trim()&&(materialLines(id==='docTerceros'?'terceros':'internos')>MAX_MATERIAL_LINES||el.scrollHeight>el.clientHeight+1))errors.push(`Materiales de ${sector}: se supera el espacio de 8 líneas. Revise los artículos.`);
+ }
  for(const el of paper.querySelectorAll('.doc-value')){if(el.textContent&&el.scrollHeight>el.clientHeight+2){errors.push('Hay campos demasiado largos para una sola página carta.');break;}}
- const bounds=paper.querySelector('.main-doc-table').getBoundingClientRect();const sign=paper.querySelector('.signatures-document').getBoundingClientRect();if(bounds.bottom>sign.top-8)errors.push('Los datos invaden el espacio de firmas.');return errors;}
+ const bounds=paper.querySelector('.main-doc-table').getBoundingClientRect();const sign=paper.querySelector('.signatures-document').getBoundingClientRect();if(bounds.bottom>sign.top-8)errors.push('Los datos invaden el espacio de firmas.');return errors;
+}
 function fitPage(){if(!viewport.clientWidth)return;const scale=Math.min(1,(viewport.clientWidth-45)/816);paper.style.transform=`scale(${scale})`;stage.style.width=`${816*scale}px`;stage.style.height=`${1056*scale}px`;document.getElementById('zoomLabel').textContent=`${Math.round(scale*100)}%`;}
-function reset(){form.reset();for(const key of ['fecha','autFecha','entFecha'])form.elements.namedItem(key).value=isoNow();form.elements.namedItem('hora').value=new Date().toTimeString().slice(0,5);items.terceros=[''];items.internos=[''];renderMaterialEditor('terceros');renderMaterialEditor('internos');refresh();}
-function setData(d){reset();for(const [key,val] of Object.entries(d)){if(key==='materialesTerceros'){items.terceros=(val||[]).slice(0,21);if(!items.terceros.length)items.terceros=[''];renderMaterialEditor('terceros');continue;}if(key==='materialesInternos'){items.internos=(val||[]).slice(0,21);if(!items.internos.length)items.internos=[''];renderMaterialEditor('internos');continue;}if(key==='conceptos'){form.querySelectorAll('[name="conceptos"]').forEach(x=>x.checked=val.includes(x.value));continue;}if(['localidad','tipo'].includes(key)){const radio=Array.from(form.querySelectorAll(`[name="${key}"]`)).find(x=>x.value===val);if(radio)radio.checked=true;continue;}if(form.elements.namedItem(key))form.elements.namedItem(key).value=val;}refresh();}
+function reset(){form.reset();for(const key of ['fecha','autFecha','entFecha'])form.elements.namedItem(key).value=isoNow();form.elements.namedItem('hora').value=new Date().toTimeString().slice(0,5);items.terceros='';items.internos='';renderMaterialEditor('terceros');renderMaterialEditor('internos');refresh();}
+function setData(d){reset();for(const [key,val] of Object.entries(d)){if(key==='materialesTerceros'){items.terceros=normalizedMaterials(val);renderMaterialEditor('terceros');continue;}if(key==='materialesInternos'){items.internos=normalizedMaterials(val);renderMaterialEditor('internos');continue;}if(key==='conceptos'){form.querySelectorAll('[name="conceptos"]').forEach(x=>x.checked=val.includes(x.value));continue;}if(['localidad','tipo'].includes(key)){const radio=Array.from(form.querySelectorAll(`[name="${key}"]`)).find(x=>x.value===val);if(radio)radio.checked=true;continue;}if(form.elements.namedItem(key))form.elements.namedItem(key).value=val;}refresh();}
 function toast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastClock);toastClock=setTimeout(()=>el.classList.remove('show'),3700);}
 function showModal(){const errors=checkFit();if(errors.length){toast(errors[0]);return;}modal.hidden=false;}
 function hideModal(){modal.hidden=true;}
 async function confirm(){if(saving)return;const errors=checkFit();if(errors.length){toast(errors[0]);hideModal();return;}const data=emptyData();const ext=document.querySelector('[name="format"]:checked').value;const button=document.getElementById('confirmSave');button.disabled=true;saving=true;try{await window.exportarConduce(data,ext);hideModal();if(window.ConduceAndroid){toast('Documento preparado. Selecciona correo u otra aplicación para enviarlo.');}else{toast('Archivo descargado. Seleccione su impresora.');setTimeout(()=>window.print(),1000);}}catch(err){console.error(err);toast(`No se pudo guardar: ${err.message||err}`);}finally{button.disabled=false;saving=false;}}
 inputOptions(document.getElementById('loc-set'),'localidad',LOCS,false);inputOptions(document.getElementById('tipo-set'),'tipo',TIPOS,false);inputOptions(document.getElementById('concepto-set'),'conceptos',CONCEPTOS,true);
-document.querySelectorAll('[data-add]').forEach(button=>button.addEventListener('click',()=>{const sector=button.dataset.add;if(items[sector].length>=21){toast('Máximo 21 artículos por sector (3 columnas × 7 filas).');return;}items[sector].push('');renderMaterialEditor(sector);document.querySelector(`#${sector==='terceros'?'itemsTerceros':'itemsInternos'} .item-editor:last-child input`)?.focus();refresh();}));
+document.querySelectorAll('[data-add]').forEach(button=>button.addEventListener('click',()=>addMaterial(button.dataset.add)));
 form.addEventListener('input',refresh);form.addEventListener('change',refresh);form.addEventListener('submit',e=>e.preventDefault());document.getElementById('reset').addEventListener('click',reset);document.getElementById('savePrint').addEventListener('click',showModal);document.getElementById('cancelModal').addEventListener('click',hideModal);document.getElementById('cancelX').addEventListener('click',hideModal);document.getElementById('confirmSave').addEventListener('click',confirm);modal.addEventListener('click',e=>{if(e.target===modal)hideModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape')hideModal();});window.addEventListener('resize',fitPage);reset();requestAnimationFrame(fitPage);
 window.FormularioSalida={getData:emptyData,setData,checkFit,refresh};
