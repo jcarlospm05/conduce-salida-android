@@ -27,6 +27,7 @@ jobs:
           mkdir -p android/app/src/main/assets/www
           cp -r android_native/www/. android/app/src/main/assets/www/
           rm -f test/widget_test.dart
+          rm -f analysis_options.yaml
           flutter pub get
           flutter analyze
           flutter build apk --debug
