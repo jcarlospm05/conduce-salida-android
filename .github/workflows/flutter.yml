@@ -1,4 +1,4 @@
-name: Conduce de Salida Flutter APK 3.6.1
+name: Conduce de Salida Flutter 3.6.2
 on:
   workflow_dispatch:
   push:
@@ -13,11 +13,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Extraer Flutter original sin tocar el reporte
-        run: |
-          unzip -q CONDUCE_DE_SALIDA_Flutter_fiel_v1.zip
-          cp flutter_patch/lib/main.dart CONDUCE_DE_SALIDA_Flutter_fiel_v1/lib/main.dart
-      - name: Compilar Android respetando barras del sistema
+      - name: Extraer fuentes 3.6.2
+        run: unzip -q Conduce_de_Salida_Flutter_v3.6.2_fuentes.zip
+      - name: Validar JavaScript
+        run: node --check CONDUCE_DE_SALIDA_Flutter_fiel_v1/android_native/www/Recursos/android.js
+      - name: Compilar Android 3.6.2
         run: |
           cd CONDUCE_DE_SALIDA_Flutter_fiel_v1
           flutter create . --platforms android --org com.bobc --project-name conduce_salida_flutter
@@ -34,5 +34,5 @@ jobs:
           flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: Conduce-de-Salida-Flutter-APK-3.6.1
+          name: Conduce-Salida-3.6.2-APK
           path: CONDUCE_DE_SALIDA_Flutter_fiel_v1/build/app/outputs/flutter-apk/app-release.apk
