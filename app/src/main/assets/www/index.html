@@ -7,7 +7,7 @@
  <script defer src="Recursos/assets/logo_embebido.js"></script><script defer src="Recursos/app.js"></script><script defer src="Recursos/exportar.js"></script><script defer src="Recursos/android.js"></script>
 </head>
 <body>
- <header class="app-header no-print"><div class="app-brand"><img class="app-brand-icon" src="Recursos/assets/icono_conduce.png" alt="" aria-hidden="true"><div><span class="header-eyebrow">CONTROL DOCUMENTAL</span><h1>Conduce Salida</h1></div></div><div class="header-detail">Documento local · Respaldo 24 h <span class="version">v3.5 Android</span></div></header>
+ <header class="app-header no-print"><div class="app-brand"><img class="app-brand-icon" src="Recursos/assets/icono_conduce.png" alt="" aria-hidden="true"><div><span class="header-eyebrow">CONTROL DOCUMENTAL</span><h1>Conduce Salida</h1></div></div><div class="header-detail">Documento local · Respaldo 24 h <span class="version">v3.6 Android</span></div></header>
  <nav class="mobile-nav no-print" aria-label="Navegación del formulario"><button id="mobileCapture" class="mobile-tab selected" type="button">✎ Capturar datos</button><button id="mobilePreview" class="mobile-tab" type="button">▣ Vista previa</button></nav>
  <main class="workspace">
   <section class="editor no-print" aria-label="Datos de captura">
@@ -17,7 +17,7 @@
     <div class="form-section"><h3>02 · Localidad</h3><div class="chip-set" id="loc-set"></div></div>
     <div class="form-section"><h3>03 · Tipo de salida</h3><div class="chip-set" id="tipo-set"></div></div>
     <div class="form-section"><h3>04 · Concepto de salida</h3><div class="chip-set" id="concepto-set"></div></div>
-    <div class="form-section"><h3>05 · Datos solicitud salida</h3><p class="sector-help">Solo se habilita la sección del tipo de salida seleccionado. En el conduce impreso, la otra permanecerá en blanco.</p>
+    <div class="form-section"><h3>05 · Datos solicitud salida</h3><p class="sector-help">Solo se habilita la sección del tipo de salida seleccionado. En la impresión aparecerá la otra sección en blanco.</p>
       <div class="sector-editor" data-sector="Terceros" aria-disabled="true"><div class="sector-title">En caso de terceros <span class="sector-state">Selecciona el tipo de salida</span></div>
        <div class="form-row two"><label>Empresa<input class="form-control" name="empresa"></label><label>RNC<input class="form-control" name="rnc"></label></div>
        <div class="form-row two"><label>Nombre y apellidos chofer<input class="form-control" name="chofer"></label><label>Cédula chofer<input class="form-control" name="cedulaChofer"></label></div>
@@ -81,14 +81,9 @@
        <p class="document-note"><b>Nota:</b> En caso de que estos artículos no sean utilizados, según concepto salida, deberán ser retornados en su totalidad a la persona quien autorizó la salida.</p>
       </article>
     </div></div>
-    <div class="preview-footer no-print"><div class="status-area"><strong id="statusText">Listo para imprimir</strong><span id="validationStatus">Una hoja carta · Sin datos almacenados</span></div><button type="button" id="savePrint" class="btn btn-primary btn-save"><span aria-hidden="true">▣</span> Guardar e imprimir</button></div>
+    <div class="preview-footer no-print"><div class="status-area"><strong id="statusText">Listo para imprimir</strong><span id="validationStatus">Una hoja carta · Sin datos almacenados</span></div><button type="button" id="savePrint" class="btn btn-primary btn-save"><span aria-hidden="true">▣</span> Guardar y enviar</button></div>
   </section>
  </main>
- <div id="formatModal" class="modal-layer no-print" hidden><div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-title"><h2 id="modalTitle">Guardar e imprimir</h2><button type="button" id="cancelX" class="btn btn-sm btn-light" aria-label="Cerrar">×</button></div><p>Seleccione el formato en el que desea guardar el conduce:</p><div class="formats">
-  <label><input type="radio" name="format" value="pdf" checked><span class="format-icon pdf">PDF</span><span>PDF <small>.pdf</small></span></label>
-  <label><input type="radio" name="format" value="docx"><span class="format-icon word">W</span><span>Word <small>.docx</small></span></label>
-  <label><input type="radio" name="format" value="xlsx"><span class="format-icon excel">X</span><span>Excel <small>.xlsx</small></span></label>
- </div><div class="modal-actions"><button type="button" id="cancelModal" class="btn btn-light">Cancelar</button><button type="button" id="confirmSave" class="btn btn-primary">Aceptar y continuar</button></div><div class="modal-hint">En Android se creará el archivo y se abrirá Compartir para enviarlo por correo, WhatsApp u otra aplicación.</div></div></div>
- <button type="button" id="mobileSave" class="mobile-save btn btn-primary no-print">▣ Guardar y compartir</button>
+ <button type="button" id="mobileSave" class="mobile-save btn btn-primary no-print">▣ Guardar y enviar</button>
  <div class="toast-msg no-print" id="toast" role="status" aria-live="polite"></div>
 </body></html>

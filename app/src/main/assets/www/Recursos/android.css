@@ -41,10 +41,30 @@
 .android-choices .btn-outlook{background:#0874c4;color:#fff;border:1px solid #0874c4}
 .android-choices .btn-outlook:hover{background:#085e9d}
 @media(max-width:410px){.android-choices{grid-template-columns:1fr}}
-/* Respaldo de 24 horas, sin afectar el documento imprimible. */
+
+/* Respaldo de 24 horas (solo interfaz; no afecta el documento de impresión). */
 .temp-recovery{display:flex;align-items:center;flex-wrap:wrap;gap:7px;padding:9px 0 13px}
 .temp-recovery .btn{font-size:12px;font-weight:650;white-space:normal}
 .temp-recovery-info{flex-basis:100%;font-size:11px;line-height:1.4;color:#5b7187}
 .temp-recovery button[hidden]{display:none!important}
 @media(max-width:780px){.temp-recovery{border-bottom:1px solid #e4ebf1;margin-bottom:6px}.temp-recovery .btn{min-height:41px;flex:1}}
 @media print{.temp-recovery{display:none!important}}
+
+/* v3.6: historial temporal y único Guardar y enviar; no cambia la hoja imprimible. */
+.history-overlay[hidden]{display:none!important}
+.history-overlay{position:fixed;inset:0;z-index:1100;background:#0b203bbd;display:flex;align-items:center;justify-content:center;padding:15px}
+.history-dialog{width:min(760px,100%);max-height:88vh;display:flex;flex-direction:column;background:#fff;border-radius:12px;padding:17px;box-shadow:0 18px 55px #0005;color:#23374b}
+.history-dialog header{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.history-dialog header h2{font-size:19px;margin:0 0 8px}
+.history-dialog header button{font-size:20px;font-weight:800}
+.history-dialog>p{font-size:12px;color:#506477;line-height:1.4;margin:0 0 12px}
+.history-scroll{overflow:auto;max-height:58vh;border:1px solid #d9e2ee;border-radius:8px}
+.history-table{width:100%;border-collapse:collapse;min-width:490px;font-size:12px}
+.history-table th{position:sticky;top:0;background:#eaf2f9;color:#193e60;text-align:left;font-weight:800;padding:12px 8px;border-bottom:1px solid #c4d4e2}
+.history-table td{padding:12px 8px;border-bottom:1px solid #dde7ef}
+.history-table tbody tr{cursor:pointer}
+.history-table tbody tr:hover,.history-table tbody tr:focus-visible{background:#d9ecff;outline:2px solid #346da4;outline-offset:-2px}
+.history-dialog footer{display:flex;justify-content:end;padding-top:12px}
+.history-empty{text-align:center;padding:18px}
+@media(max-width:780px){.history-dialog{max-height:88dvh;padding:13px}.history-dialog header h2{font-size:16px}.history-table{font-size:11px}.history-dialog>p{font-size:11px}}
+@media print{.history-overlay{display:none!important}}

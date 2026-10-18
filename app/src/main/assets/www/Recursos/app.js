@@ -2,7 +2,7 @@
 'use strict';
 const LOCS=['TSB','TRH','OP','PTP','STI'];
 const TIPOS=['Terceros','Interno'];
-// Captura exclusiva del sector elegido; la página de impresión conserva ambos.
+// Mantener la lógica de captura separada del documento que se imprime.
 const THIRD_FIELDS=['empresa','rnc','chofer','cedulaChofer','cantidadTerceros','disposicionTerceros'];
 const INTERNAL_FIELDS=['nombreInterno','posicionInterno','cantidadInterno','ubicacionInterno','disposicionInterno'];
 function updateSectorAvailability(){
@@ -31,7 +31,7 @@ function isoNow(){const d=new Date();return `${d.getFullYear()}-${String(d.getMo
 function inputOptions(container,name,choices,multiple){container.replaceChildren();for(const choice of choices){const label=document.createElement('label');const input=document.createElement('input');input.type=multiple?'checkbox':'radio';input.name=name;input.value=choice;label.append(input,document.createTextNode(choice));container.append(label);}}
 function emptyData(){const d={};for(const element of form.querySelectorAll('[name]')){if(element.type==='radio'||element.type==='checkbox')continue;d[element.name]=element.value.trim();}d.localidad=form.querySelector('[name="localidad"]:checked')?.value||'';d.tipo=form.querySelector('[name="tipo"]:checked')?.value||'';d.conceptos=Array.from(form.querySelectorAll('[name="conceptos"]:checked'),x=>x.value);d.materialesTerceros=splitMaterials(items.terceros);
  d.materialesInternos=splitMaterials(items.internos);
- // El sector no elegido permanece vacío en vista previa, exportaciones y respaldo.
+ // Nunca imprimir, exportar ni respaldar valores del sector no seleccionado.
  if(d.tipo!=='Terceros'){for(const key of THIRD_FIELDS)d[key]='';d.materialesTerceros=[];}
  if(d.tipo!=='Interno'){for(const key of INTERNAL_FIELDS)d[key]='';d.materialesInternos=[];}
  return d;}
@@ -97,7 +97,7 @@ function fitPage(){if(!viewport.clientWidth)return;const scale=Math.min(1,(viewp
 function reset(){form.reset();for(const key of ['fecha','autFecha','entFecha'])form.elements.namedItem(key).value=isoNow();form.elements.namedItem('hora').value=new Date().toTimeString().slice(0,5);items.terceros='';items.internos='';renderMaterialEditor('terceros');renderMaterialEditor('internos');refresh();}
 function setData(d){
  reset();
- // Compatibilidad de borradores anteriores que no contenían el tipo seleccionado.
+ // Respaldos anteriores a v3.5: recuperar el tipo si solo se llenó un sector.
  if(!d.tipo){
   const filled=keys=>keys.some(key=>String(d[key]||'').trim());
   const hasThird=filled(THIRD_FIELDS)||(d.materialesTerceros||[]).length>0;
@@ -108,8 +108,8 @@ function setData(d){
 function toast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastClock);toastClock=setTimeout(()=>el.classList.remove('show'),3700);}
 function showModal(){const errors=checkFit();if(errors.length){toast(errors[0]);return;}modal.hidden=false;}
 function hideModal(){modal.hidden=true;}
-async function confirm(){if(saving)return;const errors=checkFit();if(errors.length){toast(errors[0]);hideModal();return;}const data=emptyData();const ext=document.querySelector('[name="format"]:checked').value;const button=document.getElementById('confirmSave');button.disabled=true;saving=true;try{await window.exportarConduce(data,ext);hideModal();if(window.ConduceAndroid){toast('Documento preparado. Selecciona correo u otra aplicación para enviarlo.');}else{toast('Archivo descargado. Seleccione su impresora.');setTimeout(()=>window.print(),1000);}}catch(err){console.error(err);toast(`No se pudo guardar: ${err.message||err}`);}finally{button.disabled=false;saving=false;}}
+async function confirmExport(){if(saving)return;const errors=checkFit();if(errors.length){toast(errors[0]);hideModal();return;}const data=emptyData();const ext=document.querySelector('[name="format"]:checked').value;const button=document.getElementById('confirmSave');button.disabled=true;saving=true;try{await window.exportarConduce(data,ext);hideModal();if(window.ConduceAndroid){toast('Documento preparado. Selecciona correo u otra aplicación para enviarlo.');}else{toast('Archivo descargado. Seleccione su impresora.');setTimeout(()=>window.print(),1000);}}catch(err){console.error(err);toast(`No se pudo guardar: ${err.message||err}`);}finally{button.disabled=false;saving=false;}}
 inputOptions(document.getElementById('loc-set'),'localidad',LOCS,false);inputOptions(document.getElementById('tipo-set'),'tipo',TIPOS,false);inputOptions(document.getElementById('concepto-set'),'conceptos',CONCEPTOS,true);
 document.querySelectorAll('[data-add]').forEach(button=>button.addEventListener('click',()=>addMaterial(button.dataset.add)));
-form.addEventListener('input',refresh);form.addEventListener('change',refresh);form.addEventListener('submit',e=>e.preventDefault());document.getElementById('reset').addEventListener('click',reset);document.getElementById('savePrint').addEventListener('click',showModal);document.getElementById('cancelModal').addEventListener('click',hideModal);document.getElementById('cancelX').addEventListener('click',hideModal);document.getElementById('confirmSave').addEventListener('click',confirm);modal.addEventListener('click',e=>{if(e.target===modal)hideModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape')hideModal();});window.addEventListener('resize',fitPage);reset();requestAnimationFrame(fitPage);
+form.addEventListener('input',refresh);form.addEventListener('change',refresh);form.addEventListener('submit',e=>e.preventDefault());document.getElementById('reset').addEventListener('click',reset);if(!window.ConduceAndroid)document.getElementById('savePrint').addEventListener('click',showModal);document.getElementById('cancelModal')?.addEventListener('click',hideModal);document.getElementById('cancelX')?.addEventListener('click',hideModal);document.getElementById('confirmSave')?.addEventListener('click',confirmExport);modal?.addEventListener('click',e=>{if(e.target===modal)hideModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape')hideModal();});window.addEventListener('resize',fitPage);reset();requestAnimationFrame(fitPage);
 window.FormularioSalida={getData:emptyData,setData,checkFit,refresh};
