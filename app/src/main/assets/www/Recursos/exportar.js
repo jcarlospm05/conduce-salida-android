@@ -145,6 +145,15 @@ function dibujarTextoCanvas(ctx,text,x,y,w,h,el,escala){
    if(!raw.trim()){lines.push('');continue;}
    let current='';
    for(const word of raw.split(/\s+/)){
+     if(ctx.measureText(word).width>avail){
+       if(current){lines.push(current);current='';}
+       let fragment='';
+       for(const char of Array.from(word)){
+         if(fragment&&ctx.measureText(fragment+char).width>avail){lines.push(fragment);fragment=char;}
+         else fragment+=char;
+       }
+       current=fragment;continue;
+     }
      const next=current?current+' '+word:word;
      if(current&&ctx.measureText(next).width>avail){lines.push(current);current=word;}else{current=next;}
    }
