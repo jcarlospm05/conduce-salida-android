@@ -1,0 +1,36 @@
+name: Flutter Conduce de Salida - APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [conduce-flutter-fiel]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Extraer proyecto Flutter
+        run: unzip -q CONDUCE_DE_SALIDA_Flutter_fiel_v1.zip
+      - name: Preparar fuentes Android
+        run: |
+          cd CONDUCE_DE_SALIDA_Flutter_fiel_v1
+          flutter create . --platforms android --org com.bobc --project-name conduce_salida_flutter
+          mkdir -p android/app/src/main/java/com/bobc/conduce_salida_flutter
+          cp android_native/java/com/bobc/conduce_salida_flutter/*.java android/app/src/main/java/com/bobc/conduce_salida_flutter/
+          rm -f android/app/src/main/kotlin/com/bobc/conduce_salida_flutter/MainActivity.kt
+          cp android_native/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          cp -r android_native/res/. android/app/src/main/res/
+          mkdir -p android/app/src/main/assets/www
+          cp -r android_native/www/. android/app/src/main/assets/www/
+          rm -f test/widget_test.dart
+          flutter pub get
+          flutter analyze
+          flutter build apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Conduce-de-Salida-Flutter-APK
+          path: CONDUCE_DE_SALIDA_Flutter_fiel_v1/build/app/outputs/flutter-apk/app-debug.apk
