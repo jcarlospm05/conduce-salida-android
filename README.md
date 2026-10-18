@@ -43,3 +43,11 @@ No almacena formularios en una base de datos; los documentos compartidos se cons
 - Recuperación a través de botones en la parte superior del formulario.
 - Caducidad de 24 horas desde la última actualización; limpieza al consultar datos vencidos.
 - No guarda PDF ni historial permanente; el contenido ya descargado no se elimina.
+
+## v3.5 — captura exclusiva por tipo de salida
+
+- Al seleccionar **Terceros**, solo los campos de terceros quedan activos.
+- Al seleccionar **Interno**, solo los campos internos quedan activos.
+- Sin tipo, ambos sectores están desactivados y no se permite exportar.
+- La vista previa, PDF, Word, Excel y los respaldos de 24 horas dejan vacío el sector no seleccionado.
+- El documento impreso conserva el diseño de sus dos columnas originales.
