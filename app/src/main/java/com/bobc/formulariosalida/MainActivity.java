@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.SharedPreferences;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +33,13 @@ import java.util.Locale;
 public final class MainActivity extends Activity {
     private static final int REQUEST_CREATE_DOCUMENT = 406;
     private static final String OUTLOOK_PACKAGE = "com.microsoft.office.outlook";
+    private static final String TEMP_PREFS = "conduce_temporal_24h";
+    private static final long TEMP_TTL_MS = 24L * 60L * 60L * 1000L;
+    private static final int TEMP_MAX_LENGTH = 120_000;
+    private SharedPreferences tempPreferences() {
+        return getSharedPreferences(TEMP_PREFS, MODE_PRIVATE);
+    }
+
     private WebView webView;
     private File pendingLegacyFile;
 
@@ -60,6 +69,48 @@ public final class MainActivity extends Activity {
         private String name;
         private String mime;
         private StringBuilder encoded;
+
+        @JavascriptInterface public synchronized boolean guardarTemporal(String tipo, String json) {
+            if (!"borrador".equals(tipo) && !"ultimo".equals(tipo)) return false;
+            if (json == null || json.length() > TEMP_MAX_LENGTH) return false;
+            try {
+                JSONObject checked = new JSONObject(json);
+                if (checked.length() == 0) return false;
+                tempPreferences().edit()
+                    .putString(tipo + "_json", checked.toString())
+                    .putLong(tipo + "_fecha", System.currentTimeMillis())
+                    .apply();
+                return true;
+            } catch (Exception e) { return false; }
+        }
+
+        @JavascriptInterface public synchronized String leerTemporal(String tipo) {
+            if (!"borrador".equals(tipo) && !"ultimo".equals(tipo)) return "";
+            SharedPreferences prefs = tempPreferences();
+            String json = prefs.getString(tipo + "_json", "");
+            long fecha = prefs.getLong(tipo + "_fecha", 0L);
+            long now = System.currentTimeMillis();
+            if (json == null || json.isEmpty() || fecha <= 0L) return "";
+            if (fecha > now + 60_000L || now - fecha >= TEMP_TTL_MS) {
+                borrarTemporal(tipo);
+                return "";
+            }
+            try {
+                JSONObject wrapper = new JSONObject();
+                wrapper.put("savedAt", fecha);
+                wrapper.put("data", new JSONObject(json));
+                return wrapper.toString();
+            } catch (Exception ex) {
+                borrarTemporal(tipo);
+                return "";
+            }
+        }
+
+        @JavascriptInterface public synchronized void borrarTemporal(String tipo) {
+            if (!"borrador".equals(tipo) && !"ultimo".equals(tipo)) return;
+            tempPreferences().edit().remove(tipo + "_json").remove(tipo + "_fecha").apply();
+        }
+
 
         @JavascriptInterface public synchronized void setAction(String requested) {
             action = "outlook".equals(requested) ? "outlook" : "download";
@@ -217,10 +268,10 @@ public final class MainActivity extends Activity {
 
     @Override public void onBackPressed() {
         if (webView == null) { super.onBackPressed(); return; }
-        webView.evaluateJavascript("Boolean(window.conduceVolverAndroid&&window.conduceVolverAndroid())", result -> {
+        webView.evaluateJavascript("(function(){try{window.conduceGuardarTemporalAhora&&window.conduceGuardarTemporalAhora()}catch(e){}return Boolean(window.conduceVolverAndroid&&window.conduceVolverAndroid())})()", result -> {
             if (!"true".equals(result)) {
                 new AlertDialog.Builder(this).setTitle("Cerrar formulario")
-                    .setMessage("Los datos sin guardar se perderán. ¿Salir?")
+                    .setMessage("Podrás recuperar el borrador durante 24 horas. ¿Salir?")
                     .setNegativeButton("Cancelar", null)
                     .setPositiveButton("Salir", (dialog, which) -> finish()).show();
             }

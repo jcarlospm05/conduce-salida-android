@@ -41,3 +41,10 @@
 .android-choices .btn-outlook{background:#0874c4;color:#fff;border:1px solid #0874c4}
 .android-choices .btn-outlook:hover{background:#085e9d}
 @media(max-width:410px){.android-choices{grid-template-columns:1fr}}
+/* Respaldo de 24 horas, sin afectar el documento imprimible. */
+.temp-recovery{display:flex;align-items:center;flex-wrap:wrap;gap:7px;padding:9px 0 13px}
+.temp-recovery .btn{font-size:12px;font-weight:650;white-space:normal}
+.temp-recovery-info{flex-basis:100%;font-size:11px;line-height:1.4;color:#5b7187}
+.temp-recovery button[hidden]{display:none!important}
+@media(max-width:780px){.temp-recovery{border-bottom:1px solid #e4ebf1;margin-bottom:6px}.temp-recovery .btn{min-height:41px;flex:1}}
+@media print{.temp-recovery{display:none!important}}

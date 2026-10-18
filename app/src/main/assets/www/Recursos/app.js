@@ -61,6 +61,7 @@ function refresh(){const d=emptyData();for(const el of document.querySelectorAll
   label.textContent=`${materialLines(sector)} de ${MAX_MATERIAL_LINES} líneas`;
  }
  const errs=checkFit();document.getElementById('statusText').textContent=errs.length?'Revisar espacio del documento':'Listo para guardar e imprimir';document.getElementById('validationStatus').textContent=errs.length?errs[0]:'Una página carta · Texto automático hasta 8 líneas';
+ window.conduceTemporalCambio?.();
 }
 function checkFit(){const errors=[];
  for(const [id,sector] of [['docTerceros','terceros'],['docInternos','personal interno']]){

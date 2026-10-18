@@ -36,3 +36,10 @@ No almacena formularios en una base de datos; los documentos compartidos se cons
 - **Guardar en Descargas:** Android 10+ deposita PDF, Word o Excel en `Descargas/Conduce Salida` (archivos visibles desde Archivos). En Android 8 y 9 se abre el selector del sistema para escoger una carpeta, como Descargas.
 - **Enviar por Outlook:** abre exclusivamente Microsoft Outlook con el archivo adjunto preparado. Necesitas Outlook instalado y una cuenta configurada; revisas y envías manualmente el correo. No abre Gmail.
 - Las exportaciones siguen siendo locales; no se solicita acceso a la cuenta de correo.
+## Respaldo temporal v3.4 (Android)
+
+- Guarda dos registros locales: borrador y último conduce, usando SharedPreferences privado.
+- El borrador se actualiza al editar; el último se actualiza al exportar o al limpiar campos.
+- Recuperación a través de botones en la parte superior del formulario.
+- Caducidad de 24 horas desde la última actualización; limpieza al consultar datos vencidos.
+- No guarda PDF ni historial permanente; el contenido ya descargado no se elimina.
