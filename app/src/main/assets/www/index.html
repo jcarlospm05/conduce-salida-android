@@ -7,7 +7,7 @@
  <script defer src="Recursos/assets/logo_embebido.js"></script><script defer src="Recursos/app.js"></script><script defer src="Recursos/exportar.js"></script><script defer src="Recursos/android.js"></script>
 </head>
 <body>
- <header class="app-header no-print"><div class="app-brand"><img class="app-brand-icon" src="Recursos/assets/icono_conduce.png" alt="" aria-hidden="true"><div><span class="header-eyebrow">CONTROL DOCUMENTAL</span><h1>Conduce Salida</h1></div></div><div class="header-detail">Documento local · Sin almacenamiento <span class="version">v3.2 Android</span></div></header>
+ <header class="app-header no-print"><div class="app-brand"><img class="app-brand-icon" src="Recursos/assets/icono_conduce.png" alt="" aria-hidden="true"><div><span class="header-eyebrow">CONTROL DOCUMENTAL</span><h1>Conduce Salida</h1></div></div><div class="header-detail">Documento local · Sin almacenamiento <span class="version">v3.3 Android</span></div></header>
  <nav class="mobile-nav no-print" aria-label="Navegación del formulario"><button id="mobileCapture" class="mobile-tab selected" type="button">✎ Capturar datos</button><button id="mobilePreview" class="mobile-tab" type="button">▣ Vista previa</button></nav>
  <main class="workspace">
   <section class="editor no-print" aria-label="Datos de captura">
@@ -21,7 +21,7 @@
       <div class="sector-editor"><div class="sector-title">En caso de terceros</div>
        <div class="form-row two"><label>Empresa<input class="form-control" name="empresa"></label><label>RNC<input class="form-control" name="rnc"></label></div>
        <div class="form-row two"><label>Nombre y apellidos chofer<input class="form-control" name="chofer"></label><label>Cédula chofer<input class="form-control" name="cedulaChofer"></label></div>
-       <div class="material-heading"><strong>Herramientas, materiales o bienes</strong><span id="countTerceros">0 / 21</span></div>
+       <div class="material-heading"><strong>Herramientas, materiales o bienes</strong><span id="countTerceros">0 de 8 líneas</span></div>
        <div id="itemsTerceros" class="items-editor" aria-label="Materiales de terceros"></div>
        <div class="material-actions"><button class="btn btn-sm btn-outline-primary" type="button" data-add="terceros">+ Agregar artículo</button></div>
        <div class="form-row"><label>Cantidad<input class="form-control" name="cantidadTerceros"></label></div>
@@ -29,7 +29,7 @@
       </div>
       <div class="sector-editor"><div class="sector-title">En caso personal interno</div>
        <div class="form-row two"><label>Nombre y apellidos<input class="form-control" name="nombreInterno"></label><label>Posición<input class="form-control" name="posicionInterno"></label></div>
-       <div class="material-heading"><strong>Herramientas, materiales o bienes</strong><span id="countInternos">0 / 21</span></div>
+       <div class="material-heading"><strong>Herramientas, materiales o bienes</strong><span id="countInternos">0 de 8 líneas</span></div>
        <div id="itemsInternos" class="items-editor" aria-label="Materiales de personal interno"></div>
        <div class="material-actions"><button class="btn btn-sm btn-outline-primary" type="button" data-add="internos">+ Agregar artículo</button></div>
        <div class="form-row two"><label>Cantidad<input class="form-control" name="cantidadInterno"></label><label>Ubicación en caso de servicio de rescate<input class="form-control" name="ubicacionInterno"></label></div>
@@ -59,7 +59,7 @@
            <div class="doc-line"><span class="line-label">RNC:</span><span class="doc-value" data-field="rnc"></span></div>
            <div class="doc-line"><span class="line-label">Nombre y Apellidos chofer:</span><span class="doc-value" data-field="chofer"></span></div>
            <div class="doc-line"><span class="line-label">Cédula chofer:</span><span class="doc-value" data-field="cedulaChofer"></span></div>
-           <div class="doc-line material-line"><span class="line-label">Herramientas, materiales o bienes:</span><div class="doc-matrix" id="docTerceros" aria-label="Matriz de 21 materiales de terceros"></div></div>
+           <div class="doc-line material-line"><span class="line-label">Herramientas, materiales o bienes:</span><div class="doc-material-text" id="docTerceros" aria-label="Texto continuo de materiales de terceros, ocho líneas"></div></div>
            <div class="doc-line"><span class="line-label">Cantidad:</span><span class="doc-value" data-field="cantidadTerceros"></span></div>
            <div class="doc-line tall-line"><span class="line-label">Breve descripción disposición final herramientas, materiales o bienes:</span><span class="doc-value" data-field="disposicionTerceros"></span></div>
          </section>
@@ -67,7 +67,7 @@
            <div class="sector-caption">En caso personal interno</div>
            <div class="doc-line"><span class="line-label">Nombre y Apellidos:</span><span class="doc-value" data-field="nombreInterno"></span></div>
            <div class="doc-line"><span class="line-label">Posición:</span><span class="doc-value" data-field="posicionInterno"></span></div>
-           <div class="doc-line material-line"><span class="line-label">Herramientas, materiales o bienes:</span><div class="doc-matrix" id="docInternos" aria-label="Matriz de 21 materiales del personal interno"></div></div>
+           <div class="doc-line material-line"><span class="line-label">Herramientas, materiales o bienes:</span><div class="doc-material-text" id="docInternos" aria-label="Texto continuo de materiales de personal interno, ocho líneas"></div></div>
            <div class="doc-line"><span class="line-label">Cantidad:</span><span class="doc-value" data-field="cantidadInterno"></span></div>
            <div class="doc-line tall-line"><span class="line-label">Breve descripción disposición final herramientas, materiales o bienes:</span><span class="doc-value" data-field="disposicionInterno"></span></div>
            <div class="doc-line"><span class="line-label">Ubicación en caso de servicio de rescate:</span><span class="doc-value" data-field="ubicacionInterno"></span></div>
