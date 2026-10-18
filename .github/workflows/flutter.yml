@@ -1,4 +1,4 @@
-name: Flutter Conduce de Salida - APK
+name: Flutter Conduce de Salida - APK Ligera
 on:
   workflow_dispatch:
   push:
@@ -30,8 +30,8 @@ jobs:
           rm -f analysis_options.yaml
           flutter pub get
           flutter analyze
-          flutter build apk --debug
+          flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: Conduce-de-Salida-Flutter-APK
-          path: CONDUCE_DE_SALIDA_Flutter_fiel_v1/build/app/outputs/flutter-apk/app-debug.apk
+          name: Conduce-de-Salida-Flutter-APK-Ligera
+          path: CONDUCE_DE_SALIDA_Flutter_fiel_v1/build/app/outputs/flutter-apk/app-release.apk
