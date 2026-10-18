@@ -1,0 +1,35 @@
+name: PORTA Flutter APK + Web
+on:
+  workflow_dispatch:
+  push:
+    branches: [porta-flutter-independent]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: unzip -q PORTA_Control_Salidas_Flutter_v1.0_fuentes.zip
+      - run: |
+          cd porta_control_salidas
+          flutter create . --platforms android,web --org com.bobc --project-name porta_control_salidas
+          mkdir -p android/app/src/main/kotlin/com/bobc/porta_control_salidas
+          cp android_native/MainActivity.kt android/app/src/main/kotlin/com/bobc/porta_control_salidas/MainActivity.kt
+          flutter pub get
+          dart run flutter_launcher_icons
+          flutter analyze
+          flutter test
+          flutter build apk --debug
+          flutter build web --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PORTA-Flutter-APK-debug
+          path: porta_control_salidas/build/app/outputs/flutter-apk/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PORTA-Flutter-Web
+          path: porta_control_salidas/build/web
