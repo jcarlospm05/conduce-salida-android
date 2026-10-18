@@ -17,8 +17,10 @@ jobs:
       - run: |
           cd porta_control_salidas
           flutter create . --platforms android,web --org com.bobc --project-name porta_control_salidas
+          rm -f test/widget_test.dart
           mkdir -p android/app/src/main/kotlin/com/bobc/porta_control_salidas
           cp android_native/MainActivity.kt android/app/src/main/kotlin/com/bobc/porta_control_salidas/MainActivity.kt
+          sed -i 's/android:label="porta_control_salidas"/android:label="PORTA"/' android/app/src/main/AndroidManifest.xml
           flutter pub get
           dart run flutter_launcher_icons
           flutter analyze
