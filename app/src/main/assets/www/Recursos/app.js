@@ -2,6 +2,20 @@
 'use strict';
 const LOCS=['TSB','TRH','OP','PTP','STI'];
 const TIPOS=['Terceros','Interno'];
+// Captura exclusiva del sector elegido; la página de impresión conserva ambos.
+const THIRD_FIELDS=['empresa','rnc','chofer','cedulaChofer','cantidadTerceros','disposicionTerceros'];
+const INTERNAL_FIELDS=['nombreInterno','posicionInterno','cantidadInterno','ubicacionInterno','disposicionInterno'];
+function updateSectorAvailability(){
+ const tipo=form.querySelector('[name="tipo"]:checked')?.value||'';
+ for(const section of document.querySelectorAll('.sector-editor[data-sector]')){
+  const active=section.dataset.sector===tipo;
+  section.classList.toggle('sector-disabled',!active);
+  section.setAttribute('aria-disabled',String(!active));
+  for(const field of section.querySelectorAll('input,textarea,button,select'))field.disabled=!active;
+  const status=section.querySelector('.sector-state');
+  if(status)status.textContent=active?'Activo para completar':tipo?'Desactivado para esta salida':'Selecciona el tipo de salida';
+ }
+}
 const CONCEPTOS=['Venta bienes','Servicio rescate','Despacho','Mantenimiento','Importance: High'];
 const form=document.getElementById('dataForm');
 const paper=document.getElementById('printPage');
@@ -15,7 +29,12 @@ const normalizedMaterials=(input)=>Array.isArray(input)?input.map(x=>String(x||'
 const splitMaterials=(input)=>String(input||'').split(/\s+-\s+|\n+/).map(x=>x.trim()).filter(Boolean);
 function isoNow(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function inputOptions(container,name,choices,multiple){container.replaceChildren();for(const choice of choices){const label=document.createElement('label');const input=document.createElement('input');input.type=multiple?'checkbox':'radio';input.name=name;input.value=choice;label.append(input,document.createTextNode(choice));container.append(label);}}
-function emptyData(){const d={};for(const element of form.querySelectorAll('[name]')){if(element.type==='radio'||element.type==='checkbox')continue;d[element.name]=element.value.trim();}d.localidad=form.querySelector('[name="localidad"]:checked')?.value||'';d.tipo=form.querySelector('[name="tipo"]:checked')?.value||'';d.conceptos=Array.from(form.querySelectorAll('[name="conceptos"]:checked'),x=>x.value);d.materialesTerceros=splitMaterials(items.terceros);d.materialesInternos=splitMaterials(items.internos);return d;}
+function emptyData(){const d={};for(const element of form.querySelectorAll('[name]')){if(element.type==='radio'||element.type==='checkbox')continue;d[element.name]=element.value.trim();}d.localidad=form.querySelector('[name="localidad"]:checked')?.value||'';d.tipo=form.querySelector('[name="tipo"]:checked')?.value||'';d.conceptos=Array.from(form.querySelectorAll('[name="conceptos"]:checked'),x=>x.value);d.materialesTerceros=splitMaterials(items.terceros);
+ d.materialesInternos=splitMaterials(items.internos);
+ // El sector no elegido permanece vacío en vista previa, exportaciones y respaldo.
+ if(d.tipo!=='Terceros'){for(const key of THIRD_FIELDS)d[key]='';d.materialesTerceros=[];}
+ if(d.tipo!=='Interno'){for(const key of INTERNAL_FIELDS)d[key]='';d.materialesInternos=[];}
+ return d;}
 function shortDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return v||'';const [y,m,d]=v.split('-').map(Number);return `${d}/${m}/${y}`;}
 function longDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return v||'';const [y,m,d]=v.split('-').map(Number);return new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).format(new Date(y,m-1,d,12));}
 function printChoices(id,options,selected){const group=document.getElementById(id);group.replaceChildren();for(const name of options){const item=document.createElement('span');item.className='choice';const label=document.createElement('span');label.className='choice-label';label.textContent=name;const sq=document.createElement('span');sq.className='square'+(selected.includes(name)?' on':'');sq.textContent=selected.includes(name)?'X':'';item.append(label,sq);group.append(item);}}
@@ -43,6 +62,8 @@ function renderMaterialEditor(sector){
  holder.append(area,pending);
 }
 function addMaterial(sector){
+ const active=form.querySelector('[name="tipo"]:checked')?.value;
+ if(active!==(sector==='terceros'?'Terceros':'Interno'))return;
  const holder=document.getElementById(sector==='terceros'?'itemsTerceros':'itemsInternos');
  const pending=holder.querySelector('.new-material-input');const area=holder.querySelector('.material-textarea');
  const next=(pending?.value||'').trim();if(!next){pending?.focus();return;}
@@ -53,9 +74,9 @@ function addMaterial(sector){
  }
  pending.value='';pending.focus();
 }
-function refresh(){const d=emptyData();for(const el of document.querySelectorAll('[data-field]')){const key=el.dataset.field;el.textContent=key==='fecha'||key==='entFecha'?longDate(d[key]):key==='autFecha'?shortDate(d[key]):key==='hora'?(d.hora||''):d[key]||'';}
+function refresh(){updateSectorAvailability();const d=emptyData();for(const el of document.querySelectorAll('[data-field]')){const key=el.dataset.field;el.textContent=key==='fecha'||key==='entFecha'?longDate(d[key]):key==='autFecha'?shortDate(d[key]):key==='hora'?(d.hora||''):d[key]||'';}
  printChoices('viewLoc',LOCS,d.localidad?[d.localidad]:[]);printChoices('viewTipo',TIPOS,d.tipo?[d.tipo]:[]);printChoices('viewConcepto',CONCEPTOS,d.conceptos);
- makeMatrix('docTerceros',items.terceros);makeMatrix('docInternos',items.internos);
+ makeMatrix('docTerceros',d.materialesTerceros);makeMatrix('docInternos',d.materialesInternos);
  for(const sector of ['terceros','internos']){
   const label=document.getElementById(sector==='terceros'?'countTerceros':'countInternos');
   label.textContent=`${materialLines(sector)} de ${MAX_MATERIAL_LINES} líneas`;
@@ -64,6 +85,7 @@ function refresh(){const d=emptyData();for(const el of document.querySelectorAll
  window.conduceTemporalCambio?.();
 }
 function checkFit(){const errors=[];
+ if(!form.querySelector('[name="tipo"]:checked'))errors.push('Selecciona primero el tipo de salida: Terceros o Interno.');
  for(const [id,sector] of [['docTerceros','terceros'],['docInternos','personal interno']]){
   const el=document.getElementById(id);
   if(el.textContent.trim()&&(materialLines(id==='docTerceros'?'terceros':'internos')>MAX_MATERIAL_LINES||el.scrollHeight>el.clientHeight+1))errors.push(`Materiales de ${sector}: se supera el espacio de 8 líneas. Revise los artículos.`);
@@ -73,7 +95,16 @@ function checkFit(){const errors=[];
 }
 function fitPage(){if(!viewport.clientWidth)return;const scale=Math.min(1,(viewport.clientWidth-45)/816);paper.style.transform=`scale(${scale})`;stage.style.width=`${816*scale}px`;stage.style.height=`${1056*scale}px`;document.getElementById('zoomLabel').textContent=`${Math.round(scale*100)}%`;}
 function reset(){form.reset();for(const key of ['fecha','autFecha','entFecha'])form.elements.namedItem(key).value=isoNow();form.elements.namedItem('hora').value=new Date().toTimeString().slice(0,5);items.terceros='';items.internos='';renderMaterialEditor('terceros');renderMaterialEditor('internos');refresh();}
-function setData(d){reset();for(const [key,val] of Object.entries(d)){if(key==='materialesTerceros'){items.terceros=normalizedMaterials(val);renderMaterialEditor('terceros');continue;}if(key==='materialesInternos'){items.internos=normalizedMaterials(val);renderMaterialEditor('internos');continue;}if(key==='conceptos'){form.querySelectorAll('[name="conceptos"]').forEach(x=>x.checked=val.includes(x.value));continue;}if(['localidad','tipo'].includes(key)){const radio=Array.from(form.querySelectorAll(`[name="${key}"]`)).find(x=>x.value===val);if(radio)radio.checked=true;continue;}if(form.elements.namedItem(key))form.elements.namedItem(key).value=val;}refresh();}
+function setData(d){
+ reset();
+ // Compatibilidad de borradores anteriores que no contenían el tipo seleccionado.
+ if(!d.tipo){
+  const filled=keys=>keys.some(key=>String(d[key]||'').trim());
+  const hasThird=filled(THIRD_FIELDS)||(d.materialesTerceros||[]).length>0;
+  const hasInternal=filled(INTERNAL_FIELDS)||(d.materialesInternos||[]).length>0;
+  if(hasThird!==hasInternal)d={...d,tipo:hasThird?'Terceros':'Interno'};
+ }
+ for(const [key,val] of Object.entries(d)){if(key==='materialesTerceros'){items.terceros=normalizedMaterials(val);renderMaterialEditor('terceros');continue;}if(key==='materialesInternos'){items.internos=normalizedMaterials(val);renderMaterialEditor('internos');continue;}if(key==='conceptos'){form.querySelectorAll('[name="conceptos"]').forEach(x=>x.checked=val.includes(x.value));continue;}if(['localidad','tipo'].includes(key)){const radio=Array.from(form.querySelectorAll(`[name="${key}"]`)).find(x=>x.value===val);if(radio)radio.checked=true;continue;}if(form.elements.namedItem(key))form.elements.namedItem(key).value=val;}refresh();}
 function toast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toastClock);toastClock=setTimeout(()=>el.classList.remove('show'),3700);}
 function showModal(){const errors=checkFit();if(errors.length){toast(errors[0]);return;}modal.hidden=false;}
 function hideModal(){modal.hidden=true;}
