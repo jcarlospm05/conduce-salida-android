@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   android:
@@ -57,3 +57,24 @@ jobs:
           path: faro-supervisor/entrega/*
           if-no-files-found: error
           retention-days: 30
+      - name: Publicar APK de prueba para descarga directa
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > entrega/LEER_ANTES_DE_INSTALAR.txt <<'TXT'
+          FARO SUPERVISOR - PRUEBA LOCAL
+          Aplicación Android Flutter/Dart con SQLite en el dispositivo.
+          Sin sincronización entre teléfonos ni conexión a Access o Lists.
+          Perfil configurado, no autenticación verificada.
+          APK de prueba con firma de desarrollo. No usar todavía como único registro operativo.
+          Compilado por GitHub Actions después de analizar Dart y ejecutar las pruebas incluidas.
+          TXT
+          gh release create faro-supervisor-v0.1.0 \
+            entrega/Faro-Supervisor-v0.1.0.apk \
+            entrega/Faro-Supervisor-v0.1.0.apk.sha256 \
+            entrega/LEER_ANTES_DE_INSTALAR.txt \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Faro Supervisor - Android local 0.1.0" \
+            --notes "Versión de prueba local para Android. Nombre e icono Faro. Datos SQLite locales, sin sincronización. APK firmado para prueba privada; pendiente validación en dispositivo real." \
+            --prerelease

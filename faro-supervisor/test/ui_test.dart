@@ -143,6 +143,7 @@ void main() {
     await tester.tap(find.text('Abrir editor'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).first, 'No guardar');
+    await tester.pump();
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('¿Descartar los cambios?'), findsOneWidget);
@@ -191,7 +192,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(repository.operationCalls, ['start']);
     expect(find.text('Pausa y entrega'), findsOneWidget);
-    await tester.tap(find.text('Operación'));
+    await tester.tap(find.widgetWithText(Tab, 'Operación'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('1. Congelar estimado'));
     await tester.tap(find.text('1. Congelar estimado'));
