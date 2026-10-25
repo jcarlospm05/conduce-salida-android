@@ -1,0 +1,29 @@
+DATOS Y REGLAS LOCALES — PM BUQUES SUPERVISOR
+
+La aplicación usa SQLite en el dispositivo. Las 36 tablas PM_* y sus 323 campos derivan del contrato V8, incluida la referencia GangID de exclusiones. local_settings es una tabla adicional solo para configuración del teléfono.
+
+El primer inicio necesita elegir explícitamente un supervisor activo. La elección se conserva después de que confirma la transacción local. Esto registra atribución; no verifica la identidad física ni añade contraseña propia.
+
+Todos los cambios de negocio y su evento de historial comparten una transacción SQLite. Si falla una validación no se guarda una parte del cambio. Esto ofrece consistencia dentro de ESTE archivo SQLite; no coordina teléfonos separados y no es sincronización remota.
+
+Flujo local completo disponible en el repositorio:
+- start: inicia un proyecto pendiente/devuelto/en pausa y crea sesión de trabajo.
+- pause: termina la sesión propia con motivo y libera el control.
+- release: liberación supervisada de una ocupación, incluso de otro operador, con motivo.
+- freezePlan: congela el estimado cuando sus cuadrillas suman los movimientos previstos.
+- validateReports: valida los hitos ordenados y los borradores Arrival/Departure.
+- finalizeHourly: exige saldo cero por categoría/cuadrilla, reparto correcto e intervalos válidos.
+- submitReview: exige el cierre Hourly, tareas, hitos y reportes completos antes de PendienteRevision.
+- review: aprobar, devolver o reabrir con motivo y revisión persistente.
+
+La edición de estimados, cuadrillas, intervalos, repartos, hitos y reportes requiere una sesión local propia EnProceso. El supervisor puede agregar tareas o asignaciones durante la ocupación de otro operador, como intervención gerencial. La devolución/reapertura conserva las decisiones anteriores y agrega una tarea obligatoria de corrección.
+
+Las visitas nuevas inicializan borradores de Arrival/Departure y los hitos del catálogo, de modo que el editor puede completar filas existentes en lugar de recrearlas manualmente. Los hitos No aplica requieren permiso del catálogo, fecha vacía y justificación. Las fechas imposibles y las horas desbordadas se rechazan; las marcas completas se guardan UTC.
+
+El JSON exportado es una copia manual de datos, no un mecanismo de restauración ni sincronización. Se excluye la tabla heredada de credenciales. No se implementa cifrado de base, copia remota automática, autenticación corporativa ni garantía de historial inalterable frente a manipulación del dispositivo.
+
+La consulta audit devuelve los últimos 500 eventos, con filtro por proyecto cuando procede. exportJson contiene el conjunto completo de tablas operativas. Los permisos de aplicación son políticas del rol local, no una frontera de seguridad de servidor.
+
+VERIFICACIÓN REALIZADA AQUÍ:
+python tool/generate_schema.py ejecuta el esquema en SQLite de Python y comprueba 36 tablas, 323 campos y 66 FK.
+Las pruebas de test/repository_test.dart ejercitan las implementaciones Dart reales cuando se dispone de Flutter; en el entorno actual NO se han ejecutado. Tampoco se afirma compilación de APK ni funcionamiento en Android.

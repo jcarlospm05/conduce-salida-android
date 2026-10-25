@@ -1,0 +1,13 @@
+.dart_tool/
+.packages
+.pub-cache/
+build/
+android/.gradle/
+android/local.properties
+android/key.properties
+*.keystore
+*.jks
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

@@ -1,0 +1,25 @@
+ALCANCE DE LA EDICIÓN LOCAL
+
+Supervisor / Gerencia para Android. No incluye una segunda aplicación Auditor, servidor, panel web, autenticación remota o conexión con Access/Lists.
+Los modelos conservan las 36 tablas y 323 campos del contrato de referencia; local_settings es una tabla técnica adicional del dispositivo.
+Las escrituras y su bitácora se ejecutan dentro de transacciones SQLite. La consistencia local no equivale a una exclusión entre teléfonos: cada instalación tiene su propia base.
+Los perfiles y permisos son controles internos de esta aplicación, no una frontera de seguridad ante alguien que controle el dispositivo o extraiga/modifique su base.
+
+APLICACIÓN DE LA GUÍA DE CALIDAD DEL USUARIO
+
+Privacidad: minimización de datos y muestras ficticias, sin analítica externa ni publicidad.
+Secretos: sin claves, tokens, PIN maestros ni contraseñas propias.
+Red: edición sin servidor, sin permiso INTERNET en el manifiesto operativo.
+Interfaz: etiquetas en español, contraste, estados expresados también con texto, carga/error/vacío, acciones explícitas.
+Validación: cantidades, tipos, referencias, cronología, reconciliación y revisión centralizadas en el repositorio; no fiarse solo de los campos visuales.
+Conservación: datos en el dispositivo; el usuario debe definir un respaldo restaurable antes de operar con datos únicos.
+Evidencia: pruebas SQL nativas y fuentes de pruebas Dart separadas de compilación, pruebas de widgets y ejecución Android pendientes.
+No corresponden SEO, robots.txt, cookies, GA4 o publicación de una web en esta edición.
+
+PENDIENTES ANTES DE OPERACIÓN
+
+Ejecutar flutter analyze y flutter test con el SDK real.
+Compilar y probar el APK en Android con un recorrido completo y cierre/reapertura de la app.
+Verificar conservación del perfil y datos, errores, formularios con teclado, tamaños de letra, teléfono pequeño y tablet.
+Comprobar los informes y el cierre con ejemplos operativos representativos.
+Diseñar y probar restauración de respaldos y una política de actualización/firmado estable.

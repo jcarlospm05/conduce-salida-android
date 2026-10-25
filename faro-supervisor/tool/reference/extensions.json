@@ -1,0 +1,32 @@
+{
+  "version": "8.1-cooperativo",
+  "fields": [
+    {
+      "tabla": "PM_Exclusiones",
+      "campo": "GangID",
+      "tipo_access": "dbLong",
+      "longitud": null,
+      "pk": false,
+      "requerido": false,
+      "solo_lectura": false,
+      "default": "",
+      "descripcion": "Cuadrilla a la que se aplica la exclusion validada"
+    }
+  ],
+  "relations": [
+    {
+      "origen": "PM_Exclusiones",
+      "campo": "GangID",
+      "destino": "PM_EstimadoGang",
+      "clave": "ID"
+    }
+  ],
+  "required_overrides": [
+    {
+      "tabla": "PM_Equipos",
+      "campo": "VerificadoPorID",
+      "requerido": false,
+      "reason": "Perfil configurado sin autenticacion ni verificacion administrativa"
+    }
+  ]
+}

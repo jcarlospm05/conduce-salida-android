@@ -1,0 +1,22 @@
+RECORRIDO DE PRUEBA — PM BUQUES SUPERVISOR LOCAL
+
+Esta guía se utiliza DESPUÉS de compilar e instalar un APK real. El recorrido no se ha ejecutado aquí.
+
+1. Abrir por primera vez y seleccionar Supervisor Demo. Cerrar y volver a abrir; el responsable configurado y los datos deben conservarse.
+2. Revisar Inicio y tocar cada indicador. Confirmar que filtra los proyectos por estado; la urgencia no debe confundirse con el estado.
+3. En Proyectos, crear una visita con un buque demo y fecha ETA sin hora completa. Debe conservar hora pendiente, sin inventar una llegada real.
+4. Abrir el nuevo proyecto, asignar un auditor y agregar una instrucción obligatoria. La asignación es una previsión; esta edición no envía notificaciones a otra app ni otro teléfono.
+5. Iniciar localmente el proyecto. Editar el estimado y las cuadrillas; las cantidades deben coincidir antes de congelar el plan. Confirmar la congelación. Intentar cambiar después el estimado original: debe rechazarse.
+6. Agregar un intervalo Hourly, movimientos y reparto por cuadrilla. Probar cantidad negativa, decimal en un entero, minutos perdidos >=60 y un intervalo solapado. Deben rechazarse sin cambios parciales.
+7. Completar Arrival, Departure e hitos; usar No aplica solo donde el catálogo lo permita, con fecha vacía y justificación. Probar orden cronológico incorrecto. La validación debe rechazarlo.
+8. Intentar finalizar Hourly con saldo distinto de cero: debe bloquearse. Reconciliar total, categorías y cuadrillas; si se usan exclusiones, asignarlas a la cuadrilla correcta y justificarlas.
+9. Completar tareas aplicables, validar reportes y finalizar Hourly. Terminar y enviar a revisión. El estado será PendienteRevision, sin ocupación de edición.
+10. Agregar una nueva tarea obligatoria antes de aprobar. La aprobación debe detectar el pendiente. Devolver con un motivo; debe conservar el historial y crear corrección pendiente.
+11. En el proyecto demo que ya está completo, probar aprobación con motivo. Consultar movimientos e informe ponderado por servicio. Reabrir con motivo y comprobar que no se borran la revisión ni la fecha de cierre anteriores.
+12. En un proyecto ocupado de demostración, liberar con motivo. Debe cerrar su sesión y registrar relevo y evento. No liberar estados cerrados ni sesiones incoherentes.
+13. Crear y desactivar operadores. La app debe impedir desactivar el último supervisor activo o dejar sin administración el perfil actual. La selección no prueba identidad real.
+14. Probar un permiso local deshabilitado y confirmar que no permite la acción correspondiente. No tratar esos permisos como protección contra alguien que controla el dispositivo.
+15. Copiar los datos a petición desde Ajustes. Confirmar que no se envían a internet. Esta versión no implementa restaurar esa copia; no borrar datos reales esperando recuperarlos desde ella.
+16. Probar en teléfono pequeño, tablet, texto aumentado y teclado abierto: ningún botón esencial debe quedar inaccesible y deben verse los mensajes de validación.
+17. Poner el teléfono en modo avión y repetir consultas y una edición. La operación es local y debe seguir disponible. No esperar sincronización con otro equipo.
+18. Registrar versión de Flutter, Android, modelo del dispositivo, resultado y captura de cada fallo. No incluir datos personales o corporativos en las evidencias compartidas.

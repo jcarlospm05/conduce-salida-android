@@ -1,0 +1,78 @@
+FARO — SUPERVISOR PORTUARIO LOCAL
+
+TECNOLOGÍA
+
+Aplicación Flutter / Dart, con base SQLite dentro del teléfono.
+Esta edición no usa Microsoft Access, Lists, Supabase ni servidores.
+No necesita una cuenta corporativa ni conexión de red para operar.
+Los datos de cada teléfono son independientes: no se sincronizan entre equipos.
+
+ESTADO DE LA ENTREGA
+
+Se entrega el proyecto fuente, la estructura Android y los escenarios de prueba.
+NO se ha compilado ni ejecutado Flutter en este entorno: no hay un APK comprobado incluido.
+La descarga del SDK Flutter necesaria para generar ese APK no estuvo disponible.
+Las verificaciones de SQLite realizadas con Python no sustituyen ejecutar Dart, flutter analyze, flutter test o las pruebas en Android real.
+Consultar RESULTADO_VERIFICACION.json para distinguir lo ejecutado de lo pendiente.
+
+QUÉ CONTIENE LA PRUEBA
+
+- Selección inicial de Supervisor (atribución operativa, sin contraseña propia).
+- Inicio con indicadores y pendientes.
+- Proyectos, búsqueda, estados y fechas ETA.
+- Expediente con estimado, cuadrillas, Hourly, tareas e instrucciones especiales.
+- Asignaciones, revisión, devolución, reapertura y liberación de ocupación con motivo.
+- Operadores, roles, permisos locales, evaluaciones y catálogos.
+- Informes por servicio, movimientos e historial.
+- Copia explícita de datos al portapapeles; no se envían a un servicio externo.
+
+En la primera apertura se crean catálogos y tres buques ficticios para probar.
+Seleccionar Supervisor Demo como responsable. Esa selección no verifica la identidad de una persona.
+No usar los ejemplos como registros reales de operación.
+
+PARA OBTENER EL APK EN UN EQUIPO CON FLUTTER
+
+Requiere Flutter 3.35 o posterior compatible, Dart 3.9 o posterior y SDK Android configurado.
+El proyecto usa Android mínimo 7.0 (API 24, o el mínimo superior que requiera el SDK Flutter utilizado). Debe probarse con las versiones de Android donde se vaya a usar.
+
+En Windows, si Flutter ya está instalado, abrir COMPILAR_ANDROID.cmd.
+El archivo prepara los archivos Android que Flutter suministra, resuelve dependencias, analiza, ejecuta pruebas y solo después intenta crear el APK.
+No instala Flutter ni Android SDK por sí mismo. Necesita internet en el equipo que compila para obtener dependencias de desarrollo; eso no hace que la app operativa necesite internet.
+
+Comandos equivalentes:
+
+flutter create --no-pub --platforms=android --org local.pmbuques --project-name pm_buques_supervisor .
+flutter pub get
+flutter analyze
+flutter test
+flutter build apk --release
+
+El APK, si todos los pasos terminan correctamente, queda en:
+build/app/outputs/flutter-apk/app-release.apk
+
+La configuración de firma es de desarrollo local, apta solo para una prueba privada. Para distribución estable o Play Store se necesita una clave de firma propia y la validación correspondiente. No se publica nada automáticamente.
+No se incluye un APK vacío, renombrado ni generado por otra tecnología.
+
+DATOS Y PRIVACIDAD
+
+La base permanece en el almacenamiento privado de la aplicación.
+El manifiesto Android no solicita acceso a internet, contactos, ubicación ni almacenamiento general.
+Se desactiva la copia automática Android de la base.
+La base no lleva cifrado SQL adicional; el almacenamiento privado no sustituye el bloqueo y la protección del dispositivo.
+El historial registra las decisiones del perfil seleccionado, no una identidad certificada.
+La exportación al portapapeles se realiza solo tras confirmación; otras aplicaciones podrían leerlo. Guardar la copia en un lugar controlado y no usarla como envío automático.
+Esta versión no tiene importación/restauración de esa copia ni sincronización entre dispositivos.
+Desinstalar o borrar los datos de la app elimina la base local. No iniciar operación real antes de definir y probar un respaldo restaurable.
+
+ESTRUCTURA PARA DESARROLLO
+
+lib/main.dart: apertura local y recuperación de errores de inicio.
+lib/app.dart y lib/ui: pantallas e interacción.
+lib/data: esquema y repositorio SQLite.
+lib/domain: errores y reglas compartidas.
+tool/schema.sql: estructura SQL completa, sin datos personales.
+tool/reference: contrato original V8 y sus ampliaciones.
+test: pruebas Dart de repositorio e interfaz.
+android: contenedor Android de Flutter.
+
+No tienes que copiar y pegar módulos como en Access. Una vez exista un APK comprobado, se instala como una aplicación Android normal y su base se crea dentro del dispositivo.

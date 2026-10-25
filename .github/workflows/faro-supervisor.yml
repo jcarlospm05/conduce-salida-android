@@ -1,0 +1,59 @@
+name: Faro Supervisor - APK Android
+
+on:
+  push:
+    branches: [codex/faro-supervisor-android]
+    paths:
+      - 'faro-supervisor/**'
+      - '.github/workflows/faro-supervisor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: faro-supervisor
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Preparar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.35.7'
+          cache: true
+      - name: Preparar proyecto Android
+        run: |
+          flutter create --no-pub --platforms=android --org local.pmbuques --project-name pm_buques_supervisor .
+          rm -f test/widget_test.dart
+          flutter pub get
+      - name: Comprobar esquema SQLite
+        run: python3 tool/check_delivery.py
+      - name: Analizar Dart
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      - name: Ejecutar pruebas de repositorio e interfaz
+        run: flutter test --reporter expanded
+      - name: Compilar APK local
+        run: flutter build apk --release
+      - name: Preparar descarga
+        run: |
+          mkdir -p entrega
+          cp build/app/outputs/flutter-apk/app-release.apk entrega/Faro-Supervisor-v0.1.0.apk
+          cd entrega
+          sha256sum Faro-Supervisor-v0.1.0.apk > Faro-Supervisor-v0.1.0.apk.sha256
+      - name: Adjuntar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Faro-Supervisor-Android
+          path: faro-supervisor/entrega/*
+          if-no-files-found: error
+          retention-days: 30
