@@ -1,0 +1,28 @@
+{
+  "native_sqlite_and_source_checks": {
+    "executed": 11,
+    "failures": 0,
+    "errors": 0,
+    "status": "PASS"
+  },
+  "dart_analysis": "PASS_GITHUB_ACTIONS",
+  "dart_repository_tests": "PASS_21_CASES_GITHUB_ACTIONS",
+  "flutter_widget_tests": "PASS_9_CASES_GITHUB_ACTIONS",
+  "android_apk_build": "PASS_GITHUB_ACTIONS",
+  "android_device_test": "NOT_EXECUTED",
+  "network_limitation": "Local SDK download unavailable; compilation and Dart tests run on authorized GitHub Actions runner.",
+  "dart_test_sources": {
+    "repository_cases": 21,
+    "widget_cases": 9,
+    "executed": true
+  },
+  "github_workflow": "https://github.com/jcarlospm05/conduce-salida-android/actions/runs/40221734521",
+  "source_commit": "e62da81a7d51e386bd76b88b3c338ff9e5fede60",
+  "android_apk": {
+    "name": "Faro-Supervisor-v0.1.0.apk",
+    "bytes": 52407831,
+    "sha256": "896381f534a32ec427bdf266a52e61a177f999300725812155cadbb20b8b3f7b",
+    "download_url": "https://github.com/jcarlospm05/conduce-salida-android/releases/download/faro-supervisor-v0.1.0/Faro-Supervisor-v0.1.0.apk",
+    "release_url": "https://github.com/jcarlospm05/conduce-salida-android/releases/tag/faro-supervisor-v0.1.0"
+  }
+}

@@ -9,11 +9,18 @@ Los datos de cada teléfono son independientes: no se sincronizan entre equipos.
 
 ESTADO DE LA ENTREGA
 
-Se entrega el proyecto fuente, la estructura Android y los escenarios de prueba.
-NO se ha compilado ni ejecutado Flutter en este entorno: no hay un APK comprobado incluido.
-La descarga del SDK Flutter necesaria para generar ese APK no estuvo disponible.
-Las verificaciones de SQLite realizadas con Python no sustituyen ejecutar Dart, flutter analyze, flutter test o las pruebas en Android real.
-Consultar RESULTADO_VERIFICACION.json para distinguir lo ejecutado de lo pendiente.
+APK REAL GENERADO EL 25/10/2026 CON GITHUB ACTIONS.
+Nombre: Faro Supervisor. Icono adaptativo de faro en azul marino y turquesa.
+Descarga directa:
+https://github.com/jcarlospm05/conduce-salida-android/releases/download/faro-supervisor-v0.1.0/Faro-Supervisor-v0.1.0.apk
+
+Compilación Android y análisis Dart aprobados.
+21 pruebas Dart del repositorio y 9 pruebas de interfaz aprobadas, además de 11 comprobaciones SQL/estructura.
+Pendiente: prueba en un teléfono Android real; no se afirma aceptación operacional completa.
+APK de prueba privada con firma de desarrollo. Los datos iniciales son sintéticos.
+
+Para instalar no necesitas Access, Lists, Flutter ni copiar código: descarga el APK en Android y abre el archivo. El sistema puede pedir permiso para instalar desde esa fuente.
+El resto de esta carpeta contiene las fuentes y las instrucciones de recompilación para desarrollo.
 
 QUÉ CONTIENE LA PRUEBA
 
