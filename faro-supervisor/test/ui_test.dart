@@ -171,7 +171,7 @@ void main() {
     final repository = _UiRepository()..selected = 1;
     await tester.pumpWidget(MaterialApp(home: RecordEditor(repository: repository, tableName: 'PM_VaciosDestino', scaleId: 3)));
     await tester.pumpAndSettle();
-    final quantity = find.byWidgetPredicate((widget) => widget is TextFormField && widget.decoration?.labelText == 'Cantidad *');
+    final quantity = find.widgetWithText(TextFormField, 'Cantidad *');
     await tester.enterText(quantity, '-2');
     await tester.ensureVisible(find.text('Guardar cambios'));
     await tester.tap(find.text('Guardar cambios'));
