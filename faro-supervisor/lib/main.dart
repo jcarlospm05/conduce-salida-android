@@ -71,10 +71,12 @@ class _OpenLocalAppState extends State<_OpenLocalApp> {
                                       fontWeight: FontWeight.w700)),
                               const SizedBox(height: 12),
                               const Text(
-                                'Comprueba que el teléfono tenga espacio disponible. '
+                                'No se pudo iniciar el almacenamiento de la aplicación. '
                                 'Tus datos no se borrarán al reintentar.',
                                 textAlign: TextAlign.center,
                               ),
+                              const SizedBox(height: 12),
+                              SelectableText('Detalle: ${snapshot.error}', textAlign: TextAlign.center),
                               const SizedBox(height: 22),
                               FilledButton.icon(
                                 onPressed: () => setState(() {

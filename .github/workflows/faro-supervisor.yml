@@ -47,9 +47,9 @@ jobs:
       - name: Preparar descarga
         run: |
           mkdir -p entrega
-          cp build/app/outputs/flutter-apk/app-release.apk entrega/Faro-Supervisor-v0.1.0.apk
+          cp build/app/outputs/flutter-apk/app-release.apk entrega/Faro-Supervisor-v0.1.1.apk
           cd entrega
-          sha256sum Faro-Supervisor-v0.1.0.apk > Faro-Supervisor-v0.1.0.apk.sha256
+          sha256sum Faro-Supervisor-v0.1.1.apk > Faro-Supervisor-v0.1.1.apk.sha256
       - name: Adjuntar APK
         uses: actions/upload-artifact@v4
         with:
@@ -69,12 +69,12 @@ jobs:
           APK de prueba con firma de desarrollo. No usar todavía como único registro operativo.
           Compilado por GitHub Actions después de analizar Dart y ejecutar las pruebas incluidas.
           TXT
-          gh release create faro-supervisor-v0.1.0 \
-            entrega/Faro-Supervisor-v0.1.0.apk \
-            entrega/Faro-Supervisor-v0.1.0.apk.sha256 \
+          gh release create faro-supervisor-v0.1.1 \
+            entrega/Faro-Supervisor-v0.1.1.apk \
+            entrega/Faro-Supervisor-v0.1.1.apk.sha256 \
             entrega/LEER_ANTES_DE_INSTALAR.txt \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
-            --title "Faro Supervisor - Android local 0.1.0" \
+            --title "Faro Supervisor - Android local 0.1.1" \
             --notes "Versión de prueba local para Android. Nombre e icono Faro. Datos SQLite locales, sin sincronización. APK firmado para prueba privada; pendiente validación en dispositivo real." \
             --prerelease
