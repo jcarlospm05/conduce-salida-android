@@ -1,0 +1,57 @@
+SENTINEL — PLANIFICADOR DEL PROYECTO
+
+INICIO RAPIDO
+1. Abre SENTINEL-Planificador.html con doble clic en tu PC.
+2. Abre una tarea para cambiar fase, agente, estado, prioridad, fecha o notas.
+3. Agrega tareas con + Nueva tarea. Para completar una tarea, registra
+   evidencia y completa sus dependencias. Las opcionales no cuentan en avance.
+4. Al terminar, pulsa Exportar JSON y guarda el archivo descargado.
+5. Para retomar en otro PC/navegador, abre el HTML e Importa ese JSON.
+
+OTRO CHAT / AGENTES
+Llevar a otro chat descarga un TXT con decisiones, tareas y notas.
+Adjunta ese TXT y el JSON al nuevo chat.
+Cada tarea permite Copiar encargo al agente; si el navegador no permite
+copiar, descarga el encargo como TXT.
+Los tres agentes son roles con instrucciones, no procesos autonomos ni
+servicios de IA integrados. Tu decides cuando y con que chat usarlos.
+
+GUARDADO
+El HTML no envia datos a internet. Guarda en el navegador cuando es posible.
+No actualiza GitHub ni comparte cambios automaticamente. Guardar el HTML
+no incorpora tus cambios: debes conservar el JSON exportado.
+No uses este tablero para datos personales ni evaluaciones reales.
+Importar reemplaza el estado; pide confirmacion y descarga una copia previa.
+No borra tareas: puedes editar, bloquear o marcar una propuesta opcional.
+
+CONTENIDO
+56 tareas, 6 fases y 16 decisiones vigentes.
+La fase actual es PLANIFICACION. Ninguna funcionalidad de la nueva app
+operativa se declara implementada. La APK anterior no es la nueva version.
+El seguimiento empieza en 0% completado, con 2 decisiones ya definidas.
+
+MODULARIDAD
+src/index.template.html: estructura de interfaz.
+src/styles.css: estilo.
+src/seed.js: datos iniciales y decisiones.
+src/model.js: validaciones, dependencias y cambios de tarea.
+src/storage.js: persistencia en navegador.
+src/app.js: interacciones de interfaz, exportacion y contexto.
+src/index.html: entrada modular para abrir los archivos fuente.
+SENTINEL-Planificador.html e index.html: copias portables generadas.
+build.py: regenera las copias desde las fuentes (Python solo para desarrollo).
+generate_seed.py: regenera datos iniciales; no lo uses para cambios diarios.
+Los cambios diarios se gestionan en el HTML y se exportan como JSON.
+
+GITHUB
+El paquete se puede guardar en un repositorio. index.html esta listo
+para hosting estatico, incluido GitHub Pages. No contiene credenciales.
+GitHub muestra el codigo HTML, no una aplicacion ejecutandose en su visor.
+Para verlo online hay que habilitar hosting; descargar y abrir el HTML
+funciona sin hosting. Las ediciones del tablero no hacen commits.
+
+ALCANCE
+No se ha programado Access ni se han creado/modificado SharePoint Lists.
+Este entregable es exclusivamente el planificador solicitado.
+Las propuestas adicionales y preguntas pendientes estan en sus tareas.
+Las pruebas y sus limites figuran en RESULTADO_PRUEBAS.json cuando existan.

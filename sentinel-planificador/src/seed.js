@@ -1,0 +1,1211 @@
+window.SENTINEL_SEED = {
+  "schemaVersion": 1,
+  "project": "SENTINEL",
+  "updatedAt": "",
+  "tasks": [
+    {
+      "id": "P01",
+      "title": "Consolidar decisiones vigentes",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Reestructuración registrada; el contexto incluido conserva las correcciones del usuario.",
+      "accept": "Las decisiones vigentes se distinguen de propuestas y requisitos sustituidos.",
+      "status": "Definida",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P02",
+      "title": "Definir alcance y pantallas",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "SCHEDULE, preliminares, hoja de vida, estimado, hourly, arrival, departure, shifting, CRM, configuración y revisión privada.",
+      "accept": "Lista final aprobada; sin módulos adicionales inventados.",
+      "status": "Definida",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P03",
+      "title": "Cerrar reglas de responsabilidad y pausa",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Precisar toma de trabajo sin iniciar y después de PAUSA, permisos del propietario y manejo de dos auditores.",
+      "accept": "Flujo aprobado para ENTRAR/CONTINUAR/VISUALIZAR y toma tras pausa.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P04",
+      "title": "Precisar tareas por campo y check verde",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Decidir obligatoriedad, validación, guardado, correcciones y campos que no aplican.",
+      "accept": "Ejemplos aprobados de pendiente/completado y corrección sin perder historial.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P05",
+      "title": "Definir estatus y textos en inglés",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Confirmar estados, colores y coletillas exactas según referencia del usuario.",
+      "accept": "Catálogo aprobado, sin inventar hitos o pantallas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P06",
+      "title": "Definir evaluación de desempeño PM",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Nota 0–100, oportunidad, exactitud y seguimiento; separar desviaciones de errores atribuibles.",
+      "accept": "Ponderaciones, fórmulas, evidencia y excepciones aprobadas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P07",
+      "title": "Definir reportes por período ETA",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Barcos trabajados, participación, cierre y período determinado por ETA; no gestión de pagos.",
+      "accept": "Reglas de cambio ETA y servicios aún abiertos definidas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P08",
+      "title": "Definir catálogo y permisos de buques",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Creación, edición, duplicados y desactivación de nombres.",
+      "accept": "Quién puede mantener cada catálogo queda aprobado.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P09",
+      "title": "Definir alcance de respaldo y recuperación",
+      "phase": 0,
+      "agent": "a2",
+      "detail": "Listas, datos, columnas, configuración y relaciones; copias manuales fechadas.",
+      "accept": "Alcance explícito, permisos necesarios y recuperación verificable.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P10",
+      "title": "Confirmar si habrá registro separado de horas",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Solo propuesta: entrada, salida, amanecida e impresión en base propia, sin cálculos obligatorios.",
+      "accept": "Decisión explícita de incluir o excluir; no implementarlo por defecto.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": true,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P11",
+      "title": "Definir formatos de reportes e impresión",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Formatos a acordar por pantalla, sin adjuntos ni datos sensibles.",
+      "accept": "Muestras aprobadas y contenido permitido identificado.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D01",
+      "title": "Preservar y aprobar SCHEDULE",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Primera referencia, marca SENTINEL, isotipo portuario y botones solicitados.",
+      "accept": "Comparación visual aprobada sin cambiar tarjetas ni distribución.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D02",
+      "title": "Definir datos preliminares",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Campos definitivos y requisitos para guardar o iniciar.",
+      "accept": "Formulario y validaciones aprobados; campos de mockup no se asumen aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D03",
+      "title": "Definir hoja de vida del proyecto",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Resumen, cabecera/coletillas y acceso a reportes; vista responsable y solo lectura.",
+      "accept": "Diseño de ambas vistas aprobado.",
+      "status": "Por planificar",
+      "deps": [
+        "P03",
+        "P05"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D04",
+      "title": "Definir estimado de operaciones",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Movimientos agregados permitidos, tiempos, recursos y cuadrillas; sin números de contenedores.",
+      "accept": "Campos, fórmulas y edición del estimado aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D05",
+      "title": "Definir Hourly Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Datos por hora, recursos y demoras a la derecha de la hora.",
+      "accept": "Diseño y cálculos por intervalo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "D04"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D06",
+      "title": "Definir Arrival Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Confirmar campos y títulos en inglés de la referencia.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D07",
+      "title": "Definir Departure Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Confirmar campos, resumen y condiciones de salida.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D08",
+      "title": "Definir Shifting Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Registrar movimientos del buque de un lugar a otro; campos por acordar.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D09",
+      "title": "Definir CRM de puerto y planners",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Conversaciones, acuerdos, responsables, fechas y seguimiento, sin adjuntos.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D10",
+      "title": "Definir CONFIGURACIÓN",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Schedule manual, usuarios, rutas/servicios, estatus/colores, permisos y tareas genéricas/específicas.",
+      "accept": "Parámetros editables y permisos de configuración aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P04",
+        "P08"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D11",
+      "title": "Definir cierre, revisión y evaluación privada",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Solo propietario; notas por renglón, evidencia y copia de evaluación para IA externa.",
+      "accept": "Vista y criterios de cierre/devolución aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A01",
+      "title": "Diseñar arquitectura modular",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Separar UI, dominio, acceso a Lists, permisos, historial, configuración, reportes y respaldos.",
+      "accept": "Mapa de módulos con responsabilidad única y archivos separados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A02",
+      "title": "Documentar contratos y dependencias",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Definir entradas, salidas, errores y versiones de interfaces entre módulos.",
+      "accept": "Cada UI usa contratos; cambiar módulo no exige editar todos los demás.",
+      "status": "Por planificar",
+      "deps": [
+        "A01"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A03",
+      "title": "Definir identidad y permisos reales",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Vincular cuenta Microsoft 365 a auditor; permisos por operación y propietario exclusivo.",
+      "accept": "Demostrar protección también entrando directamente a Lists; ocultar botones no basta.",
+      "status": "Por planificar",
+      "deps": [
+        "P03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A04",
+      "title": "Definir concurrencia y errores de conexión",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Dos usuarios, cambios simultáneos y toma de mando tras pausa.",
+      "accept": "Estrategia verificable para evitar responsables dobles y escrituras incompatibles.",
+      "status": "Por planificar",
+      "deps": [
+        "A03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B01",
+      "title": "Revisar modelo anterior y diseñar Lists",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "Revisar las 36 tablas previas sin copiarlas automáticamente; quitar requisitos descartados.",
+      "accept": "Diccionario de listas/campos aprobado según nueva especificación.",
+      "status": "Por planificar",
+      "deps": [
+        "A01",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B02",
+      "title": "Definir IDs, relaciones e índices",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "ID automático único, referencias e índices para consultas eficientes.",
+      "accept": "Modelo y restricciones documentados; no confundir ID visible y clave técnica.",
+      "status": "Por planificar",
+      "deps": [
+        "B01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B03",
+      "title": "Diseñar historial por campo y estados",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "Valor previo/nuevo, autor, fecha/hora, responsable y tiempos operativos.",
+      "accept": "Comparación antes/durante/después y política de integridad definidas.",
+      "status": "Por planificar",
+      "deps": [
+        "B01",
+        "P04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B04",
+      "title": "Crear listas y catálogos de prueba",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Solo después de aprobación del modelo y acceso autorizado al sitio.",
+      "accept": "Listas y relaciones verificadas con datos sintéticos.",
+      "status": "Por planificar",
+      "deps": [
+        "B02",
+        "B03",
+        "A03"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B05",
+      "title": "Aplicar permisos y privacidad",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Proteger estructura, evaluación privada y operaciones según usuario.",
+      "accept": "Pruebas con cuentas reales autorizadas documentadas.",
+      "status": "Por planificar",
+      "deps": [
+        "B04",
+        "A03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B06",
+      "title": "Implementar módulo de acceso a datos",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Conexión Access/Lists centralizada; errores y consultas consistentes.",
+      "accept": "Ninguna pantalla duplica consultas ni credenciales.",
+      "status": "Por planificar",
+      "deps": [
+        "B04",
+        "A02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B07",
+      "title": "Implementar respaldo de listas",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Botón manual, carpetas fechadas, registros y estructura; sin DB Access local.",
+      "accept": "Resultado verificable y errores visibles, sin sobrescribir copias previas.",
+      "status": "Por planificar",
+      "deps": [
+        "P09",
+        "B04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I01",
+      "title": "Crear estructura de código modular",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Módulo/archivo por responsabilidad; dos frontends usando contratos compartidos.",
+      "accept": "Mapa de archivos coincide con arquitectura aprobada.",
+      "status": "Por planificar",
+      "deps": [
+        "A02"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I02",
+      "title": "Implementar SCHEDULE",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D01",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I03",
+      "title": "Implementar preliminares e inicio",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D02",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I04",
+      "title": "Implementar hoja de vida y vista de consulta",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D03",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I05",
+      "title": "Implementar estimado y recursos",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D04",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I06",
+      "title": "Implementar Hourly e incidencias",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D05",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I07",
+      "title": "Implementar Arrival Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D06",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I08",
+      "title": "Implementar Departure Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D07",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I09",
+      "title": "Implementar Shifting Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D08",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I10",
+      "title": "Implementar CRM y seguimiento",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D09",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I11",
+      "title": "Implementar CONFIGURACIÓN",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D10",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I12",
+      "title": "Implementar revisión y evaluación privada",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D11",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I13",
+      "title": "Implementar tareas y log por campo",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Check de tareas, cambios, autor y fechas; separar responsable del último editor.",
+      "accept": "Guardado válido e historial consistente, con casos de corrección.",
+      "status": "Por planificar",
+      "deps": [
+        "B03",
+        "P04",
+        "I01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I14",
+      "title": "Implementar permisos, pausa y continuación",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Protección en operaciones y reglas de responsabilidad vigentes.",
+      "accept": "VISUALIZAR no escribe; la pausa permite relevo registrado.",
+      "status": "Por planificar",
+      "deps": [
+        "A04",
+        "B05",
+        "I01"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I15",
+      "title": "Implementar reportes y copia de evaluación",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Impresión/exportación acordada, copia completa con notas para IA externa.",
+      "accept": "Sin integración IA ni adjuntos; evaluación solo propietario.",
+      "status": "Por planificar",
+      "deps": [
+        "P11",
+        "I12"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T01",
+      "title": "Probar cálculos y reglas por módulo",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Estimado/hourly, límites, vacíos, correcciones y atribución de errores.",
+      "accept": "Resultados esperados y casos fallidos documentados.",
+      "status": "Por planificar",
+      "deps": [
+        "I05",
+        "I06",
+        "I13"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T02",
+      "title": "Probar permisos y acceso directo a Lists",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Auditor responsable, otros auditores y propietario.",
+      "accept": "Sin modificación no autorizada ni acceso a evaluaciones privadas.",
+      "status": "Por planificar",
+      "deps": [
+        "I14",
+        "I12"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T03",
+      "title": "Probar trabajo simultáneo y pase de mando",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Dos usuarios intentan entrar, guardar, pausar y continuar.",
+      "accept": "No doble responsable, cambios perdidos ni relevo sin historial.",
+      "status": "Por planificar",
+      "deps": [
+        "I14",
+        "I04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T04",
+      "title": "Probar respaldo y recuperación aislada",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Reconstruir listas y referencias en destino de prueba autorizado.",
+      "accept": "Copia comprobada; alcance y limitaciones documentados.",
+      "status": "Por planificar",
+      "deps": [
+        "B07"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T05",
+      "title": "Probar recorrido completo con propietario",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Crear servicio → preliminares → operación → reportes → CRM → cierre → evaluación.",
+      "accept": "Aprobación del propietario y defectos resueltos.",
+      "status": "Por planificar",
+      "deps": [
+        "I02",
+        "I03",
+        "I04",
+        "I05",
+        "I06",
+        "I07",
+        "I08",
+        "I09",
+        "I10",
+        "I11",
+        "I12",
+        "I15",
+        "T01",
+        "T02",
+        "T03",
+        "T04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E01",
+      "title": "Preparar frontends y guía TXT",
+      "phase": 5,
+      "agent": "a3",
+      "detail": "Dos ACCDB, sin instalador, conexión a Lists y guía de respaldo.",
+      "accept": "Archivos probados con Access objetivo; no anunciar fuentes como app lista.",
+      "status": "Por planificar",
+      "deps": [
+        "T05"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E02",
+      "title": "Versionar fuentes modulares y cambios",
+      "phase": 5,
+      "agent": "a3",
+      "detail": "Repositorio con módulos separados, contratos y evidencia de pruebas.",
+      "accept": "Versión reproducible, cambios y pendientes identificados.",
+      "status": "Por planificar",
+      "deps": [
+        "I01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E03",
+      "title": "Validar piloto y plan de mantenimiento",
+      "phase": 5,
+      "agent": "a1",
+      "detail": "Uso de prueba, seguimiento de fallos y actualización del tablero.",
+      "accept": "Propietario acepta piloto; próximas tareas registradas.",
+      "status": "Por planificar",
+      "deps": [
+        "E01",
+        "E02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    }
+  ],
+  "decisions": [
+    [
+      "Arquitectura vigente",
+      "Dos UI Access (Auditores y Supervisión), con datos principales en SharePoint Lists. La decisión de usar solo Access local queda sustituida."
+    ],
+    [
+      "Reestructuración",
+      "Lo acordado para SENTINEL sustituye la concepción y flujos de la APK inicial FARO. Esta nueva versión todavía no está implementada."
+    ],
+    [
+      "Diseño fijo",
+      "Conservar la primera distribución de SCHEDULE: cinco tarjetas originales, filtros y filas de dos líneas. Solo cambios expresamente solicitados. Encabezado SENTINEL | SCHEDULE; nombre de usuario sin rol, avatar ni etiqueta Datos locales. Isotipo portuario, nunca escudo; alternativa definitiva pendiente."
+    ],
+    [
+      "Servicios",
+      "Todos pueden crear tickets con ID automático único. Catálogo de buques; falta decidir quién puede editarlo."
+    ],
+    [
+      "Acceso",
+      "ENTRAR abre preliminares antes del inicio. CONTINUAR para responsable vigente. VISUALIZAR para otros, sin modificaciones. Responsable y último editor se guardan por separado."
+    ],
+    [
+      "Preliminares",
+      "REGISTRAR CAMBIOS guarda sin iniciar. INICIAR OPERACIONES valida, guarda, registra inicio/responsable y abre trabajo."
+    ],
+    [
+      "Pausa y mando",
+      "Pase de mando mediante botón de pausa: otro auditor puede continuar y queda registro. Solo propietario y responsable pueden habilitar el pase. No pantalla adicional de entrega/recepción."
+    ],
+    [
+      "Pantallas operativas",
+      "Hoja de vida, estimado, hourly, arrival, departure, shifting y CRM. Recursos en estimado/hourly; demoras junto a la hora reportada. No pantallas separadas de plan, recursos ni hitos."
+    ],
+    [
+      "Coletillas",
+      "Los llamados hitos son títulos/coletillas superiores de la hoja de vida. Nombres en inglés según referencia del usuario; falta confirmar texto exacto."
+    ],
+    [
+      "Tareas e historial",
+      "Cada selección o campo por llenar es una tarea. Panel de realizadas con check verde. Registrar cambios por campo, usuario y fecha/hora para evaluar oportunidad antes/durante/después de operaciones. Reglas exactas del check por definir."
+    ],
+    [
+      "Evaluación privada",
+      "Evaluación PM 0–100 visible solo al propietario, notas por renglón y cierre/revisión privados. Ponderaciones por aprobar. Distinguir errores de cálculo de cambios operativos. Sin IA integrada; copiar evaluación completa para IA externa."
+    ],
+    [
+      "CRM",
+      "Registrar conversaciones con puerto y planners, acuerdos, responsables, plazos y seguimiento. Campos y reglas finales pendientes."
+    ],
+    [
+      "Sin adjuntos",
+      "No adjuntos ni números de contenedores ni información sensible. Solo reportes definidos para generar/imprimir. La evaluación de personal igualmente requiere privacidad real."
+    ],
+    [
+      "Respaldo",
+      "Un botón HACER RESPALDO, manual, con copias fechadas de listas, datos y estructura, sin sobrescribir anteriores. Sin base Access local de respaldo y sin adjuntos. Falta especificar recuperación y alcance técnico."
+    ],
+    [
+      "Nómina",
+      "No gestionar pagos en SENTINEL. El ETA determina el período para el reporte de barcos trabajados y cerrados. Registro separado de entrada/salida/amanecida con base propia es solo una posibilidad, no alcance aprobado."
+    ],
+    [
+      "Modularidad obligatoria",
+      "Pantallas, lógica, datos, permisos, historial, reportes y configuración separados. Contratos documentados para cambiar un módulo sin tocar todo el sistema."
+    ]
+  ],
+  "agents": [
+    {
+      "id": "a1",
+      "name": "Planificación y UX",
+      "label": "Agente 1",
+      "mission": "Convertir tus decisiones en requisitos, pantallas y criterios de aceptación.",
+      "prompt": "Actúa como Agente 1 — Planificación y UX de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Separa acuerdos, propuestas y pendientes. Conserva la primera referencia de SCHEDULE y aplica solo cambios solicitados. No inventes pantallas ni funciones. No programes sin instrucción. Entrega una propuesta revisable, preguntas pendientes y criterios de aceptación."
+    },
+    {
+      "id": "a2",
+      "name": "Arquitectura y datos",
+      "label": "Agente 2",
+      "mission": "Definir módulos, contratos, SharePoint, identidad, permisos y respaldo.",
+      "prompt": "Actúa como Agente 2 — Arquitectura y datos de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Diseña módulos separados con contratos y dependencias explícitas. Verifica identidad, permisos reales de SharePoint, concurrencia y recuperación de respaldos. No asumas que ocultar botones protege los datos. No implementes ni cambies requisitos sin autorización. Entrega alternativas, decisión propuesta y evidencia requerida."
+    },
+    {
+      "id": "a3",
+      "name": "Implementación y calidad",
+      "label": "Agente 3",
+      "mission": "Programar lo aprobado, probar cada módulo e integrar con evidencia.",
+      "prompt": "Actúa como Agente 3 — Implementación y calidad de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Verifica aprobación de requisitos, diseño y dependencias antes de programar. Separa UI, lógica, datos, permisos, historial y reportes. No rediseñes ni añadas funciones. Documenta archivos, pruebas reales, resultados y limitaciones. No marques completado nada sin evidencia."
+    }
+  ],
+  "phases": [
+    "Planificación",
+    "Diseño y arquitectura",
+    "Base de datos y backend",
+    "Implementación UI y lógica",
+    "Pruebas e integración",
+    "Entrega y seguimiento"
+  ],
+  "activity": []
+};

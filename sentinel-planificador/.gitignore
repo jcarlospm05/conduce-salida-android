@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+SENTINEL-seguimiento-*.json
+SENTINEL-contexto-*.txt
+SENTINEL-antes-de-importar-*.json

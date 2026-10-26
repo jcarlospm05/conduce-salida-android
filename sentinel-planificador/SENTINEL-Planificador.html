@@ -1,0 +1,1303 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Planificador de la reestructuración de SENTINEL. Tareas, fases, decisiones y tres roles de agente."><title>SENTINEL · Control del proyecto</title><style>
+:root{--navy:#112e43;--ink:#173246;--teal:#007f82;--muted:#607787;--line:#dce5e9;--paper:#f3f6f7;--amber:#a86600}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer;border:1px solid #bacbd3;background:white;color:var(--ink);border-radius:7px;padding:9px 13px;font-weight:600}button:hover{border-color:var(--teal);background:#eef8f7}button:focus-visible,a:focus-visible,input:focus,select:focus,textarea:focus{outline:3px solid #58c5cc;outline-offset:2px}.primary{background:var(--teal);color:white;border-color:var(--teal)}.primary:hover{background:#00696d;color:white}.shell{display:grid;grid-template-columns:242px minmax(0,1fr);min-height:100vh}aside{background:var(--navy);color:white;padding:30px 18px;display:flex;flex-direction:column;gap:26px}.brand{font-size:24px;font-weight:800;letter-spacing:2px;display:flex;align-items:center;gap:9px}.brand svg{width:38px;height:36px}.subbrand{color:#a4bfcf;font-size:12px;margin-top:5px}nav{display:grid;gap:7px}nav button{background:transparent;border-color:transparent;color:#bfd0db;text-align:left}nav button.active{background:#25495d;color:white;border-color:#3d6175}.sidefoot{font-size:12px;color:#bdd0dc;margin-top:auto}.sidefoot strong{color:white}.workspace{padding:30px 36px;max-width:1700px;width:100%;margin:auto}.eyebrow{color:var(--teal);text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:1.6px}h1{font-size:30px;line-height:1.2;margin:7px 0}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:0 0 8px}p{margin:6px 0 14px}.muted{color:var(--muted)}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.actions{display:flex;gap:8px;flex-wrap:wrap}.notice{background:#e5f1f2;border:1px solid #c7dfe1;padding:12px 16px;margin:20px 0;border-radius:8px;font-size:13px}.notice.warn{background:#fff5df;border-color:#ecd49d;color:#714a00}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:17px}.stat b{display:block;font-size:30px;line-height:1.2}.stat span{font-size:12px;color:var(--muted)}.progress{height:6px;background:#e5edf0;border-radius:4px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;background:var(--teal)}.phases{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:20px 0}.phase{padding:12px;text-align:left;border-color:var(--line);font-size:12px;min-height:100px}.phase.selected{border:2px solid var(--teal);padding:11px;background:#f0faf8}.phase small{display:block;color:var(--muted);font-weight:400;margin:6px 0}.filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:22px 0 12px}.filters input{flex:1;min-width:210px}.filters input,.filters select{padding:10px;background:white;border:1px solid #bacbd3;border-radius:6px;color:var(--ink)}.count{font-size:12px;color:var(--muted);margin-bottom:10px}.task{background:white;border:1px solid var(--line);border-radius:9px;margin-bottom:10px;padding:17px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px}.task-title{border:0;padding:0;background:transparent;text-align:left;font-size:15px;display:block;color:var(--ink)}.task-title:hover{background:transparent;color:var(--teal);text-decoration:underline}.task .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:11px;color:var(--muted)}.badge{border-radius:5px;padding:3px 8px;background:#eef2f4;display:inline-block;font-size:11px;font-weight:600}.badge.high{background:#fff1de;color:#925500}.badge.done{background:#def5ea;color:#176348}.badge.blocked{background:#ffe7e4;color:#a53327}.badge.running{background:#dff4f4;color:#006f72}.taskside{display:flex;align-items:center;gap:12px}.taskside button{font-size:12px}.task small{display:block;color:var(--muted);margin-top:7px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.panel{background:white;border:1px solid var(--line);border-radius:10px;padding:22px}.panel p{font-size:14px}.agent-num{font-size:12px;color:var(--teal);font-weight:800;letter-spacing:1px}.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.empty{text-align:center;padding:45px;background:white;border:1px dashed #bacbd3;border-radius:8px}.row{display:flex;gap:10px;flex-wrap:wrap}.log{border-bottom:1px solid var(--line);padding:13px 0}.log time{font-size:12px;color:var(--muted)}dialog{width:min(820px,95vw);max-height:93vh;border:0;border-radius:13px;padding:0;box-shadow:0 20px 80px #1235}dialog::backdrop{background:#0a233bb0}.dialog-head{padding:20px 24px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center}.dialog-head button{background:transparent;color:white;border-color:#648196;padding:4px 11px}.formbody{padding:24px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}label{display:block;font-size:12px;font-weight:700;color:var(--muted)}label input,label select,label textarea{display:block;width:100%;margin-top:5px;padding:9px 10px;border:1px solid #b6c9d2;border-radius:6px;background:white;color:var(--ink);font-weight:400}textarea{resize:vertical;min-height:75px}.full{grid-column:1/-1}.check{display:flex;align-items:center;gap:9px}.check input{width:auto;margin:0}.help{font-size:12px;color:var(--muted)}.formfoot{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.error{color:#a02621;font-size:13px}.hidden{display:none!important}#toast{position:fixed;bottom:22px;right:22px;max-width:450px;background:var(--navy);color:white;border-radius:8px;padding:14px 20px;z-index:10;box-shadow:0 5px 30px #1233}a{color:var(--teal)}footer{font-size:12px;color:var(--muted);margin-top:25px}.phaseheader{display:flex;align-items:center;justify-content:space-between;gap:15px}body.view-focus .stats,body.view-focus .phases{display:none}@media(max-width:1100px){.shell{grid-template-columns:195px minmax(0,1fr)}.workspace{padding:24px 20px}.phases{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.top{flex-direction:column}}@media(max-width:720px){.shell{display:block}aside{padding:16px;gap:12px}nav{display:flex;overflow-x:auto}nav button{white-space:nowrap}.sidefoot{display:none}.workspace{padding:20px 14px}.stats{grid-template-columns:repeat(2,1fr)}.phases{grid-template-columns:repeat(2,1fr)}.rules,.formgrid{grid-template-columns:1fr}.task{grid-template-columns:1fr}.taskside{justify-content:space-between}.top h1{font-size:26px}.filters>*{width:100%}.formbody{padding:18px}.full{grid-column:auto}}@media print{aside,.actions,.filters,.phases,.taskside,button,#toast,dialog{display:none!important}.shell{display:block}.workspace{padding:0}.task,.panel{break-inside:avoid}.stats{grid-template-columns:repeat(4,1fr)}body{background:white}.rules{display:block}.panel{margin:10px 0}}
+
+</style></head><body>
+<div class="shell"><aside><div><div class="brand"><svg aria-hidden="true" viewBox="0 0 60 44" fill="currentColor"><path d="M3 26h54l-9 12H13zM7 40q6-4 12 0t12 0t12 0t12 0v3H7zM11 18h10v6H11zm12 0h10v6H23zm12 0h10v6H35zM25 4h8v12h-8zM24 1h3v3h-3z"/></svg>SENTINEL</div><div class="subbrand">CONTROL DEL PROYECTO</div></div><nav aria-label="Secciones"><button data-view="tasks" class="active">01 · Plan de trabajo</button><button data-view="agents">02 · Tres agentes</button><button data-view="decisions">03 · Decisiones vigentes</button><button data-view="history">04 · Historial del tablero</button><button data-view="guide">05 · Cómo continuar</button></nav><div class="sidefoot"><strong id="currentPhase">Fase actual: planificación</strong><p>Seguimiento del desarrollo.<br>No es la aplicación operativa.</p><span>Sin conexión · Sin cuentas · Sin IA integrada</span></div></aside>
+<main class="workspace"><header class="top"><div><div class="eyebrow">Reestructuración / Hoja de ruta</div><h1 id="pageTitle">Del acuerdo a la ejecución.</h1><p class="muted" id="subtitle">Define, diseña, construye y verifica. Una tarea a la vez.</p></div><div class="actions"><button id="exportJson">Exportar JSON</button><button id="importJson">Importar</button><button id="exportContext">Llevar a otro chat</button><button class="primary" id="newTask">+ Nueva tarea</button></div></header>
+<div id="saveWarning" class="notice warn hidden" role="alert"></div><div class="notice" id="scopeNotice"><strong>Estamos en planificación.</strong> Una decisión definida no significa que la función esté implementada. La APK anterior no representa esta reestructuración.</div>
+<section id="stats" class="stats" aria-label="Resumen"></section><section id="tasksView"><div id="phases" class="phases" aria-label="Filtrar por fase"></div><div class="phaseheader"><h2 id="phaseTitle">Todas las fases</h2><button id="allPhases">Ver todas</button></div><div class="filters"><input id="search" type="search" placeholder="Buscar tarea, ID o descripción…" aria-label="Buscar tareas"><select id="statusFilter" aria-label="Filtrar por estado"><option value="">Todos los estados</option></select><select id="agentFilter" aria-label="Filtrar por agente"><option value="">Todos los agentes</option></select><select id="priorityFilter" aria-label="Filtrar por prioridad"><option value="">Toda prioridad</option><option>Alta</option><option>Media</option><option>Baja</option></select><button id="clearFilters">Limpiar</button></div><div id="taskCount" class="count" aria-live="polite"></div><div id="taskList"></div></section>
+<section id="agentsView" class="hidden"><h2>Tres roles para avanzar</h2><p class="muted">No son automatizaciones en ejecución. Copia las instrucciones y el contexto de una tarea para trabajar con un agente en otro chat.</p><div id="agents" class="grid"></div></section>
+<section id="decisionsView" class="hidden"><h2>La referencia vigente</h2><p class="muted">Estas decisiones sustituyen versiones anteriores incompatibles. Las propuestas pendientes no son funciones aprobadas.</p><div id="decisions" class="rules"></div></section>
+<section id="historyView" class="hidden"><h2>Historial de este tablero</h2><p class="muted">Registra cambios de tareas. Es local y editable mediante importación: no sustituye el log protegido de la futura aplicación.</p><div id="history" class="panel"></div></section>
+<section id="guideView" class="hidden"><h2>Tu proyecto, en una carpeta</h2><div class="rules"><article class="panel"><h3>1. Mantén tu seguimiento</h3><p>Abre <strong>SENTINEL-Planificador.html</strong> con doble clic. Los cambios se guardan en este navegador cuando su almacenamiento está disponible. No se envían a ningún servidor.</p><p>Exporta JSON al terminar. Mover el HTML, cambiar de navegador o borrar sus datos puede dejarte sin el guardado local.</p></article><article class="panel"><h3>2. Retoma en otro chat</h3><p>Usa <strong>Llevar a otro chat</strong> para descargar contexto TXT. En una tarea puedes copiar un encargo que incluye el agente, decisiones y dependencias. Adjunta también el JSON para conservar el estado completo.</p></article><article class="panel"><h3>3. GitHub y publicación</h3><p>El paquete incluye fuente separada y un HTML portable. Puedes subirlos a GitHub. Con GitHub Pages habilitado, publica la carpeta raíz que contiene index.html.</p><p>GitHub no recibe automáticamente tus cambios de tareas. Exporta y conserva el JSON. No incluyas información personal o evaluaciones en un repositorio público.</p></article><article class="panel"><h3>4. Arquitectura modular</h3><p>Este tablero separa datos iniciales, reglas, almacenamiento, UI y estilos. El HTML portable se genera desde esos módulos.</p><p>La futura app también separará pantallas, dominio, datos, permisos, historial, reportes y respaldo; falta aprobar sus contratos.</p></article><article class="panel"><h3>5. Cerrar una tarea</h3><p>Abre una tarea, revisa criterios y dependencias. Para marcarla Completada debes registrar evidencia y completar sus dependencias. Una fecha queda registrada.</p><p>Las tareas opcionales no cuentan en el avance general hasta que decidas incorporarlas.</p></article><article class="panel"><h3>6. Respaldo del tablero</h3><p>Importar reemplaza el estado completo después de tu confirmación. Primero se descarga una copia del estado actual. No importa cualquier JSON ni ejecuta su contenido.</p><button id="printButton">Imprimir vista actual</button></article></div></section>
+<footer id="saveStatus" aria-live="polite"></footer></main></div>
+<dialog id="taskDialog" aria-labelledby="dialogTitle"><div class="dialog-head"><h2 id="dialogTitle">Tarea</h2><button id="closeDialog" type="button" aria-label="Cerrar">×</button></div><form id="taskForm" class="formbody"><div class="formgrid"><label class="full">Título<input id="fTitle" required maxlength="200"></label><label>Fase<select id="fPhase"></select></label><label>Agente<select id="fAgent"></select></label><label>Estado<select id="fStatus"></select></label><label>Prioridad<select id="fPriority"><option>Alta</option><option selected>Media</option><option>Baja</option></select></label><label>Fecha objetivo (opcional)<input id="fDue" type="date"></label><label class="check"><input id="fOptional" type="checkbox">Propuesta opcional, fuera del avance</label><label class="full">Descripción<textarea id="fDetail" maxlength="50000"></textarea></label><label class="full">Criterio de aceptación<textarea id="fAccept" maxlength="50000"></textarea></label><label class="full">Dependencias (IDs separados por coma)<input id="fDeps" placeholder="Ejemplo: A01, D03"></label><div id="dependencyHelp" class="help full"></div><label class="full">Notas de seguimiento<textarea id="fNotes" maxlength="50000"></textarea></label><label class="full">Evidencia / resultado (obligatorio al completar)<textarea id="fEvidence" maxlength="50000" placeholder="Acuerdo, archivo, enlace o prueba realizada…"></textarea></label></div><p id="formError" class="error" role="alert"></p><div class="formfoot"><button id="copyTask" type="button">Copiar encargo al agente</button><div class="actions"><button type="button" id="cancelDialog">Cancelar</button><button class="primary" type="submit">Guardar tarea</button></div></div></form></dialog>
+<input type="file" id="importFile" accept=".json,application/json" class="hidden"><div id="toast" role="status" class="hidden"></div>
+<script>
+window.SENTINEL_SEED = {
+  "schemaVersion": 1,
+  "project": "SENTINEL",
+  "updatedAt": "",
+  "tasks": [
+    {
+      "id": "P01",
+      "title": "Consolidar decisiones vigentes",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Reestructuración registrada; el contexto incluido conserva las correcciones del usuario.",
+      "accept": "Las decisiones vigentes se distinguen de propuestas y requisitos sustituidos.",
+      "status": "Definida",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P02",
+      "title": "Definir alcance y pantallas",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "SCHEDULE, preliminares, hoja de vida, estimado, hourly, arrival, departure, shifting, CRM, configuración y revisión privada.",
+      "accept": "Lista final aprobada; sin módulos adicionales inventados.",
+      "status": "Definida",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P03",
+      "title": "Cerrar reglas de responsabilidad y pausa",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Precisar toma de trabajo sin iniciar y después de PAUSA, permisos del propietario y manejo de dos auditores.",
+      "accept": "Flujo aprobado para ENTRAR/CONTINUAR/VISUALIZAR y toma tras pausa.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P04",
+      "title": "Precisar tareas por campo y check verde",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Decidir obligatoriedad, validación, guardado, correcciones y campos que no aplican.",
+      "accept": "Ejemplos aprobados de pendiente/completado y corrección sin perder historial.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P05",
+      "title": "Definir estatus y textos en inglés",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Confirmar estados, colores y coletillas exactas según referencia del usuario.",
+      "accept": "Catálogo aprobado, sin inventar hitos o pantallas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P06",
+      "title": "Definir evaluación de desempeño PM",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Nota 0–100, oportunidad, exactitud y seguimiento; separar desviaciones de errores atribuibles.",
+      "accept": "Ponderaciones, fórmulas, evidencia y excepciones aprobadas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P07",
+      "title": "Definir reportes por período ETA",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Barcos trabajados, participación, cierre y período determinado por ETA; no gestión de pagos.",
+      "accept": "Reglas de cambio ETA y servicios aún abiertos definidas.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P08",
+      "title": "Definir catálogo y permisos de buques",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Creación, edición, duplicados y desactivación de nombres.",
+      "accept": "Quién puede mantener cada catálogo queda aprobado.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P09",
+      "title": "Definir alcance de respaldo y recuperación",
+      "phase": 0,
+      "agent": "a2",
+      "detail": "Listas, datos, columnas, configuración y relaciones; copias manuales fechadas.",
+      "accept": "Alcance explícito, permisos necesarios y recuperación verificable.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P10",
+      "title": "Confirmar si habrá registro separado de horas",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Solo propuesta: entrada, salida, amanecida e impresión en base propia, sin cálculos obligatorios.",
+      "accept": "Decisión explícita de incluir o excluir; no implementarlo por defecto.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": true,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "P11",
+      "title": "Definir formatos de reportes e impresión",
+      "phase": 0,
+      "agent": "a1",
+      "detail": "Formatos a acordar por pantalla, sin adjuntos ni datos sensibles.",
+      "accept": "Muestras aprobadas y contenido permitido identificado.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D01",
+      "title": "Preservar y aprobar SCHEDULE",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Primera referencia, marca SENTINEL, isotipo portuario y botones solicitados.",
+      "accept": "Comparación visual aprobada sin cambiar tarjetas ni distribución.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D02",
+      "title": "Definir datos preliminares",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Campos definitivos y requisitos para guardar o iniciar.",
+      "accept": "Formulario y validaciones aprobados; campos de mockup no se asumen aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D03",
+      "title": "Definir hoja de vida del proyecto",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Resumen, cabecera/coletillas y acceso a reportes; vista responsable y solo lectura.",
+      "accept": "Diseño de ambas vistas aprobado.",
+      "status": "Por planificar",
+      "deps": [
+        "P03",
+        "P05"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D04",
+      "title": "Definir estimado de operaciones",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Movimientos agregados permitidos, tiempos, recursos y cuadrillas; sin números de contenedores.",
+      "accept": "Campos, fórmulas y edición del estimado aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D05",
+      "title": "Definir Hourly Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Datos por hora, recursos y demoras a la derecha de la hora.",
+      "accept": "Diseño y cálculos por intervalo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "D04"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D06",
+      "title": "Definir Arrival Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Confirmar campos y títulos en inglés de la referencia.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D07",
+      "title": "Definir Departure Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Confirmar campos, resumen y condiciones de salida.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D08",
+      "title": "Definir Shifting Report",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Registrar movimientos del buque de un lugar a otro; campos por acordar.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D09",
+      "title": "Definir CRM de puerto y planners",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Conversaciones, acuerdos, responsables, fechas y seguimiento, sin adjuntos.",
+      "accept": "Pantalla, campos, acciones y ejemplo aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D10",
+      "title": "Definir CONFIGURACIÓN",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Schedule manual, usuarios, rutas/servicios, estatus/colores, permisos y tareas genéricas/específicas.",
+      "accept": "Parámetros editables y permisos de configuración aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P04",
+        "P08"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "D11",
+      "title": "Definir cierre, revisión y evaluación privada",
+      "phase": 1,
+      "agent": "a1",
+      "detail": "Solo propietario; notas por renglón, evidencia y copia de evaluación para IA externa.",
+      "accept": "Vista y criterios de cierre/devolución aprobados.",
+      "status": "Por planificar",
+      "deps": [
+        "P06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A01",
+      "title": "Diseñar arquitectura modular",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Separar UI, dominio, acceso a Lists, permisos, historial, configuración, reportes y respaldos.",
+      "accept": "Mapa de módulos con responsabilidad única y archivos separados.",
+      "status": "Por planificar",
+      "deps": [
+        "P02"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A02",
+      "title": "Documentar contratos y dependencias",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Definir entradas, salidas, errores y versiones de interfaces entre módulos.",
+      "accept": "Cada UI usa contratos; cambiar módulo no exige editar todos los demás.",
+      "status": "Por planificar",
+      "deps": [
+        "A01"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A03",
+      "title": "Definir identidad y permisos reales",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Vincular cuenta Microsoft 365 a auditor; permisos por operación y propietario exclusivo.",
+      "accept": "Demostrar protección también entrando directamente a Lists; ocultar botones no basta.",
+      "status": "Por planificar",
+      "deps": [
+        "P03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "A04",
+      "title": "Definir concurrencia y errores de conexión",
+      "phase": 1,
+      "agent": "a2",
+      "detail": "Dos usuarios, cambios simultáneos y toma de mando tras pausa.",
+      "accept": "Estrategia verificable para evitar responsables dobles y escrituras incompatibles.",
+      "status": "Por planificar",
+      "deps": [
+        "A03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B01",
+      "title": "Revisar modelo anterior y diseñar Lists",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "Revisar las 36 tablas previas sin copiarlas automáticamente; quitar requisitos descartados.",
+      "accept": "Diccionario de listas/campos aprobado según nueva especificación.",
+      "status": "Por planificar",
+      "deps": [
+        "A01",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B02",
+      "title": "Definir IDs, relaciones e índices",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "ID automático único, referencias e índices para consultas eficientes.",
+      "accept": "Modelo y restricciones documentados; no confundir ID visible y clave técnica.",
+      "status": "Por planificar",
+      "deps": [
+        "B01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B03",
+      "title": "Diseñar historial por campo y estados",
+      "phase": 2,
+      "agent": "a2",
+      "detail": "Valor previo/nuevo, autor, fecha/hora, responsable y tiempos operativos.",
+      "accept": "Comparación antes/durante/después y política de integridad definidas.",
+      "status": "Por planificar",
+      "deps": [
+        "B01",
+        "P04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B04",
+      "title": "Crear listas y catálogos de prueba",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Solo después de aprobación del modelo y acceso autorizado al sitio.",
+      "accept": "Listas y relaciones verificadas con datos sintéticos.",
+      "status": "Por planificar",
+      "deps": [
+        "B02",
+        "B03",
+        "A03"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B05",
+      "title": "Aplicar permisos y privacidad",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Proteger estructura, evaluación privada y operaciones según usuario.",
+      "accept": "Pruebas con cuentas reales autorizadas documentadas.",
+      "status": "Por planificar",
+      "deps": [
+        "B04",
+        "A03"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B06",
+      "title": "Implementar módulo de acceso a datos",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Conexión Access/Lists centralizada; errores y consultas consistentes.",
+      "accept": "Ninguna pantalla duplica consultas ni credenciales.",
+      "status": "Por planificar",
+      "deps": [
+        "B04",
+        "A02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "B07",
+      "title": "Implementar respaldo de listas",
+      "phase": 2,
+      "agent": "a3",
+      "detail": "Botón manual, carpetas fechadas, registros y estructura; sin DB Access local.",
+      "accept": "Resultado verificable y errores visibles, sin sobrescribir copias previas.",
+      "status": "Por planificar",
+      "deps": [
+        "P09",
+        "B04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I01",
+      "title": "Crear estructura de código modular",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Módulo/archivo por responsabilidad; dos frontends usando contratos compartidos.",
+      "accept": "Mapa de archivos coincide con arquitectura aprobada.",
+      "status": "Por planificar",
+      "deps": [
+        "A02"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I02",
+      "title": "Implementar SCHEDULE",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D01",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I03",
+      "title": "Implementar preliminares e inicio",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D02",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I04",
+      "title": "Implementar hoja de vida y vista de consulta",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D03",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I05",
+      "title": "Implementar estimado y recursos",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D04",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I06",
+      "title": "Implementar Hourly e incidencias",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D05",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I07",
+      "title": "Implementar Arrival Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D06",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I08",
+      "title": "Implementar Departure Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D07",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I09",
+      "title": "Implementar Shifting Report",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D08",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I10",
+      "title": "Implementar CRM y seguimiento",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D09",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I11",
+      "title": "Implementar CONFIGURACIÓN",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D10",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I12",
+      "title": "Implementar revisión y evaluación privada",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Implementar únicamente el diseño y las reglas aprobadas de este módulo.",
+      "accept": "Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.",
+      "status": "Por planificar",
+      "deps": [
+        "D11",
+        "I01",
+        "B06"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I13",
+      "title": "Implementar tareas y log por campo",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Check de tareas, cambios, autor y fechas; separar responsable del último editor.",
+      "accept": "Guardado válido e historial consistente, con casos de corrección.",
+      "status": "Por planificar",
+      "deps": [
+        "B03",
+        "P04",
+        "I01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I14",
+      "title": "Implementar permisos, pausa y continuación",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Protección en operaciones y reglas de responsabilidad vigentes.",
+      "accept": "VISUALIZAR no escribe; la pausa permite relevo registrado.",
+      "status": "Por planificar",
+      "deps": [
+        "A04",
+        "B05",
+        "I01"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "I15",
+      "title": "Implementar reportes y copia de evaluación",
+      "phase": 3,
+      "agent": "a3",
+      "detail": "Impresión/exportación acordada, copia completa con notas para IA externa.",
+      "accept": "Sin integración IA ni adjuntos; evaluación solo propietario.",
+      "status": "Por planificar",
+      "deps": [
+        "P11",
+        "I12"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T01",
+      "title": "Probar cálculos y reglas por módulo",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Estimado/hourly, límites, vacíos, correcciones y atribución de errores.",
+      "accept": "Resultados esperados y casos fallidos documentados.",
+      "status": "Por planificar",
+      "deps": [
+        "I05",
+        "I06",
+        "I13"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T02",
+      "title": "Probar permisos y acceso directo a Lists",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Auditor responsable, otros auditores y propietario.",
+      "accept": "Sin modificación no autorizada ni acceso a evaluaciones privadas.",
+      "status": "Por planificar",
+      "deps": [
+        "I14",
+        "I12"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T03",
+      "title": "Probar trabajo simultáneo y pase de mando",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Dos usuarios intentan entrar, guardar, pausar y continuar.",
+      "accept": "No doble responsable, cambios perdidos ni relevo sin historial.",
+      "status": "Por planificar",
+      "deps": [
+        "I14",
+        "I04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T04",
+      "title": "Probar respaldo y recuperación aislada",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Reconstruir listas y referencias en destino de prueba autorizado.",
+      "accept": "Copia comprobada; alcance y limitaciones documentados.",
+      "status": "Por planificar",
+      "deps": [
+        "B07"
+      ],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "T05",
+      "title": "Probar recorrido completo con propietario",
+      "phase": 4,
+      "agent": "a3",
+      "detail": "Crear servicio → preliminares → operación → reportes → CRM → cierre → evaluación.",
+      "accept": "Aprobación del propietario y defectos resueltos.",
+      "status": "Por planificar",
+      "deps": [
+        "I02",
+        "I03",
+        "I04",
+        "I05",
+        "I06",
+        "I07",
+        "I08",
+        "I09",
+        "I10",
+        "I11",
+        "I12",
+        "I15",
+        "T01",
+        "T02",
+        "T03",
+        "T04"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E01",
+      "title": "Preparar frontends y guía TXT",
+      "phase": 5,
+      "agent": "a3",
+      "detail": "Dos ACCDB, sin instalador, conexión a Lists y guía de respaldo.",
+      "accept": "Archivos probados con Access objetivo; no anunciar fuentes como app lista.",
+      "status": "Por planificar",
+      "deps": [
+        "T05"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E02",
+      "title": "Versionar fuentes modulares y cambios",
+      "phase": 5,
+      "agent": "a3",
+      "detail": "Repositorio con módulos separados, contratos y evidencia de pruebas.",
+      "accept": "Versión reproducible, cambios y pendientes identificados.",
+      "status": "Por planificar",
+      "deps": [
+        "I01"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "E03",
+      "title": "Validar piloto y plan de mantenimiento",
+      "phase": 5,
+      "agent": "a1",
+      "detail": "Uso de prueba, seguimiento de fallos y actualización del tablero.",
+      "accept": "Propietario acepta piloto; próximas tareas registradas.",
+      "status": "Por planificar",
+      "deps": [
+        "E01",
+        "E02"
+      ],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    }
+  ],
+  "decisions": [
+    [
+      "Arquitectura vigente",
+      "Dos UI Access (Auditores y Supervisión), con datos principales en SharePoint Lists. La decisión de usar solo Access local queda sustituida."
+    ],
+    [
+      "Reestructuración",
+      "Lo acordado para SENTINEL sustituye la concepción y flujos de la APK inicial FARO. Esta nueva versión todavía no está implementada."
+    ],
+    [
+      "Diseño fijo",
+      "Conservar la primera distribución de SCHEDULE: cinco tarjetas originales, filtros y filas de dos líneas. Solo cambios expresamente solicitados. Encabezado SENTINEL | SCHEDULE; nombre de usuario sin rol, avatar ni etiqueta Datos locales. Isotipo portuario, nunca escudo; alternativa definitiva pendiente."
+    ],
+    [
+      "Servicios",
+      "Todos pueden crear tickets con ID automático único. Catálogo de buques; falta decidir quién puede editarlo."
+    ],
+    [
+      "Acceso",
+      "ENTRAR abre preliminares antes del inicio. CONTINUAR para responsable vigente. VISUALIZAR para otros, sin modificaciones. Responsable y último editor se guardan por separado."
+    ],
+    [
+      "Preliminares",
+      "REGISTRAR CAMBIOS guarda sin iniciar. INICIAR OPERACIONES valida, guarda, registra inicio/responsable y abre trabajo."
+    ],
+    [
+      "Pausa y mando",
+      "Pase de mando mediante botón de pausa: otro auditor puede continuar y queda registro. Solo propietario y responsable pueden habilitar el pase. No pantalla adicional de entrega/recepción."
+    ],
+    [
+      "Pantallas operativas",
+      "Hoja de vida, estimado, hourly, arrival, departure, shifting y CRM. Recursos en estimado/hourly; demoras junto a la hora reportada. No pantallas separadas de plan, recursos ni hitos."
+    ],
+    [
+      "Coletillas",
+      "Los llamados hitos son títulos/coletillas superiores de la hoja de vida. Nombres en inglés según referencia del usuario; falta confirmar texto exacto."
+    ],
+    [
+      "Tareas e historial",
+      "Cada selección o campo por llenar es una tarea. Panel de realizadas con check verde. Registrar cambios por campo, usuario y fecha/hora para evaluar oportunidad antes/durante/después de operaciones. Reglas exactas del check por definir."
+    ],
+    [
+      "Evaluación privada",
+      "Evaluación PM 0–100 visible solo al propietario, notas por renglón y cierre/revisión privados. Ponderaciones por aprobar. Distinguir errores de cálculo de cambios operativos. Sin IA integrada; copiar evaluación completa para IA externa."
+    ],
+    [
+      "CRM",
+      "Registrar conversaciones con puerto y planners, acuerdos, responsables, plazos y seguimiento. Campos y reglas finales pendientes."
+    ],
+    [
+      "Sin adjuntos",
+      "No adjuntos ni números de contenedores ni información sensible. Solo reportes definidos para generar/imprimir. La evaluación de personal igualmente requiere privacidad real."
+    ],
+    [
+      "Respaldo",
+      "Un botón HACER RESPALDO, manual, con copias fechadas de listas, datos y estructura, sin sobrescribir anteriores. Sin base Access local de respaldo y sin adjuntos. Falta especificar recuperación y alcance técnico."
+    ],
+    [
+      "Nómina",
+      "No gestionar pagos en SENTINEL. El ETA determina el período para el reporte de barcos trabajados y cerrados. Registro separado de entrada/salida/amanecida con base propia es solo una posibilidad, no alcance aprobado."
+    ],
+    [
+      "Modularidad obligatoria",
+      "Pantallas, lógica, datos, permisos, historial, reportes y configuración separados. Contratos documentados para cambiar un módulo sin tocar todo el sistema."
+    ]
+  ],
+  "agents": [
+    {
+      "id": "a1",
+      "name": "Planificación y UX",
+      "label": "Agente 1",
+      "mission": "Convertir tus decisiones en requisitos, pantallas y criterios de aceptación.",
+      "prompt": "Actúa como Agente 1 — Planificación y UX de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Separa acuerdos, propuestas y pendientes. Conserva la primera referencia de SCHEDULE y aplica solo cambios solicitados. No inventes pantallas ni funciones. No programes sin instrucción. Entrega una propuesta revisable, preguntas pendientes y criterios de aceptación."
+    },
+    {
+      "id": "a2",
+      "name": "Arquitectura y datos",
+      "label": "Agente 2",
+      "mission": "Definir módulos, contratos, SharePoint, identidad, permisos y respaldo.",
+      "prompt": "Actúa como Agente 2 — Arquitectura y datos de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Diseña módulos separados con contratos y dependencias explícitas. Verifica identidad, permisos reales de SharePoint, concurrencia y recuperación de respaldos. No asumas que ocultar botones protege los datos. No implementes ni cambies requisitos sin autorización. Entrega alternativas, decisión propuesta y evidencia requerida."
+    },
+    {
+      "id": "a3",
+      "name": "Implementación y calidad",
+      "label": "Agente 3",
+      "mission": "Programar lo aprobado, probar cada módulo e integrar con evidencia.",
+      "prompt": "Actúa como Agente 3 — Implementación y calidad de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Verifica aprobación de requisitos, diseño y dependencias antes de programar. Separa UI, lógica, datos, permisos, historial y reportes. No rediseñes ni añadas funciones. Documenta archivos, pruebas reales, resultados y limitaciones. No marques completado nada sin evidencia."
+    }
+  ],
+  "phases": [
+    "Planificación",
+    "Diseño y arquitectura",
+    "Base de datos y backend",
+    "Implementación UI y lógica",
+    "Pruebas e integración",
+    "Entrega y seguimiento"
+  ],
+  "activity": []
+};
+
+(function(){
+'use strict';
+const statuses=['Por planificar','Definida','Lista para ejecutar','En ejecución','En revisión','Completada','Bloqueada'];
+const clone=x=>JSON.parse(JSON.stringify(x));
+function validate(s){
+ if(!s||s.schemaVersion!==1||s.project!=='SENTINEL'||!Array.isArray(s.tasks)||!Array.isArray(s.activity))throw Error('El archivo no es un seguimiento SENTINEL compatible.');
+ if(s.tasks.length>5000)throw Error('Máximo 5000 tareas.');
+ const ids=new Set();
+ for(const t of s.tasks){
+  if(!t||typeof t.id!=='string'||ids.has(t.id)||!t.id||t.id.length>80)throw Error('IDs ausentes o duplicados.');ids.add(t.id);
+  for(const k of ['title','detail','accept','notes','evidence','due','updatedAt','completedAt'])if(typeof t[k]!=='string'||t[k].length>50000)throw Error('Campos de tarea inválidos: '+k);
+  if(!t.title.trim()||!Number.isInteger(t.phase)||t.phase<0||t.phase>5||!statuses.includes(t.status)||!['a1','a2','a3'].includes(t.agent)||!['Alta','Media','Baja'].includes(t.priority)||typeof t.optional!=='boolean'||!Array.isArray(t.deps)||t.deps.some(d=>typeof d!=='string'))throw Error('Tarea incompatible: '+t.id);
+  if(t.due&&!/^\d{4}-\d{2}-\d{2}$/.test(t.due))throw Error('Fecha inválida.');
+  if(t.status==='Completada'&&(!t.evidence.trim()||!t.completedAt))throw Error('Las tareas completadas necesitan evidencia y fecha.');
+ }
+ for(const t of s.tasks)if(t.deps.some(d=>!ids.has(d)||d===t.id))throw Error('Dependencias inválidas en '+t.id);
+ for(const t of s.tasks)if(t.status==='Completada'&&t.deps.some(id=>s.tasks.find(x=>x.id===id).status!=='Completada'))throw Error('La tarea '+t.id+' está completada pero tiene dependencias pendientes. Reabre primero las tareas dependientes.');
+ const visiting=new Set(),visited=new Set(),byId=new Map(s.tasks.map(t=>[t.id,t]));
+ function visit(id){if(visiting.has(id))throw Error('Dependencias circulares.');if(visited.has(id))return;visiting.add(id);byId.get(id).deps.forEach(visit);visiting.delete(id);visited.add(id);}s.tasks.forEach(t=>visit(t.id));
+ if(s.activity.length>10000||s.activity.some(a=>!a||typeof a.at!=='string'||typeof a.text!=='string'))throw Error('Historial inválido.');
+ return s;
+}
+function unresolved(t,tasks){return t.deps.filter(id=>tasks.find(x=>x.id===id)?.status!=='Completada');}
+function stats(tasks){const included=tasks.filter(t=>!t.optional),done=included.filter(t=>t.status==='Completada').length;return {total:included.length,done,percent:included.length?Math.round(100*done/included.length):0};}
+function saveTask(state,task){const next=clone(state),at=new Date().toISOString();task=clone(task);task.updatedAt=at;const old=next.tasks.find(t=>t.id===task.id);task.completedAt=task.status==='Completada'?(old?.completedAt||at):'';if(task.status==='Completada'&&unresolved(task,next.tasks).length)throw Error('Completa primero las dependencias o actualiza su relación en la tarea.');if(old)next.tasks[next.tasks.findIndex(t=>t.id===task.id)]=task;else next.tasks.push(task);next.updatedAt=at;next.activity.unshift({at,text:`${old?'Actualizada':'Creada'} ${task.id}: ${task.title} → ${task.status}`});next.activity=next.activity.slice(0,2000);validate(next);return next;}
+window.SentinelModel={statuses,clone,validate,unresolved,stats,saveTask};
+})();
+
+(function(){'use strict';const key='sentinel-project-tracker-v1';let warning='';function load(){try{const raw=localStorage.getItem(key);if(raw)return SentinelModel.validate(JSON.parse(raw));}catch(e){warning='No se pudo recuperar el guardado local. Exporta tus cambios; el estado anterior no se sobrescribirá hasta que guardes. '+e.message;}return SentinelModel.clone(SENTINEL_SEED);}function save(state){try{localStorage.setItem(key,JSON.stringify(state));warning='';return true;}catch(e){warning='El navegador no pudo guardar. Tus cambios siguen en esta sesión: exporta JSON antes de cerrar.';return false;}}window.SentinelStorage={load,save,warning:()=>warning};})();
+
+(function(){
+'use strict';
+const $=id=>document.getElementById(id),M=SentinelModel,phases=SENTINEL_SEED.phases,agents=SENTINEL_SEED.agents;
+let state=SentinelStorage.load(),phase=null,view='tasks',editing=null,dirty=false,timer;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=x=>x?new Date(x).toLocaleString('es',{dateStyle:'medium',timeStyle:'short'}):'Sin cambios guardados';
+const agent=id=>agents.find(a=>a.id===id);
+function toast(t){$('toast').textContent=t;$('toast').classList.remove('hidden');clearTimeout(timer);timer=setTimeout(()=>$('toast').classList.add('hidden'),5000);}
+function warning(){const w=SentinelStorage.warning();$('saveWarning').textContent=w;$('saveWarning').classList.toggle('hidden',!w);$('saveStatus').textContent=`${w?'Guardado local no disponible':'Guardado en este navegador'} · ${fmt(state.updatedAt)} · Exporta JSON para conservar una copia portable.`;}
+function commit(next){state=next;const saved=SentinelStorage.save(state);render();return saved;}
+function download(name,text,type){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+function stamp(){return new Date().toISOString().replace(/[:.]/g,'-');}
+function exportJson(prefix='SENTINEL-seguimiento'){download(`${prefix}-${stamp()}.json`,JSON.stringify(state,null,2),'application/json');}
+function stage(){const i=phases.findIndex((p,i)=>state.tasks.some(t=>t.phase===i&&!t.optional&&t.status!=='Completada'));return i<0?'Seguimiento y mantenimiento':phases[i];}
+function context(){return `SENTINEL — CONTEXTO PARA CONTINUAR\nExportado: ${new Date().toISOString()}\nFase con primeras tareas pendientes: ${stage()}. Completadas: ${M.stats(state.tasks).done}/${M.stats(state.tasks).total}. El estado es el registrado por el propietario: revisar evidencia por tarea. Este tablero no es la aplicación operativa. Las decisiones describen requisitos, no pruebas de implementación.\n\nDECISIONES VIGENTES\n${SENTINEL_SEED.decisions.map(([t,d])=>`- ${t}: ${d}`).join('\n')}\n\nESTADO DE TAREAS\n${phases.map((p,i)=>`\n${i+1}. ${p}\n`+state.tasks.filter(t=>t.phase===i).map(t=>`[${t.id}] ${t.title} | ${t.status} | ${agent(t.agent).name}${t.optional?' | OPCIONAL':''}\nDescripción: ${t.detail}\nAceptación: ${t.accept}\nDepende de: ${t.deps.join(', ')||'Ninguna'}\nNotas: ${t.notes||'—'}\nEvidencia: ${t.evidence||'—'}`).join('\n\n')).join('\n')}\n\nINSTRUCCIÓN\nTrabaja solo en la tarea seleccionada. No cambies diseños ni añadas alcance sin solicitud. Distingue propuestas, acuerdos, implementación y pruebas. Devuelve cambios para actualizar este tablero.\n`;}
+function draft(){return {id:editing||('N-'+Date.now().toString(36).toUpperCase()),title:$('fTitle').value.trim(),phase:Number($('fPhase').value),agent:$('fAgent').value,status:$('fStatus').value,priority:$('fPriority').value,optional:$('fOptional').checked,detail:$('fDetail').value,accept:$('fAccept').value,deps:[...new Set($('fDeps').value.split(',').map(s=>s.trim()).filter(Boolean))],notes:$('fNotes').value,evidence:$('fEvidence').value,due:$('fDue').value,updatedAt:'',completedAt:''};}
+async function copy(text){try{if(!navigator.clipboard?.writeText)throw Error();await navigator.clipboard.writeText(text);toast('Encargo copiado. Pégalo en el otro chat.');}catch{download(`SENTINEL-encargo-${stamp()}.txt`,text,'text/plain;charset=utf-8');toast('Se descargó el encargo TXT porque el navegador no permitió copiar.');}}
+function taskPrompt(t){return `${agent(t.agent).prompt}\n\nTAREA SELECCIONADA\n${t.id}: ${t.title}\nFase: ${phases[t.phase]}\nEstado: ${t.status}\nDescripción: ${t.detail}\nAceptación: ${t.accept}\nNotas: ${t.notes}\nDependencias:\n${t.deps.map(id=>{const d=state.tasks.find(x=>x.id===id);return d?`${id}: ${d.title} (${d.status})`:`${id}: por resolver`;}).join('\n')||'Ninguna'}\n\n${context()}`;}
+function render(){
+ const s=M.stats(state.tasks),defined=state.tasks.filter(t=>t.status==='Definida').length,blocked=state.tasks.filter(t=>t.status==='Bloqueada').length;
+ $('currentPhase').textContent='Fase actual: '+stage();
+ $('scopeNotice').innerHTML='<strong>Seguimiento: '+esc(stage())+'.</strong> Una decisión definida no equivale a una función implementada. El progreso refleja tareas y evidencia registradas, sin verificar automáticamente la app.';
+ $('stats').innerHTML=`<div class="stat"><span>Avance del proyecto</span><b>${s.percent}%</b><div class="progress"><i style="width:${s.percent}%"></i></div></div><div class="stat"><span>Tareas completadas</span><b>${s.done}<small style="font-size:16px;color:#607787"> / ${s.total}</small></b></div><div class="stat"><span>Definidas, aún sin completar</span><b>${defined}</b></div><div class="stat"><span>Bloqueadas</span><b>${blocked}</b></div>`;
+ $('phases').innerHTML=phases.map((p,i)=>{const q=M.stats(state.tasks.filter(t=>t.phase===i));return `<button class="phase ${phase===i?'selected':''}" data-phase="${i}"><span>0${i+1} · ${esc(p)}</span><small>${q.done}/${q.total} completadas</small><div class="progress"><i style="width:${q.percent}%"></i></div></button>`;}).join('');
+ $('phaseTitle').textContent=phase===null?'Todas las fases':phases[phase];renderTasks();
+ $('agents').innerHTML=agents.map(a=>`<article class="panel"><div class="agent-num">${a.label}</div><h3>${a.name}</h3><p>${a.mission}</p><p class="muted">${state.tasks.filter(t=>t.agent===a.id&&t.status!=='Completada').length} tareas sin completar</p><button data-agentprompt="${a.id}">Copiar instrucciones</button><button data-agenttasks="${a.id}" style="margin-top:8px">Ver sus tareas</button></article>`).join('');
+ $('decisions').innerHTML=SENTINEL_SEED.decisions.map(([t,d])=>`<article class="panel"><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join('');
+ $('history').innerHTML=state.activity.length?state.activity.slice(0,200).map(a=>`<div class="log"><time>${esc(fmt(a.at))}</time><div>${esc(a.text)}</div></div>`).join(''):'Aún no hay cambios en el tablero. Los requisitos iniciales son el punto de partida.';
+ warning();
+}
+function renderTasks(){const term=$('search').value.toLocaleLowerCase(),status=$('statusFilter').value,who=$('agentFilter').value,priority=$('priorityFilter').value;const list=state.tasks.filter(t=>(phase===null||t.phase===phase)&&(!status||t.status===status)&&(!who||t.agent===who)&&(!priority||t.priority===priority)&&`${t.id} ${t.title} ${t.detail} ${t.notes}`.toLocaleLowerCase().includes(term));$('taskCount').textContent=`${list.length} de ${state.tasks.length} tareas · Las propuestas opcionales no cuentan en el avance.`;$('taskList').innerHTML=list.length?list.map(t=>{const deps=M.unresolved(t,state.tasks),cls=t.status==='Completada'?'done':t.status==='Bloqueada'?'blocked':t.status==='En ejecución'?'running':'';return `<article class="task"><div><button class="task-title" data-edit="${esc(t.id)}"><strong>${esc(t.id)}</strong> · ${esc(t.title)}</button><div class="meta"><span>${esc(phases[t.phase])}</span><span>·</span><span>${esc(agent(t.agent).label)}</span><span class="badge ${t.priority==='Alta'?'high':''}">${esc(t.priority)}</span>${t.optional?'<span class="badge">Opcional</span>':''}${t.due?`<span>Objetivo: ${esc(t.due)}</span>`:''}</div><small>${esc(t.detail)}</small>${deps.length?`<small>Dependencias sin completar: ${esc(deps.join(', '))}</small>`:''}</div><div class="taskside"><span class="badge ${cls}">${esc(t.status)}</span><button data-edit="${esc(t.id)}">Abrir →</button></div></article>`;}).join(''):'<div class="empty">No hay tareas con estos filtros.<br><button data-clear="yes">Limpiar filtros</button></div>';}
+function setView(v){view=v;for(const name of ['tasks','agents','decisions','history','guide'])$(name+'View').classList.toggle('hidden',name!==v);$('stats').classList.toggle('hidden',v!=='tasks');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));$('pageTitle').textContent={tasks:'Del acuerdo a la ejecución.',agents:'Un equipo con funciones claras.',decisions:'Lo que ya acordamos.',history:'Cada avance queda registrado.',guide:'Continúa donde lo dejaste.'}[v];}
+function clear(){phase=null;$('search').value='';$('statusFilter').value='';$('agentFilter').value='';$('priorityFilter').value='';render();}
+function openTask(id){const t=id?state.tasks.find(t=>t.id===id):{title:'',phase:phase??0,agent:'a1',status:'Por planificar',priority:'Media',optional:false,detail:'',accept:'',deps:[],notes:'',evidence:'',due:''};editing=id||null;dirty=false;$('dialogTitle').textContent=id?`${t.id} · Detalle de tarea`:'Nueva tarea';for(const [field,key]of [['fTitle','title'],['fPhase','phase'],['fAgent','agent'],['fStatus','status'],['fPriority','priority'],['fDue','due'],['fDetail','detail'],['fAccept','accept'],['fNotes','notes'],['fEvidence','evidence']])$(field).value=t[key];$('fOptional').checked=t.optional;$('fDeps').value=t.deps.join(', ');$('dependencyHelp').textContent=t.deps.length?t.deps.map(id=>{const d=state.tasks.find(x=>x.id===id);return `${id}: ${d?.title||'No encontrada'} — ${d?.status||''}`;}).join(' · '):'Puedes consultar los IDs de las demás tareas en el listado.';$('formError').textContent='';$('taskDialog').showModal();}
+function close(){if(dirty&&!confirm('¿Descartar los cambios sin guardar de esta tarea?'))return;$('taskDialog').close();dirty=false;}
+$('fPhase').innerHTML=phases.map((p,i)=>`<option value="${i}">${p}</option>`).join('');$('fAgent').innerHTML=agents.map(a=>`<option value="${a.id}">${a.label} · ${a.name}</option>`).join('');$('fStatus').innerHTML=M.statuses.map(s=>`<option>${s}</option>`).join('');$('statusFilter').insertAdjacentHTML('beforeend',M.statuses.map(s=>`<option>${s}</option>`).join(''));$('agentFilter').insertAdjacentHTML('beforeend',agents.map(a=>`<option value="${a.id}">${a.label} · ${a.name}</option>`).join(''));
+$('newTask').onclick=()=>openTask();$('allPhases').onclick=()=>{phase=null;render();};$('clearFilters').onclick=clear;['search','statusFilter','agentFilter','priorityFilter'].forEach(id=>$(id).addEventListener('input',renderTasks));$('closeDialog').onclick=close;$('cancelDialog').onclick=close;$('taskDialog').addEventListener('cancel',e=>{e.preventDefault();close();});$('taskForm').addEventListener('input',()=>dirty=true);
+$('taskForm').onsubmit=e=>{e.preventDefault();try{const task=draft();if(!task.title)throw Error('Escribe el título.');if(task.status==='Completada'&&!task.evidence.trim())throw Error('Registra evidencia antes de completar.');const saved=commit(M.saveTask(state,task));dirty=false;$('taskDialog').close();toast(saved?'Tarea guardada.':'Cambios solo en esta sesión: exporta JSON antes de cerrar.');}catch(err){$('formError').textContent=err.message;}};
+$('copyTask').onclick=()=>{if(dirty){$('formError').textContent='Guarda los cambios antes de copiar el encargo para enviar una versión consistente.';return;}copy(taskPrompt(editing?state.tasks.find(t=>t.id===editing):draft()));};$('exportJson').onclick=()=>{exportJson();toast('JSON exportado con todas las tareas y notas.');};$('exportContext').onclick=()=>{download(`SENTINEL-contexto-${stamp()}.txt`,context(),'text/plain;charset=utf-8');toast('Contexto TXT descargado para adjuntarlo en otro chat.');};$('importJson').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>15*1024*1024)throw Error('El archivo supera 15 MB.');const imported=M.validate(JSON.parse(await file.text()));if(!confirm(`Importar ${imported.tasks.length} tareas reemplazará el estado actual. Primero se descargará una copia del estado actual. ¿Continuar?`))return;exportJson('SENTINEL-antes-de-importar');const next={...M.clone(SENTINEL_SEED),tasks:M.clone(imported.tasks),activity:M.clone(imported.activity),updatedAt:new Date().toISOString()};next.activity.unshift({at:next.updatedAt,text:'Importado estado desde archivo JSON.'});next.activity=next.activity.slice(0,2000);commit(next);toast('Estado importado.');}catch(err){toast('No se importó: '+err.message);}finally{e.target.value='';}};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.view)setView(b.dataset.view);if(b.dataset.phase!==undefined){phase=Number(b.dataset.phase);render();}if(b.dataset.edit)openTask(b.dataset.edit);if(b.dataset.clear)clear();if(b.dataset.agentprompt)copy(agent(b.dataset.agentprompt).prompt+'\n\n'+context());if(b.dataset.agenttasks){clear();$('agentFilter').value=b.dataset.agenttasks;setView('tasks');renderTasks();}});$('printButton').onclick=()=>window.print();window.addEventListener('beforeunload',e=>{if(dirty||SentinelStorage.warning()){e.preventDefault();e.returnValue='';}});render();
+})();
+
+</script>
+</body></html>

@@ -1,0 +1,21 @@
+TRES AGENTES DEL PROYECTO SENTINEL
+
+1. PLANIFICACION Y UX
+Define requisitos, pantallas, campos, flujos y criterios de aceptacion.
+Conserva disenos y no convierte propuestas en decisiones aprobadas.
+Salida: especificacion o propuesta revisable de la tarea seleccionada.
+
+2. ARQUITECTURA Y DATOS
+Define separacion de modulos, contratos, Lists, identidad, permisos,
+concurrencia, historial y respaldo recuperable.
+Salida: arquitectura/modelo documentados, alternativas y pruebas requeridas.
+
+3. IMPLEMENTACION Y CALIDAD
+Programa exclusivamente lo aprobado, separa archivos por modulo,
+integra y prueba; registra evidencia antes de completar tareas.
+Salida: archivos modificados, pruebas, resultado y limitaciones.
+
+En el tablero, cada tarea tiene asignado uno de estos roles y un boton
+para copiar un encargo con su contexto. Estos roles no ejecutan tareas
+automaticamente ni son una integracion de IA. Puedes usarlos en tres
+chats distintos y actualizar el seguimiento con sus resultados.
