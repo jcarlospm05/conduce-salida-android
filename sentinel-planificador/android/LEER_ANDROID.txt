@@ -1,0 +1,48 @@
+SENTINEL PROYECTO — WRAPPER ANDROID DEL PLANIFICADOR
+
+No es la aplicación operativa de auditores. Conserva el planificador
+HTML en WebView offline con almacenamiento local y exportación SAF.
+
+REQUISITOS DE CONSTRUCCION
+Java 17, Android SDK 35, Gradle 8.11.1.
+En esta carpeta ejecutar, si no se incluyó el wrapper:
+gradle wrapper --gradle-version 8.11.1
+
+Copiar ../src/* a app/src/main/assets/ antes de compilar. Usar src/index.html
+modular con sus JS y CSS, no index.template.html ni el HTML autocontenido
+con scripts inline: la política CSP permite solamente scripts locales.
+
+./gradlew :app:assembleRelease
+./gradlew :app:connectedDebugAndroidTest
+
+APK: app/build/outputs/apk/release/app-release.apk
+El build release usa firma debug para esta entrega de prueba. No es
+una clave persistente de publicación; configurar firma estable antes de
+distribuir actualizaciones que deban conservar datos entre versiones.
+
+INTEGRACION JAVASCRIPT
+window.PlannerBridge.saveFile(name,text,mime)
+window.PlannerBridge.shareFile(name,text,mime)
+window.PlannerBridge.copyText(text)
+window.PlannerBridge.openMasterDocument()
+El HTML debe implementar window.sentinelNativeResult(message) para mostrar
+confirmación, cancelación o error. No indicar exportación exitosa antes
+de recibir el resultado nativo. Compartir abre el selector; no confirma envío.
+
+Documento maestro: editar únicamente res/values/strings.xml,
+master_document_url. El placeholder actual no abre un documento.
+
+Importación JSON: input type=file abre ACTION_OPEN_DOCUMENT. La validación
+de estructura del JSON la conserva el modelo JS. Límite exportación 15 MB.
+No INTERNET, no permisos de almacenamiento, no acceso file://.
+Archivos compartidos son copias temporales bajo cache/exports/.
+Exportación pendiente conserva su archivo y ruta durante recreación de
+Activity con selector abierto. Si se interrumpe antes, avisa al volver.
+Importación interrumpida por recreación requiere elegir JSON nuevamente;
+no reemplaza tareas ni anuncia éxito.
+
+La prueba instrumentada comprueba render, crear tarea, persistir al
+recrear Activity, bridge disponible, saneamiento de nombres y bytes UTF8.
+Si UiAutomation entrega captura, queda en files/planner-smoke.png.
+No prueba visualmente el selector SAF ni que Drive haya subido archivos;
+esos recorridos requieren comprobación manual en Android.

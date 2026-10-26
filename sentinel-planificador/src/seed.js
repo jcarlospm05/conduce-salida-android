@@ -1108,6 +1108,74 @@ window.SENTINEL_SEED = {
       "due": "",
       "updatedAt": "",
       "completedAt": ""
+    },
+    {
+      "id": "C01",
+      "title": "Definir protocolo de contexto por reporte",
+      "phase": 0,
+      "agent": "a4",
+      "detail": "Cada reporte conserva notas de sesión, contexto y tareas del momento; sin sincronización automática a Drive.",
+      "accept": "Protocolo documentado para guardar, compartir y retomar con el último reporte.",
+      "status": "Definida",
+      "deps": [],
+      "priority": "Alta",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "C02",
+      "title": "Confirmar y programar recordatorios en otro chat",
+      "phase": 0,
+      "agent": "a4",
+      "detail": "Propuesta: revisión diaria y consolidación semanal. Confirmar frecuencia, hora y zona America/La_Paz; verificar herramientas.",
+      "accept": "Solo marcar completo con confirmación real de programación; no inventar horarios.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "C03",
+      "title": "Consolidar documento maestro y bitácora",
+      "phase": 5,
+      "agent": "a4",
+      "detail": "Anexar reportes y acuerdos sin borrar versiones; conservar IDs de tareas y contexto vigente.",
+      "accept": "Documento y último reporte identificables; cada cambio tiene respaldo y evidencia.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
+    },
+    {
+      "id": "C04",
+      "title": "Preparar orden de cambio para Codex",
+      "phase": 5,
+      "agent": "a4",
+      "detail": "Resumir el trabajo autorizado: tarea, módulo, alcance, aceptación y pruebas.",
+      "accept": "Encargo completo revisado por propietario antes de implementar.",
+      "status": "Por planificar",
+      "deps": [],
+      "priority": "Media",
+      "optional": false,
+      "notes": "",
+      "evidence": "",
+      "due": "",
+      "updatedAt": "",
+      "completedAt": ""
     }
   ],
   "decisions": [
@@ -1197,6 +1265,13 @@ window.SENTINEL_SEED = {
       "label": "Agente 3",
       "mission": "Programar lo aprobado, probar cada módulo e integrar con evidencia.",
       "prompt": "Actúa como Agente 3 — Implementación y calidad de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Verifica aprobación de requisitos, diseño y dependencias antes de programar. Separa UI, lógica, datos, permisos, historial y reportes. No rediseñes ni añadas funciones. Documenta archivos, pruebas reales, resultados y limitaciones. No marques completado nada sin evidencia."
+    },
+    {
+      "id": "a4",
+      "label": "Agente 4",
+      "name": "Documentación y continuidad",
+      "mission": "Consolidar cada sesión, conservar contexto y preparar pedidos concretos para Codex.",
+      "prompt": "Actúa como Agente 4 — Documentación y continuidad de SENTINEL. Lee el documento maestro y el reporte de contexto más reciente. No programes ni inventes acuerdos. Conserva versiones previas y documenta decisiones, cambios, tareas por ID, evidencias, bloqueos y próxima acción. Prepara una orden para Codex con alcance, módulos afectados, cambios autorizados, criterios de aceptación y pruebas. Para recordatorios, confirma horario, frecuencia y zona America/La_Paz y verifica la capacidad de programarlos antes de afirmar que están activos. Al terminar, genera contexto actualizado y anéxalo a la bitácora del maestro cuando exista conexión autorizada a Drive."
     }
   ],
   "phases": [
@@ -1207,5 +1282,7 @@ window.SENTINEL_SEED = {
     "Pruebas e integración",
     "Entrega y seguimiento"
   ],
-  "activity": []
+  "activity": [],
+  "reports": [],
+  "masterDocumentUrl": "https://docs.google.com/document/d/1a1pzZHOHE2v-4Lsu5-DAelPXsSm3q1DlZYsnFtn00kY/edit?usp=drivesdk"
 };

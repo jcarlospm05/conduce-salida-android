@@ -1,0 +1,91 @@
+name: SENTINEL Proyecto - APK y contexto
+on:
+  push:
+    branches: [codex/sentinel-planificador]
+    paths: ['sentinel-planificador/**', '.github/workflows/sentinel-proyecto-android.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verificar-y-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: sentinel-planificador
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar modelo y preparar HTML
+        run: |
+          node --check src/app.js
+          node --check src/storage.js
+          node --check src/reports.js
+          node tests/model.test.cjs
+          python build.py
+      - name: Preparar navegador y probar interacciones
+        run: |
+          python -m pip install playwright==1.58.0
+          python -m playwright install --with-deps chromium
+          python tests/browser.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Preparar Android y compilar APK
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp src/index.html src/seed.js src/model.js src/storage.js src/reports.js src/app.js src/styles.css android/app/src/main/assets/
+          cd android
+          gradle :app:assembleRelease :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon
+      - name: Habilitar KVM para pruebas Android
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Probar APK en emulador Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
+          script: |
+            cd "$GITHUB_WORKSPACE/sentinel-planificador/android"
+            gradle :app:connectedDebugAndroidTest --no-daemon
+            adb exec-out run-as local.sentinel.planner cat files/planner-smoke.png > "$GITHUB_WORKSPACE/sentinel-planificador/vista-android.png"
+      - name: Preparar entrega
+        run: |
+          mkdir -p entrega
+          cp android/app/build/outputs/apk/release/app-release.apk entrega/SENTINEL-Proyecto-v1.0.0.apk
+          sha256sum entrega/SENTINEL-Proyecto-v1.0.0.apk > entrega/SENTINEL-Proyecto-v1.0.0.apk.sha256
+          cp SENTINEL-Planificador.html DOCUMENTO_MAESTRO.txt LEER_PRIMERO.txt RESULTADO_PRUEBAS.json entrega/
+          python -c "import zipfile,pathlib; r=pathlib.Path('.'); z=zipfile.ZipFile('entrega/SENTINEL-Proyecto-Fuentes.zip','w',zipfile.ZIP_DEFLATED); [(z.write(p,p.as_posix())) for folder in ['src','tests','android/app/src','github'] for p in pathlib.Path(folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]; [(z.write(pathlib.Path(p),p)) for p in ['build.py','generate_seed.py','estado-inicial.json','LEER_PRIMERO.txt','DOCUMENTO_MAESTRO.txt','SENTINEL-Planificador.html','android/settings.gradle','android/build.gradle','android/gradle.properties','android/app/build.gradle','android/LEER_ANDROID.txt']]; z.close()"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: SENTINEL-Proyecto-Android
+          path: |
+            sentinel-planificador/entrega/*
+            sentinel-planificador/RESULTADO_PRUEBAS.json
+            sentinel-planificador/vista-android.png
+            sentinel-planificador/vista-tablero.png
+            sentinel-planificador/vista-movil.png
+            sentinel-planificador/android/app/build/reports/androidTests/**
+            sentinel-planificador/android/app/build/outputs/androidTest-results/**
+      - name: Publicar APK y documentos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create sentinel-proyecto-android-v1.0.0 entrega/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SENTINEL Proyecto - APK v1.0.0 y documento maestro" --notes "Planificador Android local: 60 tareas, 4 roles, reportes de contexto versionados y compartir a Drive/chat. No es la app operativa Access. Sin IA integrada ni sincronización automática Drive. Recordatorios se configuran en otro chat tras confirmar horario. Firma de pruebas; exportar JSON antes de borrar datos o cambiar de versión." --prerelease

@@ -13,7 +13,7 @@ Llevar a otro chat descarga un TXT con decisiones, tareas y notas.
 Adjunta ese TXT y el JSON al nuevo chat.
 Cada tarea permite Copiar encargo al agente; si el navegador no permite
 copiar, descarga el encargo como TXT.
-Los tres agentes son roles con instrucciones, no procesos autonomos ni
+Los cuatro agentes son roles con instrucciones, no procesos autonomos ni
 servicios de IA integrados. Tu decides cuando y con que chat usarlos.
 
 GUARDADO
@@ -25,10 +25,10 @@ Importar reemplaza el estado; pide confirmacion y descarga una copia previa.
 No borra tareas: puedes editar, bloquear o marcar una propuesta opcional.
 
 CONTENIDO
-56 tareas, 6 fases y 16 decisiones vigentes.
+60 tareas, 6 fases y 16 decisiones vigentes.
 La fase actual es PLANIFICACION. Ninguna funcionalidad de la nueva app
 operativa se declara implementada. La APK anterior no es la nueva version.
-El seguimiento empieza en 0% completado, con 2 decisiones ya definidas.
+El seguimiento empieza en 0% completado, con 3 decisiones ya definidas.
 
 MODULARIDAD
 src/index.template.html: estructura de interfaz.
@@ -55,3 +55,13 @@ No se ha programado Access ni se han creado/modificado SharePoint Lists.
 Este entregable es exclusivamente el planificador solicitado.
 Las propuestas adicionales y preguntas pendientes estan en sus tareas.
 Las pruebas y sus limites figuran en RESULTADO_PRUEBAS.json cuando existan.
+
+VERSION 2: APK Y CONTEXTOS
+La APK es el planificador, no la app operativa Access. GENERAR REPORTE
+guarda contexto y tareas de ese momento; puedes exportar TXT/JSON o
+compartir desde Android a Drive/chat. No hay sincronizacion automatica
+con Drive. El agente 4 documenta y prepara ordenes de cambio para Codex.
+Documento maestro abre el Google Doc privado; necesitas la cuenta correcta.
+Sin recordatorios activos: definir horario en otro chat compatible.
+Maximo 100 reportes por archivo de seguimiento, sin borrado automatico.
+No desinstales ni borres datos sin exportar antes tu JSON.

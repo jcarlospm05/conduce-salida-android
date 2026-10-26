@@ -1,0 +1,913 @@
+# SENTINEL — DOCUMENTO MAESTRO DE CONTINUIDAD
+
+Versión base: DM-001. Fecha de preparación: 2026-10-25 21:55 (America/La_Paz).
+
+Propósito: llevar el contexto completo, las decisiones y el trabajo pendiente a otro chat, a los agentes y a Codex. Este documento describe el proyecto y su planificador; NO certifica que la aplicación operativa Access esté implementada.
+
+Estado base del tablero actualizado: 60 tareas en 6 fases; 3 tareas Definidas, ninguna Completada. La fase actual es Planificación. Las tareas y estados de una exportación JSON más reciente prevalecen sobre esta fotografía inicial; las correcciones explícitas más recientes del propietario prevalecen sobre propuestas anteriores.
+
+## 1. Cómo retomar y mantener la historia
+
+1. Leer este documento maestro, luego TODOS sus anexos de contexto en orden de fecha/versión y, por último, el reporte más reciente y el JSON exportado del tablero. No confundir una propuesta con un acuerdo ni una tarea definida con una implementación probada.
+2. Confirmar la tarea concreta que se trabajará y sus dependencias. No rediseñar ni ampliar alcance por iniciativa propia.
+3. Al terminar cada sesión o reporte, agregar un anexo nuevo con identificador único. Conservar DM-001 y todos los anexos anteriores: no reemplazar silenciosamente historia ni borrar decisiones sustituidas.
+4. Si dos documentos discrepan, registrar el conflicto y aplicar la última corrección explícita del propietario. No escoger una alternativa técnica inventada.
+5. Conservar el JSON actualizado para continuar la interacción; el TXT explica el contexto, pero no sustituye el estado editable del planificador.
+
+## 2. Visión y alcance vigente
+
+SENTINEL es una herramienta personal de automatización y evaluación del auditor como Project Manager: planificar, registrar oportunamente, controlar la operación, comunicarse y evaluar mejoras. No se presenta como sistema corporativo aprobado. No registrar datos sensibles, números individuales de contenedores ni archivos adjuntos.
+
+La nueva especificación sustituye el concepto, diseño y flujos de la APK inicial FARO. No basta renombrar la APK anterior. Este planificador de tareas tampoco es la aplicación operativa.
+
+Arquitectura funcional vigente: dos interfaces Access distintas, Auditores y Supervisión, con datos principales compartidos en SharePoint Lists. Supervisión incluye las funciones de Auditores más supervisión. Todos pueden crear servicios/tickets. La evaluación individual y cierre/revisión son de acceso exclusivo del propietario; ese acceso no se extiende automáticamente a todos los usuarios de Supervisión.
+
+La decisión antigua de backend Access exclusivamente local y entrega de tres ACCDB queda sustituida por SharePoint Lists como base principal. Se prevén dos frontends ACCDB; el empaquetado concreto del código/backend debe definirse en arquitectura, sin volver a inventar una tercera base Access local de datos. Sin instalador. No se han creado ni validado las Lists para esta reestructuración.
+
+No integrar IA. El propietario copiará la evaluación completa, incluyendo sus notas, y la llevará voluntariamente a una IA externa para preparar su discurso de retroalimentación. Tampoco hay sincronización automática del planificador con Drive, GitHub u otros chats.
+
+## 3. Decisiones funcionales y correcciones obligatorias
+
+Arquitectura vigente: Dos UI Access (Auditores y Supervisión), con datos principales en SharePoint Lists. La decisión de usar solo Access local queda sustituida.
+
+Reestructuración: Lo acordado para SENTINEL sustituye la concepción y flujos de la APK inicial FARO. Esta nueva versión todavía no está implementada.
+
+Diseño fijo: Conservar la primera distribución de SCHEDULE: cinco tarjetas originales, filtros y filas de dos líneas. Solo cambios expresamente solicitados. Encabezado SENTINEL | SCHEDULE; nombre de usuario sin rol, avatar ni etiqueta Datos locales. Isotipo portuario, nunca escudo; alternativa definitiva pendiente.
+
+Servicios: Todos pueden crear tickets con ID automático único. Catálogo de buques; falta decidir quién puede editarlo.
+
+Acceso: ENTRAR abre preliminares antes del inicio. CONTINUAR para responsable vigente. VISUALIZAR para otros, sin modificaciones. Responsable y último editor se guardan por separado.
+
+Preliminares: REGISTRAR CAMBIOS guarda sin iniciar. INICIAR OPERACIONES valida, guarda, registra inicio/responsable y abre trabajo.
+
+Pausa y mando: Pase de mando mediante botón de pausa: otro auditor puede continuar y queda registro. Solo propietario y responsable pueden habilitar el pase. No pantalla adicional de entrega/recepción.
+
+Pantallas operativas: Hoja de vida, estimado, hourly, arrival, departure, shifting y CRM. Recursos en estimado/hourly; demoras junto a la hora reportada. No pantallas separadas de plan, recursos ni hitos.
+
+Coletillas: Los llamados hitos son títulos/coletillas superiores de la hoja de vida. Nombres en inglés según referencia del usuario; falta confirmar texto exacto.
+
+Tareas e historial: Cada selección o campo por llenar es una tarea. Panel de realizadas con check verde. Registrar cambios por campo, usuario y fecha/hora para evaluar oportunidad antes/durante/después de operaciones. Reglas exactas del check por definir.
+
+Evaluación privada: Evaluación PM 0–100 visible solo al propietario, notas por renglón y cierre/revisión privados. Ponderaciones por aprobar. Distinguir errores de cálculo de cambios operativos. Sin IA integrada; copiar evaluación completa para IA externa.
+
+CRM: Registrar conversaciones con puerto y planners, acuerdos, responsables, plazos y seguimiento. Campos y reglas finales pendientes.
+
+Sin adjuntos: No adjuntos ni números de contenedores ni información sensible. Solo reportes definidos para generar/imprimir. La evaluación de personal igualmente requiere privacidad real.
+
+Respaldo: Un botón HACER RESPALDO, manual, con copias fechadas de listas, datos y estructura, sin sobrescribir anteriores. Sin base Access local de respaldo y sin adjuntos. Falta especificar recuperación y alcance técnico.
+
+Nómina: No gestionar pagos en SENTINEL. El ETA determina el período para el reporte de barcos trabajados y cerrados. Registro separado de entrada/salida/amanecida con base propia es solo una posibilidad, no alcance aprobado.
+
+Modularidad obligatoria: Pantallas, lógica, datos, permisos, historial, reportes y configuración separados. Contratos documentados para cambiar un módulo sin tocar todo el sistema.
+
+Aclaración sobre respaldo: botón manual HACER RESPALDO. Cada ejecución conserva una copia fechada de las listas, sus datos y estructura/configuración recuperable. No sobrescribir las copias anteriores con modificaciones o eliminaciones maliciosas. No crear base local Access para este respaldo. No adjuntos, porque fueron excluidos del alcance. Falta acordar método, permisos, consistencia y alcance de recuperación; exportar solo Excel no prueba que pueda restaurarse la estructura.
+
+Aclaración sobre privacidad: que los auditores desconozcan la URL no protege las listas. El diseño debe demostrar permisos reales sobre estructura, operaciones y evaluación, incluyendo acceso directo a SharePoint; no basta ocultar botones o pantallas. No prometer invulnerabilidad del historial.
+
+## 4. Referencia visual y pantallas
+
+La referencia fija es la PRIMERA propuesta visual del SCHEDULE. Conservar distribución, cinco tarjetas originales (Programados, En operación, En revisión, Finalizados, Con alertas), búsqueda/filtros y filas amplias de dos líneas. No sustituirla por el segundo mockup que cambió tarjetas o distribución. No separar columnas ni añadir elementos sin solicitud.
+
+Cambios pedidos: SENTINEL | SCHEDULE; retirar subtítulo, avatar, rol junto al nombre y etiqueta Datos locales. Conservar nombre del usuario y desplegable. Isotipo de buque, contenedor o grúa pórtico, nunca escudo; diseño final pendiente. Los mockups nuevos no constituyen aprobación automática de cada campo ni de una variante del isotipo.
+
+Referencia original disponible en el workspace de desarrollo: /workspace/generated_images/exec-c07d55d6-86e7-4aa5-8556-3ec118dc49f0.png. Este path no estará disponible en otro chat; adjuntar la imagen de referencia además del documento si se trabajará el diseño.
+
+Pantallas a definir/implementar:
+- SCHEDULE: lista de servicios con ID automático único y botones ENTRAR / CONTINUAR / VISUALIZAR según estado y responsable vigente.
+- Datos preliminares: información ampliada del servicio; REGISTRAR CAMBIOS guarda sin iniciar; INICIAR OPERACIONES valida, guarda, registra inicio/responsable y abre trabajo.
+- Hoja de vida del proyecto: reúne resumen, progreso, datos, cabecera/coletillas y acceso a los reportes; una vista modificable para responsable y otra solo de consulta.
+- Estimado de operaciones: incluye recursos y cuadrillas; campos, fórmulas y reglas por aprobar.
+- Hourly Report: recursos y registros por intervalo; incidencias y demoras a la derecha de cada hora.
+- Arrival Report, Departure Report y Shifting Report: definir cada una según referencias y necesidades del usuario.
+- CRM: comunicaciones con puerto y planners, conversaciones, acuerdos, responsables, plazos y seguimiento, sin adjuntos.
+- CONFIGURACIÓN: schedule digitado manualmente desde lo recibido por correo, auditores/usuarios, catálogos, rutas y servicios, estatus/colores, permisos, campos y tareas generales/específicas. No implica acceso automático al correo.
+- Cierre/revisión y evaluación: solo propietario, nota 0–100, evidencias, notas por cada renglón y copia del texto completo.
+
+NO crear pantallas adicionales de plan de trabajo, hitos, recursos, incidencias ni entrega/recepción de mando. Los llamados hitos son títulos/coletillas de la cabecera, en inglés, no un módulo con tiempos previstos y responsables. Recursos pertenecen a estimado/hourly. Pausar es una acción; otro auditor puede continuar y se registra la nueva responsabilidad. Precisar casos simultáneos y pausa temporal antes de implementar.
+
+La última edición y el responsable vigente son datos diferentes. Registrar estados e historial, pero no reasignar al responsable por cualquier modificación del propietario. VISUALIZAR no permite guardar. Los controles se verifican también al ejecutar/guardar, no solo al pintar la UI.
+
+Cada selección o cuadro de texto por llenar es una tarea. Debe aparecer con check verde al cumplir la regla que se acuerde. Propuesta pendiente: completar solo tras validación/guardado; una corrección conserva historial. Registrar valor anterior/nuevo, autor y fecha/hora para determinar si se capturó antes, durante o después de operaciones. No atribuir automáticamente toda desviación estimado/real a un error del auditor.
+
+No gestionar pagos de nómina. El ETA define el período de reporte de barcos/servicios trabajados. Tratamiento de cambios ETA, trabajos compartidos y servicios aún abiertos por definir. Una sección separada de entrada/salida/amanecida, base propia e impresión es solo una posibilidad; no requiere calcular horas ni se implementa por defecto.
+
+## 5. Modularidad obligatoria y arquitectura por definir
+
+Requisito no negociable: no mezclar el código de todos los módulos. Separar pantalla, reglas del negocio y almacenamiento. Una modificación localizada debe evitar tocar todo el sistema. Cada módulo tendrá nombre, archivos, responsabilidad, contrato de entrada/salida, errores, dependencias y pruebas.
+
+Separaciones mínimas a diseñar: UI por pantalla; dominio/reglas; acceso a datos Lists; identidad/permisos; historial; configuración; cálculo de estimado/hourly; CRM; cierre/evaluación privada; reportes; respaldo/recuperación. Los dos frontends podrán reutilizar contratos y fuentes compartidas sin duplicación arbitraria. No establecer nombres definitivos de archivos VBA antes de aprobar A01/A02.
+
+Las pantallas llamarán contratos del dominio/datos; no duplicarán consultas, credenciales ni reglas de autorización. Versionar contratos y cambios. Probar módulos por separado y luego integración. Conservar la referencia visual del SCHEDULE; una necesidad técnica no autoriza rediseñarlo.
+
+No copiar automáticamente el modelo previo de 36 tablas. Revisar campo por campo frente a la reestructuración, excluir requisitos descartados y diseñar las listas, claves, relaciones e índices correspondientes. Falta definir identidad Microsoft 365, permisos efectivos, concurrencia, fallos de conexión y recuperación.
+
+## 6. Equipo de cuatro agentes
+
+Agente 1 — Planificación y UX
+
+Misión: Convertir tus decisiones en requisitos, pantallas y criterios de aceptación.
+
+Instrucción de rol: Actúa como Agente 1 — Planificación y UX de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Separa acuerdos, propuestas y pendientes. Conserva la primera referencia de SCHEDULE y aplica solo cambios solicitados. No inventes pantallas ni funciones. No programes sin instrucción. Entrega una propuesta revisable, preguntas pendientes y criterios de aceptación.
+
+Agente 2 — Arquitectura y datos
+
+Misión: Definir módulos, contratos, SharePoint, identidad, permisos y respaldo.
+
+Instrucción de rol: Actúa como Agente 2 — Arquitectura y datos de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Diseña módulos separados con contratos y dependencias explícitas. Verifica identidad, permisos reales de SharePoint, concurrencia y recuperación de respaldos. No asumas que ocultar botones protege los datos. No implementes ni cambies requisitos sin autorización. Entrega alternativas, decisión propuesta y evidencia requerida.
+
+Agente 3 — Implementación y calidad
+
+Misión: Programar lo aprobado, probar cada módulo e integrar con evidencia.
+
+Instrucción de rol: Actúa como Agente 3 — Implementación y calidad de SENTINEL. Lee el contexto adjunto y trabaja solo la tarea seleccionada. Verifica aprobación de requisitos, diseño y dependencias antes de programar. Separa UI, lógica, datos, permisos, historial y reportes. No rediseñes ni añadas funciones. Documenta archivos, pruebas reales, resultados y limitaciones. No marques completado nada sin evidencia.
+
+Agente 4 — Documentación y continuidad
+
+Misión: conservar versiones completas y coherentes del contexto después de cada reporte, mantener documento maestro y anexos, y preparar órdenes de cambio concretas para Codex. No implementar automáticamente, no inventar acuerdos, no declarar recordatorios ni agentes autónomos activos sin capacidad comprobada.
+
+Instrucción de rol: Actúa como Agente 4 de SENTINEL, Documentación y continuidad. Lee el documento maestro, todos los anexos y el estado más reciente. Después de cada reporte crea una nueva versión/anexo con fecha, ID, acuerdos, cambios, pendientes, bloqueos, tareas/estados actualizados, evidencias, petición concreta para Codex y próxima acción. Diferencia propuestas de decisiones y las funciones del planificador de las de Access. Mantén la historia, no sobrescribas silenciosamente. Prepara encargos acotados para Codex con ID de tarea, alcance, archivos/módulos, criterios, pruebas y diseño a preservar; no los ejecutes automáticamente. Entrega la exportación para que el usuario decida compartirla con otro chat o Drive.
+
+Los cuatro son roles de trabajo que el usuario podrá invocar en un chat capaz de agentes. El HTML v1 publicado se documentó con tres roles; el cuarto se incorpora a esta instrucción de continuidad y deberá reflejarse en la versión actualizada del planificador cuando esté implementado. Un botón o una tarjeta de agente no inicia por sí solo un servicio de IA.
+
+## 7. Fases y catálogo completo de 56 tareas
+
+Estados iniciales del planificador: Por planificar, Definida y demás estados que permita el modelo. Definida no equivale a Completada. La finalización requiere cumplir aceptación, dependencias y evidencia verificable. Las tareas opcionales no deben inflar el avance obligatorio. No marcar una tarea como hecha porque exista una descripción.
+
+## Fase 1 — Planificación
+
+P01 — Consolidar decisiones vigentes
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Definida. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Reestructuración registrada; el contexto incluido conserva las correcciones del usuario.
+
+Criterio de aceptación: Las decisiones vigentes se distinguen de propuestas y requisitos sustituidos.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P02 — Definir alcance y pantallas
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Definida. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: SCHEDULE, preliminares, hoja de vida, estimado, hourly, arrival, departure, shifting, CRM, configuración y revisión privada.
+
+Criterio de aceptación: Lista final aprobada; sin módulos adicionales inventados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P03 — Cerrar reglas de responsabilidad y pausa
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Precisar toma de trabajo sin iniciar y después de PAUSA, permisos del propietario y manejo de dos auditores.
+
+Criterio de aceptación: Flujo aprobado para ENTRAR/CONTINUAR/VISUALIZAR y toma tras pausa.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P04 — Precisar tareas por campo y check verde
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Decidir obligatoriedad, validación, guardado, correcciones y campos que no aplican.
+
+Criterio de aceptación: Ejemplos aprobados de pendiente/completado y corrección sin perder historial.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P05 — Definir estatus y textos en inglés
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Confirmar estados, colores y coletillas exactas según referencia del usuario.
+
+Criterio de aceptación: Catálogo aprobado, sin inventar hitos o pantallas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P06 — Definir evaluación de desempeño PM
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Nota 0–100, oportunidad, exactitud y seguimiento; separar desviaciones de errores atribuibles.
+
+Criterio de aceptación: Ponderaciones, fórmulas, evidencia y excepciones aprobadas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P07 — Definir reportes por período ETA
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Barcos trabajados, participación, cierre y período determinado por ETA; no gestión de pagos.
+
+Criterio de aceptación: Reglas de cambio ETA y servicios aún abiertos definidas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P08 — Definir catálogo y permisos de buques
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Creación, edición, duplicados y desactivación de nombres.
+
+Criterio de aceptación: Quién puede mantener cada catálogo queda aprobado.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P09 — Definir alcance de respaldo y recuperación
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Listas, datos, columnas, configuración y relaciones; copias manuales fechadas.
+
+Criterio de aceptación: Alcance explícito, permisos necesarios y recuperación verificable.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P10 — Confirmar si habrá registro separado de horas
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Opcional, pendiente de decidir.
+
+Dependencias: ninguna registrada.
+
+Alcance: Solo propuesta: entrada, salida, amanecida e impresión en base propia, sin cálculos obligatorios.
+
+Criterio de aceptación: Decisión explícita de incluir o excluir; no implementarlo por defecto.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+P11 — Definir formatos de reportes e impresión
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: ninguna registrada.
+
+Alcance: Formatos a acordar por pantalla, sin adjuntos ni datos sensibles.
+
+Criterio de aceptación: Muestras aprobadas y contenido permitido identificado.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## Fase 2 — Diseño y arquitectura
+
+D01 — Preservar y aprobar SCHEDULE
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Primera referencia, marca SENTINEL, isotipo portuario y botones solicitados.
+
+Criterio de aceptación: Comparación visual aprobada sin cambiar tarjetas ni distribución.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D02 — Definir datos preliminares
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Campos definitivos y requisitos para guardar o iniciar.
+
+Criterio de aceptación: Formulario y validaciones aprobados; campos de mockup no se asumen aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D03 — Definir hoja de vida del proyecto
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P03, P05.
+
+Alcance: Resumen, cabecera/coletillas y acceso a reportes; vista responsable y solo lectura.
+
+Criterio de aceptación: Diseño de ambas vistas aprobado.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D04 — Definir estimado de operaciones
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Movimientos agregados permitidos, tiempos, recursos y cuadrillas; sin números de contenedores.
+
+Criterio de aceptación: Campos, fórmulas y edición del estimado aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D05 — Definir Hourly Report
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: D04.
+
+Alcance: Datos por hora, recursos y demoras a la derecha de la hora.
+
+Criterio de aceptación: Diseño y cálculos por intervalo aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D06 — Definir Arrival Report
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Confirmar campos y títulos en inglés de la referencia.
+
+Criterio de aceptación: Pantalla, campos, acciones y ejemplo aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D07 — Definir Departure Report
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Confirmar campos, resumen y condiciones de salida.
+
+Criterio de aceptación: Pantalla, campos, acciones y ejemplo aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D08 — Definir Shifting Report
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Registrar movimientos del buque de un lugar a otro; campos por acordar.
+
+Criterio de aceptación: Pantalla, campos, acciones y ejemplo aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D09 — Definir CRM de puerto y planners
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Conversaciones, acuerdos, responsables, fechas y seguimiento, sin adjuntos.
+
+Criterio de aceptación: Pantalla, campos, acciones y ejemplo aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D10 — Definir CONFIGURACIÓN
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P04, P08.
+
+Alcance: Schedule manual, usuarios, rutas/servicios, estatus/colores, permisos y tareas genéricas/específicas.
+
+Criterio de aceptación: Parámetros editables y permisos de configuración aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+D11 — Definir cierre, revisión y evaluación privada
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P06.
+
+Alcance: Solo propietario; notas por renglón, evidencia y copia de evaluación para IA externa.
+
+Criterio de aceptación: Vista y criterios de cierre/devolución aprobados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+A01 — Diseñar arquitectura modular
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: P02.
+
+Alcance: Separar UI, dominio, acceso a Lists, permisos, historial, configuración, reportes y respaldos.
+
+Criterio de aceptación: Mapa de módulos con responsabilidad única y archivos separados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+A02 — Documentar contratos y dependencias
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: A01.
+
+Alcance: Definir entradas, salidas, errores y versiones de interfaces entre módulos.
+
+Criterio de aceptación: Cada UI usa contratos; cambiar módulo no exige editar todos los demás.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+A03 — Definir identidad y permisos reales
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: P03.
+
+Alcance: Vincular cuenta Microsoft 365 a auditor; permisos por operación y propietario exclusivo.
+
+Criterio de aceptación: Demostrar protección también entrando directamente a Lists; ocultar botones no basta.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+A04 — Definir concurrencia y errores de conexión
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: A03.
+
+Alcance: Dos usuarios, cambios simultáneos y toma de mando tras pausa.
+
+Criterio de aceptación: Estrategia verificable para evitar responsables dobles y escrituras incompatibles.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## Fase 3 — Base de datos y backend
+
+B01 — Revisar modelo anterior y diseñar Lists
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: A01, D03, D04, D05, D06, D07, D08, D09, D10, D11.
+
+Alcance: Revisar las 36 tablas previas sin copiarlas automáticamente; quitar requisitos descartados.
+
+Criterio de aceptación: Diccionario de listas/campos aprobado según nueva especificación.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B02 — Definir IDs, relaciones e índices
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: B01.
+
+Alcance: ID automático único, referencias e índices para consultas eficientes.
+
+Criterio de aceptación: Modelo y restricciones documentados; no confundir ID visible y clave técnica.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B03 — Diseñar historial por campo y estados
+
+Agente responsable: Agente 2 / Arquitectura y datos. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: B01, P04.
+
+Alcance: Valor previo/nuevo, autor, fecha/hora, responsable y tiempos operativos.
+
+Criterio de aceptación: Comparación antes/durante/después y política de integridad definidas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B04 — Crear listas y catálogos de prueba
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: B02, B03, A03.
+
+Alcance: Solo después de aprobación del modelo y acceso autorizado al sitio.
+
+Criterio de aceptación: Listas y relaciones verificadas con datos sintéticos.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B05 — Aplicar permisos y privacidad
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: B04, A03.
+
+Alcance: Proteger estructura, evaluación privada y operaciones según usuario.
+
+Criterio de aceptación: Pruebas con cuentas reales autorizadas documentadas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B06 — Implementar módulo de acceso a datos
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: B04, A02.
+
+Alcance: Conexión Access/Lists centralizada; errores y consultas consistentes.
+
+Criterio de aceptación: Ninguna pantalla duplica consultas ni credenciales.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+B07 — Implementar respaldo de listas
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P09, B04.
+
+Alcance: Botón manual, carpetas fechadas, registros y estructura; sin DB Access local.
+
+Criterio de aceptación: Resultado verificable y errores visibles, sin sobrescribir copias previas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## Fase 4 — Implementación UI y lógica
+
+I01 — Crear estructura de código modular
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: A02.
+
+Alcance: Módulo/archivo por responsabilidad; dos frontends usando contratos compartidos.
+
+Criterio de aceptación: Mapa de archivos coincide con arquitectura aprobada.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I02 — Implementar SCHEDULE
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D01, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I03 — Implementar preliminares e inicio
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D02, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I04 — Implementar hoja de vida y vista de consulta
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D03, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I05 — Implementar estimado y recursos
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D04, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I06 — Implementar Hourly e incidencias
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D05, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I07 — Implementar Arrival Report
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D06, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I08 — Implementar Departure Report
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D07, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I09 — Implementar Shifting Report
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D08, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I10 — Implementar CRM y seguimiento
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D09, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I11 — Implementar CONFIGURACIÓN
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D10, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I12 — Implementar revisión y evaluación privada
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: D11, I01, B06.
+
+Alcance: Implementar únicamente el diseño y las reglas aprobadas de este módulo.
+
+Criterio de aceptación: Prueba funcional por módulo y evidencia; sin modificar otras UI sin necesidad.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I13 — Implementar tareas y log por campo
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: B03, P04, I01.
+
+Alcance: Check de tareas, cambios, autor y fechas; separar responsable del último editor.
+
+Criterio de aceptación: Guardado válido e historial consistente, con casos de corrección.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I14 — Implementar permisos, pausa y continuación
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: A04, B05, I01.
+
+Alcance: Protección en operaciones y reglas de responsabilidad vigentes.
+
+Criterio de aceptación: VISUALIZAR no escribe; la pausa permite relevo registrado.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+I15 — Implementar reportes y copia de evaluación
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: P11, I12.
+
+Alcance: Impresión/exportación acordada, copia completa con notas para IA externa.
+
+Criterio de aceptación: Sin integración IA ni adjuntos; evaluación solo propietario.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## Fase 5 — Pruebas e integración
+
+T01 — Probar cálculos y reglas por módulo
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: I05, I06, I13.
+
+Alcance: Estimado/hourly, límites, vacíos, correcciones y atribución de errores.
+
+Criterio de aceptación: Resultados esperados y casos fallidos documentados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+T02 — Probar permisos y acceso directo a Lists
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: I14, I12.
+
+Alcance: Auditor responsable, otros auditores y propietario.
+
+Criterio de aceptación: Sin modificación no autorizada ni acceso a evaluaciones privadas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+T03 — Probar trabajo simultáneo y pase de mando
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: I14, I04.
+
+Alcance: Dos usuarios intentan entrar, guardar, pausar y continuar.
+
+Criterio de aceptación: No doble responsable, cambios perdidos ni relevo sin historial.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+T04 — Probar respaldo y recuperación aislada
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Alta. Alcance obligatorio del plan.
+
+Dependencias: B07.
+
+Alcance: Reconstruir listas y referencias en destino de prueba autorizado.
+
+Criterio de aceptación: Copia comprobada; alcance y limitaciones documentados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+T05 — Probar recorrido completo con propietario
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: I02, I03, I04, I05, I06, I07, I08, I09, I10, I11, I12, I15, T01, T02, T03, T04.
+
+Alcance: Crear servicio → preliminares → operación → reportes → CRM → cierre → evaluación.
+
+Criterio de aceptación: Aprobación del propietario y defectos resueltos.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## Fase 6 — Entrega y seguimiento
+
+E01 — Preparar frontends y guía TXT
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: T05.
+
+Alcance: Dos ACCDB, sin instalador, conexión a Lists y guía de respaldo.
+
+Criterio de aceptación: Archivos probados con Access objetivo; no anunciar fuentes como app lista.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+E02 — Versionar fuentes modulares y cambios
+
+Agente responsable: Agente 3 / Implementación y calidad. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: I01.
+
+Alcance: Repositorio con módulos separados, contratos y evidencia de pruebas.
+
+Criterio de aceptación: Versión reproducible, cambios y pendientes identificados.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+E03 — Validar piloto y plan de mantenimiento
+
+Agente responsable: Agente 1 / Planificación y UX. Estado inicial: Por planificar. Prioridad: Media. Alcance obligatorio del plan.
+
+Dependencias: E01, E02.
+
+Alcance: Uso de prueba, seguimiento de fallos y actualización del tablero.
+
+Criterio de aceptación: Propietario acepta piloto; próximas tareas registradas.
+
+Evidencia / notas / fecha de cierre: por registrar al trabajar la tarea.
+
+## 8. Instrucción maestra copiable para otro chat
+
+Actúa como coordinador de SENTINEL. Lee este documento maestro, sus anexos y el JSON más reciente. Estamos reestructurando y planificando la aplicación operativa, no continuando sin revisión la APK FARO. Respeta las correcciones del propietario y la referencia fija de SCHEDULE. Si este chat dispone de agentes, crea exactamente cuatro roles: 1 Planificación y UX, 2 Arquitectura y datos, 3 Implementación y calidad, 4 Documentación y continuidad. Si no puede crear agentes, usa los cuatro roles como instrucciones de trabajo y explica la limitación; no afirmes que hay procesos activos. Trabaja tareas acotadas por ID, con dependencias y criterios de aceptación. No programes funcionalidad operativa sin que el propietario encargue esa implementación. No introduzcas pantallas, datos sensibles, IA integrada ni automatizaciones externas no solicitadas.
+
+Después de cada reporte pide al Agente 4 que prepare una nueva versión del contexto, actualice tareas y redacte una orden de cambio para Codex. Revisa el resultado antes de marcar completado. Los cambios se comparten mediante exportación/adjuntos y acción del usuario, no por sincronización automática con Drive o GitHub. Para publicar, usa solo el destino autorizado y no incluyas información privada.
+
+Recordatorios: proponer una revisión diaria de próximas tareas y una consolidación semanal del contexto. Antes de programar nada, comprobar si este chat dispone de esa capacidad y confirmar frecuencia, hora, día semanal y zona America/La_Paz con el usuario. Hacer una sola consulta breve que reúna esas preferencias; no inventar horarios ni activar nada por silencio. Si no existe capacidad, entregar el texto/plan para que el usuario lo configure. No decir que recordatorios, agentes o sincronizaciones están activos sin una confirmación real de la herramienta.
+
+Primera acción al retomar: mostrar la fase vigente, la siguiente tarea desbloqueada y hasta tres decisiones pendientes; luego trabajar únicamente el encargo indicado. No repetir una implementación aprobada ni sobrescribir cambios más recientes con la semilla inicial.
+
+## 9. Plantillas de reporte y orden de cambio
+
+PLANTILLA DE ANEXO DE CONTEXTO
+ID de reporte/versión: CTX-AAAA-MM-DD-NNN
+Fecha y hora: [America/La_Paz, indicar también zona]
+Documento maestro/base y anexo anterior: [ID]
+Tarea(s) trabajada(s): [ID]
+Cambios realizados: [concreto]
+Acuerdos confirmados por el propietario: [texto]
+Propuestas aún no aprobadas: [texto]
+Pendientes y bloqueos: [texto]
+Tareas actualizadas: [ID, estado anterior/nuevo y motivo]
+Dependencias afectadas: [ID]
+Evidencias: [prueba, archivo, commit o captura verificable]
+Petición concreta para Codex: [encargo acotado o ninguna]
+Próxima acción: [tarea/decisión]
+Archivos exportados y ubicación elegida por el usuario: [JSON/TXT]
+Limitaciones y verificaciones no realizadas: [texto]
+
+PLANTILLA DE ORDEN DE CAMBIO PARA CODEX
+ID de encargo: OC-AAAA-MM-DD-NNN
+Tarea del tablero: [ID existente o nueva tarea registrada]
+Contexto vigente: [DM y último CTX]
+Objetivo y alcance autorizado: [qué debe cambiar]
+Módulos/archivos a revisar y modificar: [rutas o por identificar antes de editar]
+Dependencias y contratos: [entradas, salidas, errores y tareas previas]
+Criterios de aceptación: [resultados observables]
+Pruebas necesarias: [casos, permisos, límites e integración según cambio]
+Diseño a preservar: [referencia y aspectos sin cambios]
+Restricciones de datos/acceso: [sin adjuntos, no datos sensibles, permisos]
+Entregables y evidencia: [archivos, pruebas reales, notas y versión]
+No implementar fuera de alcance ni publicar/sincronizar en destinos no autorizados. Al finalizar, informar estado real y limitaciones; preparar el anexo nuevo.
+
+## 10. Guardado, snapshots y entrega entre chats
+
+El planificador guarda su estado localmente cuando el navegador lo permite. Exportar JSON después de trabajar y TXT de contexto para continuar en otro chat. Guardar el HTML por sí solo no incorpora los cambios del usuario. Un estado local se puede perder al borrar almacenamiento o cambiar navegador; la exportación es el respaldo portable.
+
+La versión nueva prevé snapshots/reportes locales de contexto por cada reporte. No afirmar implementada esa función en la v1 por estar descrita aquí: comprobar la versión entregada y su evidencia. Mantener versiones por anexos y exportar la copia que se vaya a compartir. Enviar a otro chat o subir a Drive requiere acción del usuario o un encargo explícito para esa subida. No hay sincronización automática con Drive, ni IA integrada, ni agentes externos ejecutándose solos.
+
+No usar el planificador ni el documento público para evaluaciones reales, datos personales, credenciales ni información corporativa. Documentar con datos sintéticos y nombres genéricos.
+
+## 11. Estado real de entregables y verificaciones
+
+ENTREGADO Y VERIFICADO: planificador HTML portable v1.0.0, fuentes separadas HTML/CSS/JS, JSON inicial, instrucciones TXT y encargos para tres roles originales. Permite crear/editar tareas, fases, estados, dependencias, notas y evidencia, filtrar y exportar/importar JSON y contexto TXT. Verificación de GitHub Actions 40255905914, commit 914ff68e3e667daf62e512f418731a527ac6b9b4, SUCCESS: 10 pruebas de modelo y 13 comprobaciones interactivas Chromium. Esto verifica el recorrido probado, no todos los escenarios posibles. Etiqueta de entrega: sentinel-planificador-v1.0.0.
+
+NO DESPLEGADO EN ESA ENTREGA: no se certificó sitio web alojado ni visor interactivo embebido en el chat. Descargar y abrir el HTML permite usarlo localmente. Subir fuentes a GitHub no equivale a hosting ni sincroniza tareas.
+
+EN PREPARACIÓN: nueva APK del PLANIFICADOR y ampliaciones de continuidad/documentación. No confundirla con APK operativa SENTINEL ni anunciar APK descargable, instalación comprobada o función nueva aprobada hasta tener artefacto y pruebas de esa versión. Los snapshots y cuarto agente deben identificarse por la versión efectivamente entregada.
+
+SIN IMPLEMENTAR EN ESTA REESTRUCTURACIÓN: la nueva app operativa Access, modelo SharePoint Lists, backend, pantallas definitivas, reglas/cálculos, permisos efectivos, respaldo/recuperación y pruebas Windows/Access/SharePoint. Los paquetes Access anteriores fueron revisados desde Linux sin validación funcional en Access; no presentarlos como bases listas.
+
+Este documento maestro inicial no crea automatizaciones, recordatorios, agentes persistentes, conexiones a Drive ni cambios de datos en SharePoint. Documenta el trabajo y cómo continuarlo con control del propietario.
+
+## 12. Bitácora inicial
+
+DM-001 — Documento maestro inicial: consolida decisiones vigentes, correcciones, cuatro roles, 56 tareas, 6 fases, modularidad, continuidad por anexos y estado real de entregables. Próximo reporte: crear CTX con fecha/ID y los cambios reales de la siguiente sesión. No sustituir esta base ni reiniciar el progreso con la semilla si hay un JSON más reciente.
+
+## 16. Tareas de continuidad añadidas en esta versión
+
+C01 — Definir protocolo de contexto por reporte
+Agente: Documentación y continuidad. Fase: Planificación. Estado: Definida.
+Descripción: Cada reporte conserva notas de sesión, contexto y tareas del momento; sin sincronización automática a Drive.
+Aceptación: Protocolo documentado para guardar, compartir y retomar con el último reporte.
+
+C02 — Confirmar y programar recordatorios en otro chat
+Agente: Documentación y continuidad. Fase: Planificación. Estado: Por planificar.
+Descripción: Propuesta: revisión diaria y consolidación semanal. Confirmar frecuencia, hora y zona America/La_Paz; verificar herramientas.
+Aceptación: Solo marcar completo con confirmación real de programación; no inventar horarios.
+
+C03 — Consolidar documento maestro y bitácora
+Agente: Documentación y continuidad. Fase: Entrega y seguimiento. Estado: Por planificar.
+Descripción: Anexar reportes y acuerdos sin borrar versiones; conservar IDs de tareas y contexto vigente.
+Aceptación: Documento y último reporte identificables; cada cambio tiene respaldo y evidencia.
+
+C04 — Preparar orden de cambio para Codex
+Agente: Documentación y continuidad. Fase: Entrega y seguimiento. Estado: Por planificar.
+Descripción: Resumir el trabajo autorizado: tarea, módulo, alcance, aceptación y pruebas.
+Aceptación: Encargo completo revisado por propietario antes de implementar.
+
+## 17. Documento maestro y distribución
+
+Documento en Drive: https://docs.google.com/document/d/1a1pzZHOHE2v-4Lsu5-DAelPXsSm3q1DlZYsnFtn00kY/edit?usp=drivesdk
+Se conserva el acceso existente de Drive. Compartir un enlace con otro chat no garantiza que ese chat tenga acceso: deberá conectarse a Drive o recibir el contexto exportado.
+La APK solicitada es SENTINEL Proyecto, un planificador de seguimiento; no es la aplicación operativa Access ni reemplaza sus tareas pendientes.

@@ -12,11 +12,11 @@ with sync_playwright() as p:
  page.on('pageerror',lambda e:errors.append(str(e)))
  page.goto((r/'SENTINEL-Planificador.html').as_uri())
  page.wait_for_selector('.task')
- assert page.locator('.task').count()==56
- ok('HTML portable abre sin servidor y muestra 56 tareas')
+ assert page.locator('.task').count()==60
+ ok('HTML portable abre sin servidor y muestra 60 tareas')
  page.screenshot(path=str(r/'vista-tablero.png'),full_page=True)
  page.locator('#search').fill('Hourly')
- assert page.locator('.task').count()>0 and page.locator('.task').count()<56
+ assert page.locator('.task').count()>0 and page.locator('.task').count()<60
  page.locator('#clearFilters').click()
  ok('Búsqueda y filtros')
  page.locator('#newTask').click()
@@ -24,11 +24,11 @@ with sync_playwright() as p:
  page.locator('#fDetail').fill('Tarea agregada por el propietario')
  page.locator('#fNotes').fill('Mi nota de prueba')
  page.locator('#taskForm button[type=submit]').click()
- assert page.locator('.task').count()==57
+ assert page.locator('.task').count()==61
  assert page.locator('.task img').count()==0
  ok('Crear tarea y mostrar texto sin ejecutar HTML')
  page.reload()
- assert page.locator('.task').count()==57
+ assert page.locator('.task').count()==61
  ok('Persistencia local al reabrir')
  page.locator('[data-edit=P01]').first.click()
  page.locator('#fStatus').select_option('Completada')
@@ -48,27 +48,41 @@ with sync_playwright() as p:
  ok('Dependencias bloquean cierre sin completar')
  with page.expect_download() as d:page.locator('#exportJson').click()
  export=Path(tempfile.gettempdir())/'sentinel-test-export.json';d.value.save_as(str(export))
- snapshot=json.loads(export.read_text());assert len(snapshot['tasks'])==57
+ snapshot=json.loads(export.read_text());assert len(snapshot['tasks'])==61
  with page.expect_download() as d:page.locator('#exportContext').click()
  txt=Path(tempfile.gettempdir())/'sentinel-test-context.txt';d.value.save_as(str(txt))
  assert 'DECISIONES VIGENTES' in txt.read_text() and 'Mi nota de prueba' in txt.read_text()
  ok('Exportar JSON y contexto TXT completos')
+ assert page.evaluate("JSON.parse(localStorage.getItem('sentinel-project-tracker-v1')).reports.length")==1
+ page.reload()
+ assert page.evaluate("JSON.parse(localStorage.getItem('sentinel-project-tracker-v1')).reports[0].taskSnapshot.tasks.length")==61
+ page.locator('#generateReport').click()
+ page.locator('#rTitle').fill('Sesión de definición')
+ page.locator('#rNotes').fill('Acordamos preparar un cambio para Codex')
+ page.locator('#reportForm button[type=submit]').click()
+ assert page.locator('#reportsList .panel').count()==2
+ with page.expect_download() as d:page.locator('#exportJson').click()
+ d.value.save_as(str(export))
+ assert len(json.loads(export.read_text())['reports'])==2
+ page.locator('[data-view=tasks]').click()
+ ok('Generar contextos persistentes y exportarlos sin recursión')
  page.locator('#importFile').set_input_files({'name':'bad.json','mimeType':'application/json','buffer':b'{"schemaVersion":99}'})
- assert page.locator('.task').count()==57
+ assert page.locator('.task').count()==61
  ok('Importación inválida no cambia datos')
  page.once('dialog',lambda d:d.accept())
  with page.expect_download():page.locator('#importFile').set_input_files(str(export))
  page.wait_for_function("JSON.parse(localStorage.getItem('sentinel-project-tracker-v1')).activity[0].text.includes('Importado')")
- ok('Importación válida preserva copia anterior e importa')
- page.locator('[data-view=agents]').click();assert page.locator('#agents .panel').count()==3
+ assert page.evaluate("JSON.parse(localStorage.getItem('sentinel-project-tracker-v1')).reports.length")==2
+ ok('Importación válida preserva copia anterior e importa reportes')
+ page.locator('[data-view=agents]').click();assert page.locator('#agents .panel').count()==4
  page.locator('[data-agenttasks=a2]').click();assert 'Arquitectura' in page.locator('#agentFilter option:checked').inner_text()
- ok('Tres agentes e instrucciones por tarea')
+ ok('Cuatro agentes e instrucciones por tarea')
  page.locator('#clearFilters').click()
  page.set_viewport_size({'width':390,'height':844})
  assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
  page.screenshot(path=str(r/'vista-movil.png'),full_page=True)
  ok('Vista móvil sin desbordamiento horizontal')
- page2=b.new_page();page2.goto((r/'src/index.html').as_uri());page2.wait_for_selector('.task');assert page2.locator('.task').count()==56
+ page2=b.new_page();page2.goto((r/'src/index.html').as_uri());page2.wait_for_selector('.task');assert page2.locator('.task').count()==60
  ok('Versión modular abre sin dependencias externas')
  assert not errors,errors
  ok('Sin errores JavaScript en recorrido probado')

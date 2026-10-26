@@ -1,7 +1,7 @@
 name: SENTINEL - Planificador y pruebas
 on:
   push:
-    branches: [codex/sentinel-planificador]
+    branches: [codex/sentinel-planificador-v1-archivado]
     paths: ['sentinel-planificador/**', '.github/workflows/sentinel-planificador.yml']
   workflow_dispatch:
 permissions:

@@ -9,7 +9,7 @@ function validate(s){
  for(const t of s.tasks){
   if(!t||typeof t.id!=='string'||ids.has(t.id)||!t.id||t.id.length>80)throw Error('IDs ausentes o duplicados.');ids.add(t.id);
   for(const k of ['title','detail','accept','notes','evidence','due','updatedAt','completedAt'])if(typeof t[k]!=='string'||t[k].length>50000)throw Error('Campos de tarea inválidos: '+k);
-  if(!t.title.trim()||!Number.isInteger(t.phase)||t.phase<0||t.phase>5||!statuses.includes(t.status)||!['a1','a2','a3'].includes(t.agent)||!['Alta','Media','Baja'].includes(t.priority)||typeof t.optional!=='boolean'||!Array.isArray(t.deps)||t.deps.some(d=>typeof d!=='string'))throw Error('Tarea incompatible: '+t.id);
+  if(!t.title.trim()||!Number.isInteger(t.phase)||t.phase<0||t.phase>5||!statuses.includes(t.status)||!['a1','a2','a3','a4'].includes(t.agent)||!['Alta','Media','Baja'].includes(t.priority)||typeof t.optional!=='boolean'||!Array.isArray(t.deps)||t.deps.some(d=>typeof d!=='string'))throw Error('Tarea incompatible: '+t.id);
   if(t.due&&!/^\d{4}-\d{2}-\d{2}$/.test(t.due))throw Error('Fecha inválida.');
   if(t.status==='Completada'&&(!t.evidence.trim()||!t.completedAt))throw Error('Las tareas completadas necesitan evidencia y fecha.');
  }
@@ -18,6 +18,16 @@ function validate(s){
  const visiting=new Set(),visited=new Set(),byId=new Map(s.tasks.map(t=>[t.id,t]));
  function visit(id){if(visiting.has(id))throw Error('Dependencias circulares.');if(visited.has(id))return;visiting.add(id);byId.get(id).deps.forEach(visit);visiting.delete(id);visited.add(id);}s.tasks.forEach(t=>visit(t.id));
  if(s.activity.length>10000||s.activity.some(a=>!a||typeof a.at!=='string'||typeof a.text!=='string'))throw Error('Historial inválido.');
+ if(s.reports!==undefined){
+  if(!Array.isArray(s.reports)||s.reports.length>100)throw Error('Reportes inválidos o límite de 100 excedido.');
+  const reportIds=new Set();
+  for(const r of s.reports){
+   if(!r||typeof r.id!=='string'||!r.id||r.id.length>100||reportIds.has(r.id))throw Error('Identificador de reporte inválido o duplicado.');reportIds.add(r.id);
+   for(const k of ['title','notes','contextTxt','createdAt','version'])if(typeof r[k]!=='string'||r[k].length>(k==='contextTxt'?4000000:50000))throw Error('Contenido del reporte inválido.');
+   if(!Number.isFinite(Date.parse(r.createdAt))||!r.taskSnapshot||r.taskSnapshot.reports!==undefined)throw Error('Snapshot inválido o recursivo.');
+   validate(r.taskSnapshot);
+  }
+ }
  return s;
 }
 function unresolved(t,tasks){return t.deps.filter(id=>tasks.find(x=>x.id===id)?.status!=='Completada');}
