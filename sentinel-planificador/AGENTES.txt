@@ -1,21 +1,37 @@
-TRES AGENTES DEL PROYECTO SENTINEL
+SENTINEL — CUATRO AGENTES Y CONTINUIDAD
 
 1. PLANIFICACION Y UX
 Define requisitos, pantallas, campos, flujos y criterios de aceptacion.
-Conserva disenos y no convierte propuestas en decisiones aprobadas.
-Salida: especificacion o propuesta revisable de la tarea seleccionada.
+Preserva los disenos; separa acuerdos, propuestas y pendientes.
 
 2. ARQUITECTURA Y DATOS
-Define separacion de modulos, contratos, Lists, identidad, permisos,
+Define modulos separados, contratos, Lists, identidad, permisos,
 concurrencia, historial y respaldo recuperable.
-Salida: arquitectura/modelo documentados, alternativas y pruebas requeridas.
 
 3. IMPLEMENTACION Y CALIDAD
-Programa exclusivamente lo aprobado, separa archivos por modulo,
-integra y prueba; registra evidencia antes de completar tareas.
-Salida: archivos modificados, pruebas, resultado y limitaciones.
+Programa solo lo aprobado, integra y prueba cada parte.
+Registra evidencia; no declara implementado o probado lo que no ejecuto.
 
-En el tablero, cada tarea tiene asignado uno de estos roles y un boton
-para copiar un encargo con su contexto. Estos roles no ejecutan tareas
-automaticamente ni son una integracion de IA. Puedes usarlos en tres
-chats distintos y actualizar el seguimiento con sus resultados.
+4. DOCUMENTACION Y CONTINUIDAD
+Conserva contexto por cada reporte, acuerdos y decisiones sustituidas.
+Prepara pedidos para Codex: ID, alcance, modulos/archivos afectados,
+criterios de aceptacion, pruebas y proxima accion.
+En otro chat conectado a Drive, anexa contexto al documento maestro sin
+borrar historia. Verifica lectura del ultimo reporte antes de continuar.
+
+RECORDATORIOS
+El documento maestro instruye al otro chat para crearlos SOLO al confirmar
+frecuencia, hora y zona America/La_Paz y comprobar su capacidad de programar.
+Propuestas: revision diaria de tareas y consolidacion semanal. No estan activos.
+
+CONTEXTO
+GENERAR REPORTE guarda tareas y notas de ese momento en el dispositivo.
+No modifica reportes anteriores. Exportar TXT/JSON o Compartir permite
+llevar una version a Drive/otro chat. No hay sincronizacion automatica.
+
+DOCUMENTO MAESTRO
+https://docs.google.com/document/d/1a1pzZHOHE2v-4Lsu5-DAelPXsSm3q1DlZYsnFtn00kY/edit
+Este enlace no concede acceso: usa tu cuenta Google o comparte expresamente.
+
+Los agentes son roles e instrucciones reutilizables; no servicios autonomos
+permanentemente conectados a este planificador.

@@ -1,0 +1,11 @@
+SENTINEL PROYECTO — VERIFICACION APK v1.0.1
+Commit: bdb8bc62eeff9b123c16e46c72b624421558f549
+GitHub Actions: https://github.com/jcarlospm05/conduce-salida-android/actions/runs/40258556269
+Resultado: SUCCESS.
+Modelo13 + almacenamiento3 + navegador14 aprobadas.
+assembleRelease y connectedDebugAndroidTest API35: SUCCESS.
+Apertura, tarea, persistencia, reporte/contexto y archivo UTF8 comprobados.
+No probado en telefono fisico. No implementa app operativa Access/Lists.
+APK 1689184 bytes, Android8+, firma de pruebas.
+Master GoogleDoc actualizado y verificado con anexo DM-002.
+Recordatorios no activos. Sin sincronizacion automatica Drive.
