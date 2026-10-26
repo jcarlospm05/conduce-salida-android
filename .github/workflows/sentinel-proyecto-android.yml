@@ -27,11 +27,15 @@ jobs:
           node --check src/storage.js
           node --check src/reports.js
           node tests/model.test.cjs
+          node tests/storage.test.cjs
           python build.py
       - name: Preparar navegador y probar interacciones
+        timeout-minutes: 6
+        env:
+          SENTINEL_CHROMIUM_PATH: /usr/bin/google-chrome
         run: |
-          python -m pip install playwright==1.58.0
-          python -m playwright install --with-deps chromium
+          test -x "$SENTINEL_CHROMIUM_PATH"
+          python -m pip install --retries 2 --timeout 30 playwright==1.58.0
           python tests/browser.py
       - uses: actions/setup-java@v4
         with:
@@ -70,8 +74,8 @@ jobs:
       - name: Preparar entrega
         run: |
           mkdir -p entrega
-          cp android/app/build/outputs/apk/release/app-release.apk entrega/SENTINEL-Proyecto-v1.0.0.apk
-          sha256sum entrega/SENTINEL-Proyecto-v1.0.0.apk > entrega/SENTINEL-Proyecto-v1.0.0.apk.sha256
+          cp android/app/build/outputs/apk/release/app-release.apk entrega/SENTINEL-Proyecto-v1.0.1.apk
+          sha256sum entrega/SENTINEL-Proyecto-v1.0.1.apk > entrega/SENTINEL-Proyecto-v1.0.1.apk.sha256
           cp SENTINEL-Planificador.html DOCUMENTO_MAESTRO.txt LEER_PRIMERO.txt RESULTADO_PRUEBAS.json entrega/
           python -c "import zipfile,pathlib; r=pathlib.Path('.'); z=zipfile.ZipFile('entrega/SENTINEL-Proyecto-Fuentes.zip','w',zipfile.ZIP_DEFLATED); [(z.write(p,p.as_posix())) for folder in ['src','tests','android/app/src','github'] for p in pathlib.Path(folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]; [(z.write(pathlib.Path(p),p)) for p in ['build.py','generate_seed.py','estado-inicial.json','LEER_PRIMERO.txt','DOCUMENTO_MAESTRO.txt','SENTINEL-Planificador.html','android/settings.gradle','android/build.gradle','android/gradle.properties','android/app/build.gradle','android/LEER_ANDROID.txt']]; z.close()"
       - uses: actions/upload-artifact@v4
@@ -90,4 +94,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create sentinel-proyecto-android-v1.0.0 entrega/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SENTINEL Proyecto - APK v1.0.0 y documento maestro" --notes "Planificador Android local: 60 tareas, 4 roles, reportes de contexto versionados y compartir a Drive/chat. No es la app operativa Access. Sin IA integrada ni sincronización automática Drive. Recordatorios se configuran en otro chat tras confirmar horario. Firma de pruebas; exportar JSON antes de borrar datos o cambiar de versión." --prerelease
+          gh release create sentinel-proyecto-android-v1.0.1 entrega/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SENTINEL Proyecto - APK v1.0.1 y documento maestro" --notes "Planificador Android local: 60 tareas, 4 roles, reportes de contexto versionados y compartir a Drive/chat. No es la app operativa Access. Sin IA integrada ni sincronización automática Drive. Recordatorios se configuran en otro chat tras confirmar horario. Firma de pruebas; exportar JSON antes de borrar datos o cambiar de versión." --prerelease

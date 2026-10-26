@@ -1,0 +1,7 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
+const code=n=>fs.readFileSync(__dirname+'/../src/'+n,'utf8');
+const memory=new Map();const store={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,v)};
+function ctx(storage=store){const c=vm.createContext({localStorage:storage});c.window=c;['seed.js','model.js','storage.js','reports.js'].forEach(n=>vm.runInContext(code(n),c));return c;}
+let a=ctx(),b=ctx();let sa=a.SentinelStorage.load(),sb=b.SentinelStorage.load();sa=a.SentinelReports.create(sa,'A','Notas','Contexto');assert(a.SentinelStorage.save(sa));sb.tasks[0].notes='B';assert.equal(b.SentinelStorage.save(sb),false);assert.equal(JSON.parse(memory.get('sentinel-project-tracker-v1')).reports.length,1);console.log('PASS ventana antigua no sobrescribe contextos nuevos');
+memory.clear();memory.set('sentinel-project-tracker-v1','datos inválidos');a=ctx();sa=a.SentinelStorage.load();assert.equal(a.SentinelStorage.rejectedRecovery(),'datos inválidos');assert(a.SentinelStorage.save(sa));assert.equal(a.SentinelStorage.rejectedRecovery(),'datos inválidos');console.log('PASS estado inválido se conserva antes de volver al inicio');
+memory.clear();memory.set('sentinel-project-tracker-v1','datos dañados');a=ctx({getItem:store.getItem,setItem:()=>{throw Error('Cuota');}});sa=a.SentinelStorage.load();assert.equal(a.SentinelStorage.save(sa),false);assert.equal(memory.get('sentinel-project-tracker-v1'),'datos dañados');console.log('PASS cuota llena no destruye estado previo');
